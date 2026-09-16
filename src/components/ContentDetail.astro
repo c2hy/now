@@ -1,0 +1,116 @@
+---
+import { render, type CollectionEntry } from 'astro:content';
+import { ui, sectionPath, date, type Locale } from '../i18n';
+interface Props {
+  entry: CollectionEntry<'writing'> | CollectionEntry<'projects'>;
+  locale: Locale;
+}
+const { entry, locale } = Astro.props;
+const t = ui[locale];
+const page = entry.collection;
+const article = entry.collection === 'writing' ? entry : undefined;
+const project = entry.collection === 'projects' ? entry : undefined;
+const title = article?.data.title ?? project?.data.name;
+const { Content } = await render(entry);
+---
+
+<article>
+  <header
+    class:list={[
+      'pt-12 pb-10 md:pt-20 md:pb-14',
+      article && 'mx-auto max-w-[850px]',
+    ]}
+  >
+    <a
+      class="eyebrow inline-flex min-h-11 items-center gap-3 text-muted"
+      href={sectionPath(locale, page)}
+    >
+      ← {t[page as 'writing' | 'projects']}
+    </a>
+    <h1 class="display page-title mt-7">{title}</h1>
+    <p class="mt-6 max-w-2xl text-xl leading-relaxed text-muted">
+      {project?.data.statement ?? article?.data.description}
+    </p>
+    {
+      project?.data.status === 'active' && (
+        <p class="eyebrow mt-6 text-accent">{t.live}</p>
+      )
+    }
+    {
+      article && (
+        <p class="mt-8 text-xs text-muted">
+          <time datetime={article.data.publishedAt.toISOString()}>
+            {date(article.data.publishedAt, locale)}
+          </time>{' '}
+          <span class="mx-3">/</span> Will{' '}
+          {article.data.updatedAt && (
+            <>
+              {' '}
+              · {locale === 'en' ? 'Updated' : '更新于'}{' '}
+              {date(article.data.updatedAt, locale)}
+            </>
+          )}
+        </p>
+      )
+    }
+  </header>
+  {
+    project && (
+      <figure>
+        <img
+          src={project.data.hero.src}
+          alt={project.data.hero.alt}
+          width="1200"
+          height="800"
+          fetchpriority="high"
+          class="max-h-[650px] w-full object-cover"
+        />
+      </figure>
+    )
+  }
+  <div class:list={['mx-auto', article ? 'max-w-[850px]' : 'max-w-[700px]']}>
+    <div class="prose mt-10 max-w-[700px]">
+      {Content && <Content />}
+    </div>
+    {
+      project?.data.gallery?.map((image) => (
+        <figure class="my-8">
+          <img
+            src={image.src}
+            alt={image.alt}
+            width="1200"
+            height="800"
+            loading="lazy"
+          />
+          {image.caption && (
+            <figcaption class="mt-2 text-xs text-muted">
+              {image.caption}
+            </figcaption>
+          )}
+        </figure>
+      ))
+    }
+    {
+      project && project.data.links.length > 0 && (
+        <section class="mt-10 border-t border-line pt-6">
+          <h2 class="font-display text-3xl">
+            {locale === 'en' ? 'Links' : '相关链接'}
+          </h2>
+          {project.data.links.map((link) => (
+            <a
+              class="text-link mr-6"
+              href={link.href}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {link.label} ↗
+            </a>
+          ))}
+        </section>
+      )
+    }
+    <a class="text-link mt-12" href={sectionPath(locale, page)}>
+      ← {t.back}{locale === 'en' ? ' ' : ''}{t[page as 'writing' | 'projects']}
+    </a>
+  </div>
+</article>

@@ -1,0 +1,54 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { ui, path, type Locale } from '../i18n';
+interface Props {
+  item: CollectionEntry<'projects'>;
+  locale: Locale;
+  index: number;
+}
+const { item, locale, index } = Astro.props;
+const t = ui[locale];
+---
+
+<article class="grid gap-6 pb-14 md:grid-cols-[0.7fr_1.3fr] md:gap-16 md:pb-20">
+  <div class="flex flex-col items-start">
+    <span class="eyebrow mb-5 text-muted"
+      >{String(index + 1).padStart(2, '0')}
+      <span class="mx-3">/</span>
+      {item.data.year}
+      {
+        item.data.status === 'active' && (
+          <>
+            <span class="mx-3">/</span>
+            {t.live}
+          </>
+        )
+      }</span
+    ><h3 class="mb-4 font-display text-4xl tracking-tight md:text-5xl">
+      <a href={path(locale, `projects/${item.data.slug}`)}>{item.data.name}</a>
+    </h3><p class="max-w-xs text-lg leading-relaxed">{item.data.statement}</p><p
+      class="mt-4 max-w-xs text-sm leading-relaxed text-muted"
+    >
+      {item.data.description}
+    </p><a
+      class="text-link mt-7 md:mt-auto md:pt-8"
+      href={path(locale, `projects/${item.data.slug}`)}
+      >{t.read}<span class="arrow" aria-hidden="true">↗</span></a
+    >
+  </div>
+  <figure>
+    <a
+      href={path(locale, `projects/${item.data.slug}`)}
+      aria-label={item.data.name}
+      class="block overflow-hidden"
+      ><img
+        src={item.data.hero.src}
+        alt={item.data.hero.alt}
+        width="1200"
+        height="800"
+        loading="lazy"
+        class="h-auto w-full transition-transform duration-300 hover:scale-[1.015]"
+      /></a
+    >
+  </figure>
+</article>

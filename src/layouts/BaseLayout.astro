@@ -1,0 +1,248 @@
+---
+import '../styles/global.css';
+import { profile } from '../data/profile';
+import { ui, path, sectionPath, type Locale } from '../i18n';
+interface Props {
+  locale: Locale;
+  title: string;
+  metaTitle?: string;
+  description?: string;
+  current?: string;
+  alternate?: string;
+  article?: { publishedAt: Date; updatedAt?: Date };
+  ogImage?: { path: string; alt: string };
+}
+const {
+  locale,
+  title,
+  metaTitle,
+  description = profile.description,
+  current,
+  alternate,
+  article,
+  ogImage = {
+    path: `/og/${locale}/site.png`,
+    alt: `${profile.siteName} — ${locale === 'zh' ? '观察、记录与软件' : 'Observations, Notes, and Software'}`,
+  },
+} = Astro.props;
+const t = ui[locale];
+const other = locale === 'en' ? 'zh' : 'en';
+const canonical = new URL(Astro.url.pathname, profile.site).href;
+const ogImageUrl = new URL(ogImage.path, profile.site).href;
+const resolvedTitle = metaTitle ?? title;
+const browserTitle =
+  current && !resolvedTitle.includes(profile.siteName)
+    ? `${resolvedTitle} — ${profile.siteName}`
+    : resolvedTitle;
+// Index pages by default; set PUBLIC_INDEXING_ENABLED=false for previews or
+// other deployments that should remain out of search results.
+const indexingEnabled = import.meta.env.PUBLIC_INDEXING_ENABLED !== 'false';
+const alternatePath =
+  alternate ??
+  (current === 'writing' || current === 'projects' || current === 'about'
+    ? sectionPath(other, current)
+    : path(other, current || ''));
+const isDetail =
+  ['writing', 'projects'].includes(current || '') &&
+  Astro.url.pathname.split('/').filter((part) => part && part !== 'zh').length >
+    1;
+const paired =
+  current !== '404' && (!isDetail || !['/', '/zh/'].includes(alternatePath));
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Person',
+      '@id': `${profile.site}/#person`,
+      name: profile.name,
+      url: profile.site,
+      image: `${profile.site}/avatar.svg`,
+    },
+    { '@type': 'WebSite', name: profile.siteName, url: profile.site },
+    ...(article
+      ? [
+          {
+            '@type': 'Article',
+            headline: title,
+            description,
+            datePublished: article.publishedAt.toISOString(),
+            dateModified: (
+              article.updatedAt || article.publishedAt
+            ).toISOString(),
+            author: { '@id': `${profile.site}/#person` },
+          },
+        ]
+      : []),
+  ],
+};
+---
+
+<!doctype html>
+<html lang={locale === 'zh' ? 'zh-CN' : 'en'}>
+  <head>
+    <meta charset="UTF-8" /><meta
+      name="viewport"
+      content="width=device-width, initial-scale=1"
+    />
+    <title>{browserTitle}</title><meta
+      name="description"
+      content={description}
+    /><meta
+      name="robots"
+      content={indexingEnabled ? 'index, follow' : 'noindex, nofollow'}
+    />
+    <link rel="icon" type="image/svg+xml" href="/avatar.svg" /><link
+      rel="canonical"
+      href={canonical}
+    />
+    {
+      paired && (
+        <>
+          <>
+            <link
+              rel="alternate"
+              hreflang={locale === 'zh' ? 'zh-CN' : 'en'}
+              href={canonical}
+            />
+            <link
+              rel="alternate"
+              hreflang={other === 'zh' ? 'zh-CN' : 'en'}
+              href={new URL(alternatePath, profile.site).href}
+            />
+          </>
+        </>
+      )
+    }
+    {
+      !current && (
+        <link rel="alternate" hreflang="x-default" href={profile.site} />
+      )
+    }
+    <meta property="og:title" content={browserTitle} /><meta
+      property="og:description"
+      content={description}
+    /><meta property="og:url" content={canonical} /><meta
+      property="og:type"
+      content={article ? 'article' : 'website'}
+    /><meta
+      property="og:locale"
+      content={locale === 'zh' ? 'zh_CN' : 'en_US'}
+    /><meta property="og:site_name" content={profile.siteName} /><meta
+      property="og:image"
+      content={ogImageUrl}
+    /><meta property="og:image:secure_url" content={ogImageUrl} /><meta
+      property="og:image:type"
+      content="image/png"
+    /><meta property="og:image:width" content="1200" /><meta
+      property="og:image:height"
+      content="630"
+    /><meta property="og:image:alt" content={ogImage.alt} /><meta
+      name="twitter:card"
+      content="summary_large_image"
+    /><meta name="twitter:title" content={browserTitle} /><meta
+      name="twitter:description"
+      content={description}
+    /><meta name="twitter:image" content={ogImageUrl} /><meta
+      name="twitter:image:alt"
+      content={ogImage.alt}
+    />
+    {
+      article && (
+        <>
+          <meta
+            property="article:published_time"
+            content={article.publishedAt.toISOString()}
+          />
+          <meta
+            property="article:modified_time"
+            content={(article.updatedAt || article.publishedAt).toISOString()}
+          />
+        </>
+      )
+    }
+    <script
+      is:inline
+      type="application/ld+json"
+      set:html={JSON.stringify(structuredData).replace(/</g, '\\u003c')}
+    />
+  </head>
+  <body>
+    <a class="skip" href="#main">{t.skip}</a>
+    <div class="shell">
+      <header
+        class="sticky top-0 z-10 flex flex-wrap items-center justify-between gap-x-6 gap-y-2 border-b border-line bg-paper/95 py-5 backdrop-blur-sm md:py-7"
+      >
+        <a
+          href={path(locale)}
+          class="flex min-h-11 items-center gap-2 text-xl font-semibold tracking-tight"
+          aria-label="Will.OPC"
+        >
+          <img
+            src="/avatar.svg"
+            alt=""
+            width="28"
+            height="28"
+            class="h-7 w-7 rounded-full"
+            aria-hidden="true"
+          /><span>Will<span class="text-accent">.</span>OPC</span></a
+        >
+        <nav
+          class="flex flex-wrap items-center gap-x-5 sm:gap-x-8 text-[13px]"
+          aria-label={locale === 'zh' ? '主导航' : 'Main navigation'}
+        >
+          {
+            (
+              <a
+                class:list={[
+                  'inline-flex min-h-11 items-center',
+                  current === undefined && 'underline decoration-accent',
+                ]}
+                aria-current={current === undefined ? 'page' : undefined}
+                href={path(locale)}
+              >
+                {t.home}
+              </a>
+            )
+          }
+          {
+            (['writing', 'projects', 'about'] as const).map((item) => (
+              <a
+                class:list={[
+                  'inline-flex min-h-11 items-center',
+                  current === item && 'underline decoration-accent',
+                ]}
+                aria-current={current === item ? 'page' : undefined}
+                href={sectionPath(locale, item)}
+              >
+                {t[item]}
+              </a>
+            ))
+          }
+          <a
+            class="inline-flex min-h-11 items-center border-l border-line pl-5 sm:pl-7 text-muted"
+            href={alternatePath}
+            lang={other === 'zh' ? 'zh-CN' : 'en'}
+            aria-label={t.langLabel}>{t.language}</a
+          >
+        </nav>
+      </header>
+      <main id="main"><slot /></main>
+      <footer class="mt-20 border-t border-line pt-6 pb-8 md:mt-28">
+        <div
+          class="flex flex-wrap items-center justify-between gap-4 text-xs text-muted"
+        >
+          <span
+            >Will.OPC <span class="mx-2">©</span>
+            {new Date().getFullYear()}
+            <span class="mx-2">·</span>
+            {locale === 'zh' ? '上海' : 'Shanghai'}</span
+          ><a
+            class="inline-flex min-h-11 items-center"
+            href="#main"
+            aria-label={locale === 'zh' ? '回到顶部' : 'Back to top'}>↑</a
+          >
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>

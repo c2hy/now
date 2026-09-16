@@ -1,0 +1,181 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ContentDetail from '../components/ContentDetail.astro';
+import Home from '../components/Home.astro';
+import About from '../components/About.astro';
+import WritingList from '../components/WritingList.astro';
+import WritingFilters from '../components/WritingFilters.astro';
+import ProjectFeature from '../components/ProjectFeature.astro';
+import { locales, ui, path, contentPath, type Locale } from '../i18n';
+import { visible, translation } from '../utils/content';
+export async function getStaticPaths() {
+  const routes = [];
+  for (const locale of locales) {
+    for (const page of ['home', 'writing', 'projects', 'about'])
+      routes.push({
+        params: {
+          route:
+            path(
+              locale,
+              page === 'home' ? '' : page === 'writing' ? 'notes' : page,
+            )
+              .replace(/^\//, '')
+              .replace(/\/$/, '') || undefined,
+        },
+        props: { locale, page },
+      });
+    for (const kind of ['writing', 'projects'] as const)
+      for (const entry of (await getCollection(kind)).filter(
+        (e) => e.data.locale === locale && visible(e.data),
+      ))
+        routes.push({
+          params: {
+            route: contentPath(locale, kind, entry.data.slug).slice(1),
+          },
+          props: { locale, page: kind, entry },
+        });
+  }
+  return routes;
+}
+interface Props {
+  locale: Locale;
+  page: string;
+  entry?: CollectionEntry<'writing'> | CollectionEntry<'projects'>;
+}
+const { locale, page, entry } = Astro.props as Props;
+const t = ui[locale];
+const article = entry?.collection === 'writing' ? entry : undefined;
+const project = entry?.collection === 'projects' ? entry : undefined;
+const title =
+  article?.data.title ??
+  project?.data.name ??
+  (page === 'home'
+    ? locale === 'en'
+      ? 'Noticing what usually goes unnoticed'
+      : '留意那些常被忽略的事'
+    : t[page as 'writing' | 'projects' | 'about']);
+const metaTitle =
+  article?.data.seoTitle ??
+  (page === 'home'
+    ? locale === 'en'
+      ? 'Will.OPC — Observations, Notes, and Software by Will'
+      : 'Will.OPC｜Will 的观察、记录与软件'
+    : page === 'writing'
+      ? locale === 'en'
+        ? 'Notes on Self, Technology, and Everyday Life'
+        : '关于人与自我、数字生活的记录'
+      : page === 'projects'
+        ? locale === 'en'
+          ? 'Projects — Yipa, Huddle, and Tablow'
+          : '作品｜Yipa、泡泡留言板与橘小记'
+        : page === 'about'
+          ? locale === 'en'
+            ? 'About Will — Observations, Notes, and Software'
+            : '关于 Will｜观察、记录与软件'
+          : undefined);
+const pageDescription =
+  entry?.data.description ??
+  (page === 'writing'
+    ? locale === 'en'
+      ? 'Will’s notes on self, technology, everyday life, and how software quietly enters all three.'
+      : 'Will 关于人与自我、数字生活，以及软件如何进入真实生活的记录。'
+    : page === 'projects'
+      ? locale === 'en'
+        ? 'Yipa, Huddle, and Tablow — three launched products by independent developer Will.'
+        : 'Yipa、泡泡留言板与橘小记：独立开发者 Will 已上线的三个产品。'
+      : page === 'about'
+        ? locale === 'en'
+          ? 'About Will, an independent developer who writes about self, technology, and everyday life—and turns a few observations into software.'
+          : '关于 Will：一名记录人与自我、数字生活，也把少数观察做成软件的独立开发者。'
+        : locale === 'en'
+          ? 'I write about self, technology, and everyday life—and turn a few of those observations into software.'
+          : '写人与自我、数字生活，也把其中一些观察做成软件。');
+const alternate = entry
+  ? await translation(entry.collection, entry.data.translationKey, locale)
+  : undefined;
+const ogImage = article
+  ? {
+      path: `/og/${locale}/notes/${article.data.slug}.png`,
+      alt: article.data.title,
+    }
+  : undefined;
+const writing =
+  page === 'writing' && !entry
+    ? (await getCollection('writing'))
+        .filter((e) => e.data.locale === locale && visible(e.data))
+        .sort(
+          (a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf(),
+        )
+    : [];
+const projects =
+  page === 'projects' && !entry
+    ? (await getCollection('projects'))
+        .filter((e) => e.data.locale === locale && visible(e.data))
+        .sort(
+          (a, b) => b.data.year - a.data.year || a.data.order - b.data.order,
+        )
+    : [];
+const groups = [...new Set(projects.map((e) => String(e.data.year)))];
+---
+
+<BaseLayout
+  locale={locale}
+  title={title}
+  metaTitle={metaTitle}
+  description={pageDescription}
+  current={page === 'home' ? undefined : page}
+  alternate={alternate}
+  article={article?.data}
+  ogImage={ogImage}
+>
+  {page === 'home' && <Home locale={locale} />}
+  {page === 'about' && <About locale={locale} />}
+  {
+    !entry && (page === 'writing' || page === 'projects') && (
+      <>
+        <section class="pt-14 pb-12 md:pt-24 md:pb-16">
+          <>
+            <p class="eyebrow mb-7 text-muted">
+              {page === 'writing'
+                ? locale === 'en'
+                  ? 'Essays and observations'
+                  : '文章与观察'
+                : locale === 'en'
+                  ? 'Independent products'
+                  : '独立产品'}
+            </p>
+            <h1 class="display page-title">
+              {t[page]}
+              <span class="text-accent">.</span>
+            </h1>
+            <p class="mt-7 max-w-xl text-base leading-relaxed text-muted">
+              {page === 'writing' ? t.notesIntro : t.projectsIntro}
+            </p>
+          </>
+        </section>
+        {page === 'writing' ? (
+          <>
+            <WritingFilters locale={locale} />
+            <WritingList items={writing} locale={locale} topRule />
+          </>
+        ) : (
+          groups.map((group, groupIndex) => (
+            <section class:list={[groupIndex > 0 && 'mt-14 md:mt-20']}>
+              <h2 class="eyebrow mb-6 text-muted">{group}</h2>
+              {projects
+                .filter((e) => String(e.data.year) === group)
+                .map((item, index) => (
+                  <ProjectFeature item={item} locale={locale} index={index} />
+                ))}
+            </section>
+          ))
+        )}
+        {page === 'projects' && !projects.length && (
+          <p class="border-t border-line py-8 text-muted">{t.empty}</p>
+        )}
+      </>
+    )
+  }
+  {entry && <ContentDetail entry={entry} locale={locale} />}
+</BaseLayout>

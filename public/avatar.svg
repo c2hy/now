@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg"
+     width="1024" height="1024" viewBox="0 0 1024 1024"
+     role="img" aria-labelledby="title desc">
+  <title id="title">Will.OPC</title>
+  <desc id="desc">A black serif W monogram with a green four-point star, on a warm white background.</desc>
+
+  <!-- Full-bleed background. -->
+  <rect id="background" width="1024" height="1024" fill="#FAF9F4"/>
+
+  <!-- Custom outlined artwork: no font dependency. -->
+  <g id="monogram" fill="#050505">
+    <!-- Left descending serif stroke. -->
+    <path d="M174 310H338
+             C312 319 304 340 315 368
+             L431 671L393 768L235 379
+             C222 347 207 324 174 310Z"/>
+
+    <!-- Centre descending serif stroke. -->
+    <path d="M419 310H579
+             C551 319 543 341 554 370
+             L672 671L634 768L471 379
+             C458 347 443 324 419 310Z"/>
+
+    <!-- Right terminal: the tapered cutout keeps the mark legible at small sizes. -->
+    <path d="M699 310H836
+             C795 319 772 342 765 383
+             C758 342 736 319 699 310Z"/>
+  </g>
+
+  <!-- Four-point balance/focus star. -->
+  <path id="focus-star" fill="#66C94E"
+        d="M765 438
+           C774 476 795 500 838 513
+           C795 526 774 550 765 588
+           C756 550 735 526 692 513
+           C735 500 756 476 765 438Z"/>
+</svg>

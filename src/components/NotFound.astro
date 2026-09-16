@@ -1,0 +1,35 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { path, sectionPath, type Locale } from '../i18n';
+const { locale = 'en' } = Astro.props as { locale?: Locale };
+---
+
+<BaseLayout
+  locale={locale}
+  title={locale === 'en' ? 'Page not found' : '没有找到这一页'}
+  alternate={locale === 'en' ? '/zh/404' : '/404'}
+  current="404"
+>
+  <section class="min-h-[60vh] py-20 md:py-28">
+    <p class="eyebrow mb-8 text-accent">
+      404 / {locale === 'en' ? 'A wrong turn' : '走岔了一小步'}
+    </p><h1 class="display page-title max-w-3xl">
+      {
+        locale === 'en'
+          ? 'Nothing here. Plenty elsewhere.'
+          : '这里没有，别处还有。'
+      }
+    </h1><p class="mt-8 text-muted">
+      {
+        locale === 'en'
+          ? 'This page may have moved, or never quite existed.'
+          : '这一页可能搬走了，也可能还不曾存在。'
+      }
+    </p><div class="mt-8 flex flex-wrap gap-8">
+      <a class="text-link" href={path(locale)}
+        >{locale === 'en' ? 'Back home' : '回到首页'} →</a
+      ><a class="text-link" href={sectionPath(locale, 'writing')}
+        >{locale === 'en' ? 'Browse the notes' : '看看最近的记录'} →</a>
+    </div>
+  </section>
+</BaseLayout>
