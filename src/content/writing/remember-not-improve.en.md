@@ -3,7 +3,7 @@ title: 'Some Things Are Worth Remembering, But Not Necessarily Worth Improving'
 seoTitle: 'Some Things Are Worth Remembering, But Not Necessarily Worth Improving | Will.OPC'
 description: 'On plans, setbacks, and learning to look for causes instead of blame.'
 publishedAt: '2026-09-16'
-featured: false
+featured: true
 category: 'life-observation'
 locale: 'en'
 slug: 'remember-not-improve'

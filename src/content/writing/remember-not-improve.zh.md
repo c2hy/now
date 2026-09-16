@@ -3,7 +3,7 @@ title: '有些事情值得记住，但不一定值得改进。'
 seoTitle: '有些事情值得记住，但不一定值得改进。 | Will.OPC'
 description: '一次偏离只是生活反馈给你的信息，算不上什么判决书。'
 publishedAt: '2026-09-16'
-featured: false
+featured: true
 category: 'life-observation'
 locale: 'zh'
 slug: 'remember-not-improve'
