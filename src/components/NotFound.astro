@@ -26,9 +26,9 @@ const { locale = 'en' } = Astro.props as { locale?: Locale };
           : '这一页可能搬走了，也可能还不曾存在。'
       }
     </p><div class="mt-8 flex flex-wrap gap-8">
-      <a class="text-link" href={path(locale)}
+      <a class="text-link" href={path(locale)} data-drip-placement="not_found_home"
         >{locale === 'en' ? 'Back home' : '回到首页'} →</a
-      ><a class="text-link" href={sectionPath(locale, 'writing')}
+      ><a class="text-link" href={sectionPath(locale, 'writing')} data-drip-placement="not_found_notes"
         >{locale === 'en' ? 'Browse the notes' : '看看最近的记录'} →</a>
     </div>
   </section>

@@ -24,6 +24,7 @@ const { Content } = await render(entry);
     <a
       class="eyebrow inline-flex min-h-11 items-center gap-3 text-muted"
       href={sectionPath(locale, page)}
+      data-drip-placement="content_back"
     >
       ← {t[page as 'writing' | 'projects']}
     </a>
@@ -100,6 +101,15 @@ const { Content } = await render(entry);
             <a
               class="text-link mr-6"
               href={link.href}
+              data-drip-placement={`project_link_${link.type}`}
+              data-drip-product={project.data.slug}
+              data-drip-destination={
+                link.type === 'app-store'
+                  ? 'app_store'
+                  : link.type === 'google-play'
+                    ? 'google_play'
+                    : undefined
+              }
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -109,7 +119,11 @@ const { Content } = await render(entry);
         </section>
       )
     }
-    <a class="text-link mt-12" href={sectionPath(locale, page)}>
+    <a
+      class="text-link mt-12"
+      href={sectionPath(locale, page)}
+      data-drip-placement="content_back"
+    >
       ← {t.back}{locale === 'en' ? ' ' : ''}{t[page as 'writing' | 'projects']}
     </a>
   </div>

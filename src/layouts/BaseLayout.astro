@@ -10,6 +10,7 @@ interface Props {
   description?: string;
   current?: string;
   alternate?: string;
+  product?: string;
   article?: { publishedAt: Date; updatedAt?: Date };
   ogImage?: { path: string; alt: string };
 }
@@ -20,6 +21,7 @@ const {
   description = profile.description,
   current,
   alternate,
+  product,
   article,
   ogImage = {
     path: `/og/${locale}/site.png`,
@@ -35,6 +37,12 @@ const browserTitle =
   current && !resolvedTitle.includes(profile.siteName)
     ? `${resolvedTitle} — ${profile.siteName}`
     : resolvedTitle;
+const dripEndpoint =
+  import.meta.env.PUBLIC_DRIP_ENDPOINT?.trim() ||
+  'https://drip-api.hyperge.top/v1/events';
+const dripWriteKey = import.meta.env.PUBLIC_DRIP_WRITE_KEY?.trim();
+const dripEnabled = import.meta.env.PUBLIC_DRIP_ENABLED !== 'false';
+const dripConfigured = import.meta.env.PROD && dripEnabled && !!dripWriteKey;
 // Index pages by default; set PUBLIC_INDEXING_ENABLED=false for previews or
 // other deployments that should remain out of search results.
 const indexingEnabled = import.meta.env.PUBLIC_INDEXING_ENABLED !== 'false';
@@ -168,7 +176,12 @@ const structuredData = {
       set:html={JSON.stringify(structuredData).replace(/</g, '\\u003c')}
     />
   </head>
-  <body>
+  <body
+    data-drip-endpoint={dripConfigured ? dripEndpoint : undefined}
+    data-drip-write-key={dripConfigured ? dripWriteKey : undefined}
+    data-drip-page-title={dripConfigured ? browserTitle : undefined}
+    data-drip-product={dripConfigured ? product : undefined}
+  >
     <a class="skip" href="#main">{t.skip}</a>
     <div class="shell">
       <header
@@ -176,6 +189,7 @@ const structuredData = {
       >
         <a
           href={path(locale)}
+          data-drip-placement="header_brand"
           class="flex min-h-11 items-center gap-2 text-xl font-semibold tracking-tight"
           aria-label="Will.OPC"
         >
@@ -201,6 +215,7 @@ const structuredData = {
                 ]}
                 aria-current={current === undefined ? 'page' : undefined}
                 href={path(locale)}
+                data-drip-placement="nav_home"
               >
                 {t.home}
               </a>
@@ -215,6 +230,7 @@ const structuredData = {
                 ]}
                 aria-current={current === item ? 'page' : undefined}
                 href={sectionPath(locale, item)}
+                data-drip-placement={`nav_${item}`}
               >
                 {t[item]}
               </a>
@@ -223,6 +239,7 @@ const structuredData = {
           <a
             class="inline-flex min-h-11 items-center border-l border-line pl-5 sm:pl-7 text-muted"
             href={alternatePath}
+            data-drip-placement="language_switch"
             lang={other === 'zh' ? 'zh-CN' : 'en'}
             aria-label={t.langLabel}>{t.language}</a
           >
@@ -241,10 +258,12 @@ const structuredData = {
           ><a
             class="inline-flex min-h-11 items-center"
             href="#main"
+            data-drip-placement="footer_back_to_top"
             aria-label={locale === 'zh' ? '回到顶部' : 'Back to top'}>↑</a
           >
         </div>
       </footer>
     </div>
+    {dripConfigured && <script src="../scripts/drip.ts"></script>}
   </body>
 </html>

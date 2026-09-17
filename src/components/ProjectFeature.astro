@@ -25,7 +25,12 @@ const t = ui[locale];
         )
       }</span
     ><h3 class="mb-4 font-display text-4xl tracking-tight md:text-5xl">
-      <a href={path(locale, `projects/${item.data.slug}`)}>{item.data.name}</a>
+      <a
+        href={path(locale, `projects/${item.data.slug}`)}
+        data-drip-placement="project_item"
+        data-drip-product={item.data.slug}
+        >{item.data.name}</a
+      >
     </h3><p class="max-w-xs text-lg leading-relaxed">{item.data.statement}</p><p
       class="mt-4 max-w-xs text-sm leading-relaxed text-muted"
     >
@@ -33,12 +38,16 @@ const t = ui[locale];
     </p><a
       class="text-link mt-7 md:mt-auto md:pt-8"
       href={path(locale, `projects/${item.data.slug}`)}
+      data-drip-placement="project_item"
+      data-drip-product={item.data.slug}
       >{t.read}<span class="arrow" aria-hidden="true">↗</span></a
     >
   </div>
   <figure>
     <a
       href={path(locale, `projects/${item.data.slug}`)}
+      data-drip-placement="project_item"
+      data-drip-product={item.data.slug}
       aria-label={item.data.name}
       class="block overflow-hidden"
       ><img

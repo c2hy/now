@@ -126,6 +126,7 @@ const groups = [...new Set(projects.map((e) => String(e.data.year)))];
   description={pageDescription}
   current={page === 'home' ? undefined : page}
   alternate={alternate}
+  product={project?.data.slug}
   article={article?.data}
   ogImage={ogImage}
 >

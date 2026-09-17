@@ -71,6 +71,7 @@ const projects = (await getCollection('projects'))
     </p><div class="hidden items-end justify-between md:flex">
       <span class="text-5xl italic text-muted/60" aria-hidden="true">w.</span><a
         href="#notes"
+        data-drip-placement="home_notes"
         class="eyebrow flex min-h-11 items-center gap-4 text-muted"
         >{locale === 'en' ? 'A few things, below' : '往下，随意看看'}<span
           class="text-xl"
@@ -90,7 +91,10 @@ const projects = (await getCollection('projects'))
       >
         {t.noting}
       </h2>
-    </div><a class="text-link" href={sectionPath(locale, 'writing')}
+    </div><a
+      class="text-link"
+      href={sectionPath(locale, 'writing')}
+      data-drip-placement="home_notes_index"
       >{t.allWriting}<span aria-hidden="true">→</span></a
     >
   </div><WritingList items={writing} locale={locale} />
@@ -103,7 +107,10 @@ const projects = (await getCollection('projects'))
       >
         {t.making}
       </h2>
-    </div><a class="text-link" href={sectionPath(locale, 'projects')}
+    </div><a
+      class="text-link"
+      href={sectionPath(locale, 'projects')}
+      data-drip-placement="home_projects_index"
       >{t.allProjects}<span aria-hidden="true">→</span></a
     >
   </div>{
@@ -148,7 +155,10 @@ const projects = (await getCollection('projects'))
           ? 'This site brings together my observations, the judgments that grow from them, and the few ideas I have turned into software.'
           : '这里收着我的观察、由它们延伸出的判断，以及少数被做成软件的想法。'
       }
-    </p><a class="text-link mt-6" href={sectionPath(locale, 'about')}
+    </p><a
+      class="text-link mt-6"
+      href={sectionPath(locale, 'about')}
+      data-drip-placement="home_about"
       >{t.aboutLink}<span aria-hidden="true">↗</span></a
     >
   </div>
@@ -161,6 +171,7 @@ const projects = (await getCollection('projects'))
         <a
           class="text-link"
           href={link.href}
+          data-drip-placement="social_link"
           target="_blank"
           rel="noopener noreferrer"
         >

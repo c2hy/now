@@ -32,14 +32,27 @@ npm run build          # 正式构建，排除所有 sample / draft 内容
 - `public/images/`：项目 SVG 概念示意图与已确认的产品截图。
 - `src/utils/og.ts`、`src/pages/og/`：构建时生成 1200×630 的中英文站点与文章 OG PNG；文章可通过 frontmatter 的 `cover` 覆盖默认文字版式。
 
-标记为 `sample` / `draft` 的内容仅由 `dev` / `build:preview` 显式开启，`build` 强制关闭（当前没有此类内容）。当前默认允许搜索引擎收录；如需让预览或测试部署不被收录，可明确设置 `PUBLIC_INDEXING_ENABLED=false`。不加载统计脚本，也不写追踪存储；`robots.txt`、`sitemap.xml` 和中英文 OG 分享图已接入，RSS、Analytics 与生产部署仍待接入。
+标记为 `sample` / `draft` 的内容仅由 `dev` / `build:preview` 显式开启，`build` 强制关闭（当前没有此类内容）。当前默认允许搜索引擎收录；如需让预览或测试部署不被收录，可明确设置 `PUBLIC_INDEXING_ENABLED=false`。Drip 仅在正式构建中、配置 `PUBLIC_DRIP_WRITE_KEY` 后加载，采集 `page_view`、作品浏览、商店点击和标记过的链接点击；开发环境不会生成身份、不读写浏览器存储，也不会发出请求。Vercel Analytics 继续保留，用于网站访问统计。
+
+首次配置或重建环境时，在 Drip 中创建 `now` app 和 production web public ingest key，并将 key 注入构建环境：
+
+```sh
+npm run manage -- app create \
+  --slug now \
+  --name "Will.OPC" \
+  --origin https://willopc.com \
+  --origin https://now.willopc.com
+npm run manage -- key create --app now --label "production web" --runtime production --release-channel web --platform web
+```
+
+将命令输出的 public write key 配置为 `PUBLIC_DRIP_WRITE_KEY`。它可以出现在浏览器 bundle 中；不要配置 Drip server key。当前 `now` app 已允许 `https://willopc.com` 与 `https://now.willopc.com` 两个公开入口。
 
 ## 正式发布前
 
 1. 确认 Hero、About 和个人信息；核对文章与发布日期。
 2. 补充 Huddle 的真实产品截图和外部链接；Yipa 与 Tablow 已接入中英文官网及 App Store / Google Play 链接，项目详情头图仍是概念示意图。
 3. 配置真实社交链接与邮箱。
-4. 按规划补齐 SEO 分享、订阅、统计与部署，并在上线后核对索引状态。
+4. 配置 Drip public write key 与正式部署，并在上线后检查 `page_view`、`product_view`、`store_click` 和 `link_click` 是否入库。
 
 ## 规划
 

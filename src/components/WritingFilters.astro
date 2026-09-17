@@ -24,6 +24,7 @@ const t = ui[locale];
     href={sectionPath(locale, 'writing')}
     class="inline-flex min-h-11 items-center border border-line px-4 py-2 text-sm transition-colors hover:border-ink hover:bg-surface"
     data-category-filter="all"
+    data-drip-placement="notes_filter"
     data-active="true"
     aria-current="page"
   >
@@ -35,6 +36,7 @@ const t = ui[locale];
         href={`${sectionPath(locale, 'writing')}?category=${category}`}
         class="inline-flex min-h-11 items-center border border-line px-4 py-2 text-sm transition-colors hover:border-ink hover:bg-surface"
         data-category-filter={category}
+        data-drip-placement="notes_filter"
       >
         {writingCategoryLabels[locale][category]}
       </a>
