@@ -9,7 +9,7 @@ status: 'active'
 hero: { 'src': '/images/covers/tablow-zh.png', 'alt': '橘小记首页与生活记录界面' }
 links:
   - label: '官方网站'
-    href: 'https://tabloo.hyperge.top'
+    href: 'https://tablow.willopc.com'
     type: 'website'
   - label: 'App Store'
     href: 'https://apps.apple.com/cn/app/tablow/id6747320605'

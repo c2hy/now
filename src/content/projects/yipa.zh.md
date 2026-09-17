@@ -9,7 +9,7 @@ status: 'active'
 hero: { 'src': '/images/covers/yipa-zh.png', 'alt': 'Yipa 时间线与 AI 观察界面' }
 links:
   - label: '官方网站'
-    href: 'https://yipa.hyperge.top'
+    href: 'https://yipa.willopc.com'
     type: 'website'
   - label: 'App Store'
     href: 'https://apps.apple.com/cn/app/yipa/id6755779044'

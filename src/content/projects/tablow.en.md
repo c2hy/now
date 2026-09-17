@@ -9,7 +9,7 @@ status: 'active'
 hero: { 'src': '/images/covers/tablow-en.png', 'alt': 'Tablow home screen and life trackers' }
 links:
   - label: 'Website'
-    href: 'https://tabloo.hyperge.top'
+    href: 'https://tablow.willopc.com'
     type: 'website'
   - label: 'App Store'
     href: 'https://apps.apple.com/us/app/tablow/id6747320605'

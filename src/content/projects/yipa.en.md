@@ -9,7 +9,7 @@ status: 'active'
 hero: { 'src': '/images/covers/yipa-en.png', 'alt': 'Yipa timeline and AI observation interface' }
 links:
   - label: 'Website'
-    href: 'https://yipa.hyperge.top'
+    href: 'https://yipa.willopc.com'
     type: 'website'
   - label: 'App Store'
     href: 'https://apps.apple.com/us/app/yipa/id6755779044'
