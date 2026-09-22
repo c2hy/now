@@ -32,7 +32,7 @@ npm run build          # 正式构建，排除所有 sample / draft 内容
 - `public/images/`：项目 SVG 概念示意图与已确认的产品截图。
 - `src/utils/og.ts`、`src/pages/og/`：构建时生成 1200×630 的中英文站点与文章 OG PNG；文章可通过 frontmatter 的 `cover` 覆盖默认文字版式。
 
-标记为 `sample` / `draft` 的内容仅由 `dev` / `build:preview` 显式开启，`build` 强制关闭（当前没有此类内容）。当前默认允许搜索引擎收录；如需让预览或测试部署不被收录，可明确设置 `PUBLIC_INDEXING_ENABLED=false`。Drip 仅在正式构建中、配置 `PUBLIC_DRIP_WRITE_KEY` 后加载，采集 `page_view`、作品浏览、商店点击和标记过的链接点击；开发环境不会生成身份、不读写浏览器存储，也不会发出请求。Vercel Analytics 继续保留，用于网站访问统计。
+标记为 `sample` / `draft` 的内容仅由 `dev` / `build:preview` 显式开启，`build` 强制关闭（当前没有此类内容）。当前默认允许搜索引擎收录；如需让预览或测试部署不被收录，可明确设置 `PUBLIC_INDEXING_ENABLED=false`。Drip 仅在正式构建中、配置 `PUBLIC_DRIP_WRITE_KEY` 后加载，采集 `page_view`、作品浏览、商店点击和标记过的链接点击；开发环境不会生成身份、不读写浏览器存储，也不会发出请求。来源标记遵循 UTM 优先、外部 referrer 兜底：读取 `utm_source`、`utm_medium`、`utm_campaign`、`utm_content`，无 UTM 时保留外部 referrer hostname；X、Twitter 和 t.co 统一记为 `source=x`。同时为同一浏览会话生成并复用 `attribution_id`，不上传完整 referrer URL。Vercel Analytics 继续保留，用于网站访问统计。
 
 首次配置或重建环境时，在 Drip 中创建 `now` app 和 production web public ingest key，并将 key 注入构建环境：
 

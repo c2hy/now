@@ -18,6 +18,8 @@ export const contentPath = (locale: Locale, kind: ContentKind, slug: string) =>
   path(locale, `${segment(kind)}/${slug}`);
 export const ui = {
   en: {
+    siteIntro:
+      'I’m Will. I write about questions in how we understand ourselves and live with technology, and turn a few ideas into software.',
     writing: 'Notes',
     projects: 'Projects',
     about: 'About',
@@ -30,8 +32,8 @@ export const ui = {
     allProjects: 'Explore all projects',
     read: 'Read the story',
     live: 'Live',
-    noting: 'Things I’ve noted lately',
-    making: 'Things I’ve made',
+    noting: 'Recent notes',
+    making: 'The work behind the ideas',
     aboutLink: 'A little more about me',
     elsewhere: 'Elsewhere',
     empty: 'Nothing published here yet.',
@@ -39,11 +41,13 @@ export const ui = {
     categoryFilterLabel: 'Filter notes by audience',
     noCategoryResults: 'No notes in this category yet.',
     notesIntro:
-      'Notes on self, technology, everyday life, and how software quietly enters all three.',
+      'Writing about how we understand ourselves, how technology shapes everyday life, and the decisions behind the things I make.',
     projectsIntro:
       'Three launched products: Yipa for self-observation, Huddle for smaller social spaces, and Tablow for remembering when something last happened.',
   },
   zh: {
+    siteIntro:
+      '我是 Will。我记录人与自我、数字生活里的真实问题，也把少数想法做成软件。',
     writing: '记录',
     projects: '作品',
     about: '关于',
@@ -56,15 +60,16 @@ export const ui = {
     allProjects: '看看全部作品',
     read: '了解背后的故事',
     live: '已上线',
-    noting: '最近记下的事',
-    making: '我做的一些东西',
+    noting: '最近的记录',
+    making: '作品背后的想法',
     aboutLink: '再多了解我一点',
     elsewhere: '在别处',
     empty: '这里暂时没有已发布的内容。',
     allCategories: '全部记录',
     categoryFilterLabel: '按内容方向筛选记录',
     noCategoryResults: '这个分类下暂时没有记录。',
-    notesIntro: '写人与自我、数字生活，以及软件如何悄悄进入真实生活。',
+    notesIntro:
+      '记录人与自我、数字生活里的真实问题，也写下做产品时的判断与取舍。',
     projectsIntro:
       '三个已经上线的产品：用于自我观察的 Yipa、属于小圈子的泡泡留言板，以及记录“上一次”的橘小记。',
   },

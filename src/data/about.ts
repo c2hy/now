@@ -1,7 +1,5 @@
 export const about = {
   en: {
-    intro:
-      'I pay attention to how software enters our memory, relationships, and understanding of ourselves—and sometimes turn what I notice into software.',
     paragraphs: [
       'My current products begin with three different moments: writing something down and revisiting it later, sharing everyday life inside a smaller group, and remembering when something last happened.',
       'This site brings together those products, the decisions behind them, and observations that may never need to become software.',
@@ -23,8 +21,6 @@ export const about = {
     ],
   },
   zh: {
-    intro:
-      '我留意软件如何进入我们的记忆、自我理解与关系，也把其中少数观察做成软件。',
     paragraphs: [
       '我现在的几个产品分别从三个具体时刻开始：写下一件事并在后来重新看它，在一个更小的群体里分享日常，以及记住一件事上一次发生在什么时候。',
       '这个网站收着这些产品、背后的取舍，以及那些或许永远不必变成软件的观察。',

@@ -22,6 +22,8 @@ export interface ArticleOgData {
 interface OgLayout {
   locale: Locale;
   title: string;
+  titleLines?: string[];
+  titleFontSize?: number;
   label: string;
   footer: string;
   coverDataUrl?: string;
@@ -177,13 +179,17 @@ const coverDataUrl = (src: string) => {
 const svgFor = ({
   locale,
   title,
+  titleLines,
+  titleFontSize,
   label,
   footer,
   coverDataUrl: cover,
 }: OgLayout) => {
   const hasCover = Boolean(cover);
   const textWidth = hasCover ? 610 : locale === 'zh' ? 760 : 970;
-  const { fontSize, lines } = fitTitle(title, locale, textWidth);
+  const fitted = fitTitle(title, locale, textWidth);
+  const fontSize = titleFontSize ?? fitted.fontSize;
+  const lines = titleLines ?? fitted.lines;
   const lineHeight = Math.round(fontSize * (locale === 'zh' ? 1.25 : 1.08));
   const titleY = 190;
   const [brand, section] = label.split(' / ');
@@ -228,13 +234,20 @@ export const renderSiteOg = (locale: Locale) =>
       locale,
       title:
         locale === 'zh'
-          ? '观察、记录与软件'
-          : 'Observations, Notes, and Software',
+          ? '记录人与自我、数字生活里的真实问题，也把少数想法做成软件。'
+          : 'Writing about life with technology, and building software from a few ideas.',
+      titleLines:
+        locale === 'zh'
+          ? [
+              '记录人与自我、',
+              '数字生活里的真实问题，',
+              '也把少数想法做成软件。',
+            ]
+          : undefined,
+      titleFontSize: locale === 'zh' ? 62 : undefined,
       label: 'WILL.OPC / HOME',
       footer:
-        locale === 'zh'
-          ? '观察 / 记录 / 软件'
-          : 'OBSERVATIONS / NOTES / SOFTWARE',
+        locale === 'zh' ? '记录 / 作品 / WILL' : 'NOTES / SOFTWARE / WILL',
     }),
   );
 
