@@ -1,12 +1,12 @@
 ---
 name: 'Huddle'
-statement: 'A social product that gives every small group a space of its own.'
+statement: 'Share everyday life with just the right people.'
 description: 'Different relationships can live in separate spaces, sharing the everyday moments that belong to them instead of crowding into one public feed.'
 year: 2026
 order: 1
 featured: true
 status: 'active'
-hero: { 'src': '/images/covers/huddle.png', 'alt': 'Huddle space and moments interface' }
+hero: { 'src': '/images/projects/huddle-landscape-en.png', 'alt': 'Huddle landscape graphic with a Chinese-language moment detail screen', 'width': 2400, 'height': 1260 }
 links: []
 locale: 'en'
 slug: 'bubbles'

@@ -6,7 +6,7 @@ year: 2026
 order: 0
 featured: true
 status: 'active'
-hero: { 'src': '/images/covers/yipa-zh.png', 'alt': 'Yipa 时间线与 AI 观察界面' }
+hero: { 'src': '/images/projects/yipa-landscape-zh.png', 'alt': 'Yipa 横版主视觉与中文时间线界面截图', 'width': 2400, 'height': 1260 }
 links:
   - label: '官方网站'
     href: 'https://yipa.willopc.com'

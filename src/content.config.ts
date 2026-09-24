@@ -10,6 +10,10 @@ const base = {
   draft: z.boolean().default(false),
 };
 const image = z.object({ src: z.string(), alt: z.string().min(1) });
+const projectImage = image.extend({
+  width: z.number().int().positive(),
+  height: z.number().int().positive(),
+});
 const writing = defineCollection({
   loader: glob({
     pattern: '**/*.md',
@@ -45,10 +49,7 @@ const projects = defineCollection({
     order: z.number(),
     featured: z.boolean(),
     status: z.enum(['active', 'maintained', 'archived']).optional(),
-    hero: image,
-    gallery: z
-      .array(image.extend({ caption: z.string().optional() }))
-      .optional(),
+    hero: projectImage,
     links: z
       .array(
         z.object({

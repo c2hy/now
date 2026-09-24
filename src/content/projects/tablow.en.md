@@ -1,12 +1,12 @@
 ---
 name: 'Tablow'
-statement: 'A lightweight tool for remembering when something last happened.'
-description: 'Tap once when it happens, then see how long it has been—without streaks, goals, or turning everyday life into a list of targets.'
+statement: 'Remember the last time, without turning it into a routine.'
+description: 'A simple place to record when something happened and see how long ago it was, for the parts of life that do not follow a fixed schedule.'
 year: 2026
 order: 2
 featured: true
 status: 'active'
-hero: { 'src': '/images/covers/tablow-en.png', 'alt': 'Tablow home screen and life trackers' }
+hero: { 'src': '/images/projects/tablow-og-en.png', 'alt': 'Tablow — Life Tracker · No Streaks', 'width': 2400, 'height': 1260 }
 links:
   - label: 'Website'
     href: 'https://tablow.willopc.com'
@@ -17,31 +17,37 @@ links:
   - label: 'Google Play'
     href: 'https://play.google.com/store/apps/details?id=top.hyperge.tabloo'
     type: 'google-play'
-gallery:
-  - src: '/images/tablow-home-en.png'
-    alt: 'Tablow home screen showing simple life trackers and monthly calendars.'
-    caption: 'The home screen keeps the last occurrence and a simple month view close at hand.'
 locale: 'en'
 slug: 'tablow'
 translationKey: 'tablow'
 ---
 
-## Why I made this
+## Some things are surprisingly hard to remember
 
-Some things are worth remembering without needing to become habits: the last time I changed the cat litter, dewormed, met a friend, went somewhere, or did something else that mattered to me. When I need that information, the real question is usually simple: when did I last do it?
+When did I last change my toothbrush? When did I last clean the air conditioner? How long has it been since I saw a friend? These questions seem small until I need an answer, and then my memory gives me little more than a guess.
 
-I did not want another method for keeping a streak. I wanted a small tool that could answer that question immediately when it became useful.
+They do not always belong on a calendar. I may not want a reminder every month or a goal to keep. Most of the time, I just want to know when it last happened. That small gap between what I remember and what actually happened is why I started building Tablow.
 
-## What it became
+## Not everything needs to become a habit
 
-Tablow gives each thing a small record of its own. Tap once when it happens, add a note if useful, and open it later to see the last date, elapsed time, calendar marks, and history.
+A to-do list reminds me what comes next. A calendar helps me choose when. A habit tracker looks for consistency. But plenty of ordinary things do not happen on a fixed schedule: changing a filter, getting a haircut, meeting a friend, or going for a hike.
 
-Records stay local by default, work offline, and do not require an account. Premium is a one-time unlock that adds unlimited trackers, export and import, backdated entries, and date-range filters.
+Sometimes I only need a little context. Knowing whether I last replaced something weeks or months ago can help me decide what to do. Knowing when I last spoke with someone can make it easier to reach out. Tablow keeps that history close at hand and leaves the decision to me.
 
-## Selected details
+## One tap to keep the date
 
-- No streaks, goals, leaderboards, or social feed.
-- Keep the last occurrence and elapsed time where they are easy to find.
-- Use the calendar and history to look back, not to judge performance.
+Create a tracker for something you want to remember. When it happens, tap once to record the date; add a note when the date alone does not tell the whole story. Later, open it to see the most recent date, how much time has passed, calendar marks, and the full history.
 
-It is a small tool that keeps one useful piece of information close at hand, without asking everyday life to become a system of continuous improvement.
+There is no schedule to set up in advance. Record something when it happens, then come back whenever you want to look.
+
+## The moments you want to keep
+
+Some records are practical: changing the bedsheets, replacing a filter, or booking a haircut. Others are about time with people or doing something you enjoy: dinner with a friend, a walk, a trip, or a day at a museum.
+
+They do not all need the same rhythm, and they do not need to become goals. Tablow gives each one a place in your history, so the date is there the next time you wonder.
+
+## Keep a record, then get on with your day
+
+Your records stay on your device by default. Tablow works offline and does not require an account. A one-time Premium unlock adds unlimited active trackers, import and export, backdated entries, and date-range filters.
+
+Sometimes, knowing when something last happened is enough.

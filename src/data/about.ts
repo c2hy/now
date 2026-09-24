@@ -1,15 +1,17 @@
 export const about = {
   en: {
+    lead:
+      'I’ve made a few apps. Each began with a different everyday question and slowly took shape through the choices I made while building it.',
     paragraphs: [
-      'My current products begin with three different moments: writing something down and revisiting it later, sharing everyday life inside a smaller group, and remembering when something last happened.',
-      'This site brings together those products, the decisions behind them, and observations that may never need to become software.',
+      'Yipa begins with writing down what is happening now and returning to it later. Huddle began as a place to leave messages for a few people. Tablow answers a small question: when was the last time?',
+      'As I kept building, the questions became more specific. How can AI help someone look back without defining who they are? What kind of space lets a small group share its everyday life? Can a record simply help you remember, without becoming a streak or a goal?',
+      'Making those choices has helped me understand what I want to keep. It has also shaped what each app has become.',
     ],
     sections: [
       {
-        title: 'What I keep working on',
+        title: 'What I write here',
         paragraphs: [
-          'I am interested in how AI can help people look back without deciding who they are, how small groups form their own context online, and how simple tools can hold useful information without turning it into a goal.',
-          'Some observations become notes. Some later become software.',
+          'This site holds the apps, the decisions behind them, and things I notice in everyday life. Some questions find their way into software. Often, writing them down is enough.',
         ],
       },
       {
@@ -21,16 +23,18 @@ export const about = {
     ],
   },
   zh: {
+    lead:
+      '我做了几个 App。它们从不同的日常问题开始，也在一次次选择中慢慢有了自己的样子。',
     paragraphs: [
-      '我现在的几个产品分别从三个具体时刻开始：写下一件事并在后来重新看它，在一个更小的群体里分享日常，以及记住一件事上一次发生在什么时候。',
-      '这个网站收着这些产品、背后的取舍，以及那些或许永远不必变成软件的观察。',
+      'Yipa 从记下此刻、日后再回看开始；泡泡留言板最初只是一个给几个人留言的地方；橘小记想回答的，是一件事上一次发生在什么时候。',
+      '继续做下去，问题变得更具体：AI 怎样帮人回看，却不替人下定义？几个人的日常需要怎样的空间？一条记录能不能只是帮人记住，而不变成打卡或目标？',
+      '在一次次取舍里，我才越来越清楚自己想留下什么。这些选择也让每个产品慢慢变成现在的样子。',
     ],
     sections: [
       {
-        title: '我还在继续做的事',
+        title: '我在这里写的事',
         paragraphs: [
-          '我关心 AI 怎样帮助人回看自己、却不替人下定义，小群体怎样在线上形成自己的上下文，以及简单工具怎样保存有用的信息、却不把它变成目标。',
-          '有些观察变成记录，有些后来变成软件。',
+          '这个网站放着这些产品和背后的选择，也记下日常里留意到的事。有些问题后来会进入软件；更多时候，写下来就够了。',
         ],
       },
       {

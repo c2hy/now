@@ -51,14 +51,14 @@ const t = ui[locale];
       data-drip-placement={placement}
       data-drip-product={item.data.slug}
       aria-label={item.data.name}
-      class="block overflow-hidden"
+      class="flex w-full justify-center"
       ><img
         src={item.data.hero.src}
         alt={item.data.hero.alt}
-        width="1200"
-        height="800"
+        width={item.data.hero.width}
+        height={item.data.hero.height}
         loading="lazy"
-        class="h-auto w-full transition-transform duration-300 hover:scale-[1.015]"
+        class="mx-auto block h-auto w-auto max-h-[520px] max-w-full object-contain"
       /></a
     >
   </figure>

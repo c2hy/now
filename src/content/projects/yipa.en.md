@@ -6,7 +6,7 @@ year: 2026
 order: 0
 featured: true
 status: 'active'
-hero: { 'src': '/images/covers/yipa-en.png', 'alt': 'Yipa timeline and AI observation interface' }
+hero: { 'src': '/images/projects/yipa-landscape-en.png', 'alt': 'Yipa landscape graphic with an English timeline screenshot', 'width': 2400, 'height': 1260 }
 links:
   - label: 'Website'
     href: 'https://yipa.willopc.com'

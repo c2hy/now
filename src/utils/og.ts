@@ -200,9 +200,14 @@ const svgFor = ({
   footer,
   coverDataUrl: cover,
 }: OgLayout) => {
-  const section = kind === 'site'
-    ? locale === 'zh' ? '首页' : 'HOME'
-    : locale === 'zh' ? '记录' : 'NOTES';
+  const section =
+    kind === 'site'
+      ? locale === 'zh'
+        ? '首页'
+        : 'HOME'
+      : locale === 'zh'
+        ? '记录'
+        : 'NOTES';
   const heading =
     kind === 'site'
       ? `<text x="88" y="326" fill="#111111" font-family="${fontFamily}" font-size="112" font-weight="650" letter-spacing="${locale === 'zh' ? 0 : -5}">${escapeXml(title)}</text>

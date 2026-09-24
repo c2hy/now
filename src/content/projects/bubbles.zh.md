@@ -1,12 +1,12 @@
 ---
 name: '泡泡留言板'
-statement: '一款让不同关系拥有各自空间的社交产品。'
+statement: '把生活，分享给刚刚好的人。'
 description: '不同的关系待在各自的空间里，分享属于这几个人的日常，不必全部挤进同一条公开信息流。'
 year: 2026
 order: 1
 featured: true
 status: 'active'
-hero: { 'src': '/images/covers/huddle.png', 'alt': '泡泡留言板的空间与动态界面' }
+hero: { 'src': '/images/projects/huddle-landscape-zh.png', 'alt': '泡泡留言板横版主视觉与动态详情截图', 'width': 2400, 'height': 1260 }
 links: []
 locale: 'zh'
 slug: 'bubbles'

@@ -95,10 +95,10 @@ const { Content } = await render(entry);
         <img
           src={project.data.hero.src}
           alt={project.data.hero.alt}
-          width="1200"
-          height="800"
+          width={project.data.hero.width}
+          height={project.data.hero.height}
           fetchpriority="high"
-          class="max-h-[650px] w-full object-cover"
+          class="mx-auto block h-auto w-auto max-h-[650px] max-w-full object-contain"
         />
       </figure>
     )
@@ -107,24 +107,6 @@ const { Content } = await render(entry);
     <div class="prose mt-10 max-w-[700px]">
       {Content && <Content />}
     </div>
-    {
-      project?.data.gallery?.map((image) => (
-        <figure class="my-8">
-          <img
-            src={image.src}
-            alt={image.alt}
-            width="1200"
-            height="800"
-            loading="lazy"
-          />
-          {image.caption && (
-            <figcaption class="mt-2 text-xs text-muted">
-              {image.caption}
-            </figcaption>
-          )}
-        </figure>
-      ))
-    }
     <a
       class="text-link mt-12"
       href={sectionPath(locale, page)}
