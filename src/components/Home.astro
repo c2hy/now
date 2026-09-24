@@ -1,6 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
-import { contentPath, sectionPath, ui, type Locale } from '../i18n';
+import { sectionPath, ui, type Locale } from '../i18n';
 import { visible } from '../utils/content';
 import WritingList from './WritingList.astro';
 import ProjectFeature from './ProjectFeature.astro';
@@ -24,68 +24,41 @@ const projects = (await getCollection('projects'))
 ---
 
 <section class="home-intro" aria-labelledby="home-title">
-  <p class="eyebrow text-muted">
-    {
-      locale === 'zh'
-        ? 'Will / 独立开发者与写作者'
-        : 'Will / Independent developer and writer'
-    }
-  </p>
-  <h1 id="home-title" class="display home-title mt-4">
-    {t.siteIntro}
+  <h1 id="home-title" class="display home-title">
+    {t.homeIntroTitle}
   </h1>
+  <p class="home-description">{t.homeIntroDescription}</p>
 </section>
 
-<section class="home-overview" aria-labelledby="home-projects-title">
-  <div class="section-bar">
+<section class="home-projects" aria-labelledby="home-projects-title">
+  <div class="section-bar mb-6 md:mb-8">
     <h2 id="home-projects-title" class="eyebrow text-muted">
-      {locale === 'zh' ? '从观察做成的作品' : 'Ideas turned into software'}
+      {t.projects}
     </h2>
     <a
       class="section-more"
       href={sectionPath(locale, 'projects')}
       data-drip-placement="home_projects_index"
-      >{t.allProjects}<span aria-hidden="true">↗</span></a
     >
+      {t.allProjects}<span aria-hidden="true">↗</span>
+    </a>
   </div>
-  <div class="overview-grid">
-    {
-      projects.map((item, index) => (
-        <a
-          class="overview-card group"
-          href={contentPath(locale, 'projects', item.data.slug)}
-          data-drip-placement="home_project_overview"
-          data-drip-product={item.data.slug}
-        >
-          <div class="overview-copy">
-            <span class="eyebrow text-muted">
-              {String(index + 1).padStart(2, '0')} / {t.projects}
-            </span>
-            <h3 class="overview-name">
-              {item.data.name}
-              <span aria-hidden="true">↗</span>
-            </h3>
-            <p class="overview-statement">{item.data.statement}</p>
-          </div>
-          <img
-            class="overview-image"
-            src={item.data.hero.src.replace('.png', '-preview.webp')}
-            alt=""
-            width="720"
-            height="480"
-            loading={index === 0 ? 'eager' : 'lazy'}
-            decoding="async"
-          />
-        </a>
-      ))
-    }
-  </div>
+  {
+    projects.map((item, index) => (
+      <ProjectFeature
+        item={item}
+        locale={locale}
+        index={index}
+        placement="home_project_overview"
+      />
+    ))
+  }
 </section>
 
 <section id="notes" class="home-section" aria-labelledby="home-notes-title">
   <div class="section-bar mb-6 md:mb-8">
     <div>
-      <p class="eyebrow mb-3 text-muted">01 / {t.writing}</p>
+      <p class="eyebrow mb-3 text-muted">{t.writing}</p>
       <h2 id="home-notes-title" class="display section-title">{t.noting}</h2>
     </div>
     <a
@@ -99,35 +72,12 @@ const projects = (await getCollection('projects'))
   <WritingList items={writing} locale={locale} />
 </section>
 
-<section class="home-section" aria-labelledby="home-project-details-title">
-  <div class="section-bar mb-8 md:mb-10">
-    <div>
-      <p class="eyebrow mb-3 text-muted">02 / {t.projects}</p>
-      <h2 id="home-project-details-title" class="display section-title">
-        {t.making}
-      </h2>
-    </div>
-    <a
-      class="section-more"
-      href={sectionPath(locale, 'projects')}
-      data-drip-placement="home_projects_index"
-    >
-      {t.allProjects}<span aria-hidden="true">↗</span>
-    </a>
-  </div>
-  {
-    projects.map((item, index) => (
-      <ProjectFeature item={item} locale={locale} index={index} />
-    ))
-  }
-</section>
-
 <section
   class="home-section grid gap-7 md:grid-cols-[0.7fr_1.3fr] md:gap-16"
   aria-labelledby="home-about-title"
 >
   <div>
-    <p class="eyebrow mb-3 text-muted">03 / {t.about}</p>
+    <p class="eyebrow mb-3 text-muted">{t.about}</p>
     <h2 id="home-about-title" class="display section-title">
       {locale === 'zh' ? '关于 Will' : 'About Will'}
     </h2>
@@ -136,8 +86,8 @@ const projects = (await getCollection('projects'))
     <p class="max-w-2xl text-[18px] leading-[1.7] md:text-[22px]">
       {
         locale === 'zh'
-          ? '我在上海独立维护 Yipa、泡泡留言板和橘小记，也持续写下产品背后的问题与取舍。'
-          : 'I work independently in Shanghai on Yipa, Huddle, and Tablow, and write about the questions and decisions behind them.'
+          ? '我在上海独立做这些 App，也在这里写它们是怎么来的，以及那些可能永远不会变成 App 的日常小事。'
+          : 'I work on these apps independently in Shanghai. I write here about how they came to be, and about everyday things that may never become an app.'
       }
     </p>
     <a

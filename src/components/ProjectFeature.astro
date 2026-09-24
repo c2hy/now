@@ -5,8 +5,9 @@ interface Props {
   item: CollectionEntry<'projects'>;
   locale: Locale;
   index: number;
+  placement?: string;
 }
-const { item, locale, index } = Astro.props;
+const { item, locale, index, placement = 'project_item' } = Astro.props;
 const t = ui[locale];
 ---
 
@@ -29,7 +30,7 @@ const t = ui[locale];
     ><h3 class="mb-4 font-display text-[34px] tracking-tight md:text-[46px]">
       <a
         href={path(locale, `projects/${item.data.slug}`)}
-        data-drip-placement="project_item"
+        data-drip-placement={placement}
         data-drip-product={item.data.slug}>{item.data.name}</a
       >
     </h3><p class="max-w-xs text-lg leading-relaxed">{item.data.statement}</p><p
@@ -39,7 +40,7 @@ const t = ui[locale];
     </p><a
       class="text-link mt-7 md:mt-auto md:pt-8"
       href={path(locale, `projects/${item.data.slug}`)}
-      data-drip-placement="project_item"
+      data-drip-placement={placement}
       data-drip-product={item.data.slug}
       >{t.read}<span class="arrow" aria-hidden="true">↗</span></a
     >
@@ -47,7 +48,7 @@ const t = ui[locale];
   <figure>
     <a
       href={path(locale, `projects/${item.data.slug}`)}
-      data-drip-placement="project_item"
+      data-drip-placement={placement}
       data-drip-product={item.data.slug}
       aria-label={item.data.name}
       class="block overflow-hidden"

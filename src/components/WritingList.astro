@@ -17,23 +17,23 @@ const { items, locale, topRule = false } = Astro.props;
 
 <div class:list={[topRule && 'border-t border-line']} data-writing-list>
   {
-    items.map((item, i) => (
+    items.map((item, index) => (
       <a
         href={contentPath(locale, 'writing', item.data.slug)}
         data-drip-placement="note_item"
         data-writing-item
         data-category={item.data.category}
-        class="group -mx-4 grid grid-cols-[24px_1fr_20px] items-start gap-4 border-b border-line px-4 py-7 transition-colors hover:bg-surface md:grid-cols-[40px_1fr_125px_24px] md:gap-6 md:py-9"
+        class:list={[
+          'group grid grid-cols-1 items-start gap-4 border-line py-7 md:grid-cols-[minmax(0,1fr)_125px] md:gap-6 md:py-9',
+          index < items.length - 1 && 'border-b',
+        ]}
       >
-        <span class="pt-1.5 text-xs text-muted" data-writing-index>
-          {String(i + 1).padStart(2, '0')}
-        </span>
         <div>
           <>
             <p class="mb-2 text-xs text-muted">
               {writingCategoryLabels[locale][item.data.category]}
             </p>
-            <h3 class="font-display text-[27px] leading-tight tracking-tight md:text-[32px]">
+            <h3 class="font-display text-[27px] leading-tight tracking-tight underline-offset-4 group-hover:underline group-focus-visible:underline md:text-[32px]">
               {item.data.title}
             </h3>
             <p class="mt-2 max-w-xl text-sm leading-relaxed text-muted">
@@ -47,17 +47,12 @@ const { items, locale, topRule = false } = Astro.props;
             </time>
           </>
         </div>
-        <>
-          <time
-            class="hidden pt-2 text-xs text-muted md:block"
-            datetime={item.data.publishedAt.toISOString()}
-          >
-            {date(item.data.publishedAt, locale)}
-          </time>
-          <span class="arrow pt-1 text-xl" aria-hidden="true">
-            ↗
-          </span>
-        </>
+        <time
+          class="hidden pt-2 text-xs text-muted md:block"
+          datetime={item.data.publishedAt.toISOString()}
+        >
+          {date(item.data.publishedAt, locale)}
+        </time>
       </a>
     ))
   }

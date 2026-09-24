@@ -125,18 +125,14 @@ const groups = [...new Set(projects.map((e) => String(e.data.year)))];
       <>
         <section class="pt-10 pb-10 md:pt-16 md:pb-14">
           <>
-            <p class="eyebrow mb-5 text-muted">
-              {page === 'writing'
-                ? locale === 'en'
-                  ? 'Essays and observations'
-                  : '文章与观察'
-                : locale === 'en'
-                  ? 'Independent products'
-                  : '独立产品'}
-            </p>
+            {page === 'projects' && (
+              <p class="eyebrow mb-5 text-muted">
+                {locale === 'en' ? 'Independent products' : '独立产品'}
+              </p>
+            )}
             <h1 class="display page-title">
               {t[page]}
-              <span class="text-accent">.</span>
+              {page === 'projects' && <span class="text-accent">.</span>}
             </h1>
             <p class="mt-7 max-w-xl text-base leading-relaxed text-muted">
               {page === 'writing' ? t.notesIntro : t.projectsIntro}

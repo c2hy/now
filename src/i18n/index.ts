@@ -18,6 +18,9 @@ export const contentPath = (locale: Locale, kind: ContentKind, slug: string) =>
   path(locale, `${segment(kind)}/${slug}`);
 export const ui = {
   en: {
+    homeIntroTitle: 'I’m Will.',
+    homeIntroDescription:
+      'I’ve made a few apps for recording things. I also write about what I notice in everyday life.',
     siteIntro:
       'I’m Will. I write about questions in how we understand ourselves and live with technology, and turn a few ideas into software.',
     writing: 'Notes',
@@ -33,7 +36,6 @@ export const ui = {
     read: 'Read the story',
     live: 'Live',
     noting: 'Recent notes',
-    making: 'The work behind the ideas',
     aboutLink: 'A little more about me',
     elsewhere: 'Elsewhere',
     empty: 'Nothing published here yet.',
@@ -46,6 +48,9 @@ export const ui = {
       'Three launched products: Yipa for self-observation, Huddle for smaller social spaces, and Tablow for remembering when something last happened.',
   },
   zh: {
+    homeIntroTitle: '我是 Will。',
+    homeIntroDescription:
+      '我做了几个用来记录东西的 App，也写日常里留意到的事。',
     siteIntro:
       '我是 Will。我记录人与自我、数字生活里的真实问题，也把少数想法做成软件。',
     writing: '记录',
@@ -61,7 +66,6 @@ export const ui = {
     read: '了解背后的故事',
     live: '已上线',
     noting: '最近的记录',
-    making: '作品背后的想法',
     aboutLink: '再多了解我一点',
     elsewhere: '在别处',
     empty: '这里暂时没有已发布的内容。',

@@ -25,13 +25,13 @@ const {
   article,
   ogImage = {
     path: `/og/${locale}/site.png`,
-    alt: ui[locale].siteIntro,
+    alt: `${ui[locale].homeIntroTitle} ${ui[locale].homeIntroDescription}`,
   },
 } = Astro.props;
 const t = ui[locale];
 const other = locale === 'en' ? 'zh' : 'en';
 const canonical = new URL(Astro.url.pathname, profile.site).href;
-const ogImageUrl = new URL(ogImage.path, profile.site).href;
+const ogImageUrl = new URL(`${ogImage.path}?v=2`, profile.site).href;
 const resolvedTitle = metaTitle ?? title;
 const browserTitle =
   current && !resolvedTitle.includes(profile.siteName)
@@ -222,7 +222,7 @@ const structuredData = {
             )
           }
           {
-            (['writing', 'projects', 'about'] as const).map((item) => (
+            (['projects', 'writing', 'about'] as const).map((item) => (
               <a
                 class:list={[
                   'inline-flex min-h-11 items-center',

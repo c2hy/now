@@ -26,7 +26,13 @@ const { Content } = await render(entry);
       href={sectionPath(locale, page)}
       data-drip-placement="content_back"
     >
-      ← {t[page as 'writing' | 'projects']}
+      {
+        article
+          ? locale === 'zh'
+            ? '← 返回记录列表'
+            : '← Back to Notes'
+          : `← ${t[page as 'writing' | 'projects']}`
+      }
     </a>
     <h1 class="display page-title mt-5">{title}</h1>
     <p class="mt-5 max-w-2xl text-lg leading-relaxed text-muted md:text-xl">

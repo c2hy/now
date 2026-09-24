@@ -22,7 +22,7 @@ const t = ui[locale];
 >
   <a
     href={sectionPath(locale, 'writing')}
-    class="inline-flex min-h-11 items-center border border-line px-4 py-2 text-sm transition-colors hover:border-ink hover:bg-surface"
+    class="inline-flex min-h-11 items-center px-2 py-2 text-sm transition-colors"
     data-category-filter="all"
     data-drip-placement="notes_filter"
     data-active="true"
@@ -34,7 +34,7 @@ const t = ui[locale];
     writingCategorySlugs.map((category) => (
       <a
         href={`${sectionPath(locale, 'writing')}?category=${category}`}
-        class="inline-flex min-h-11 items-center border border-line px-4 py-2 text-sm transition-colors hover:border-ink hover:bg-surface"
+        class="inline-flex min-h-11 items-center px-2 py-2 text-sm transition-colors"
         data-category-filter={category}
         data-drip-placement="notes_filter"
       >
@@ -63,18 +63,19 @@ const t = ui[locale];
 
     const applyFilter = (requested: string, updateUrl = false) => {
       const category = validCategories.has(requested) ? requested : 'all';
-      let visibleIndex = 0;
+      let visibleCount = 0;
 
       items.forEach((item) => {
         const isVisible =
           category === 'all' || item.dataset.category === category;
         item.hidden = !isVisible;
 
-        if (isVisible) {
-          visibleIndex += 1;
-          const index = item.querySelector<HTMLElement>('[data-writing-index]');
-          if (index) index.textContent = String(visibleIndex).padStart(2, '0');
-        }
+        if (isVisible) visibleCount += 1;
+      });
+
+      const visibleItems = items.filter((item) => !item.hidden);
+      visibleItems.forEach((item, index) => {
+        item.classList.toggle('border-b', index < visibleItems.length - 1);
       });
 
       controls.forEach((control) => {
@@ -83,7 +84,7 @@ const t = ui[locale];
         else control.removeAttribute('aria-current');
         control.dataset.active = String(isActive);
       });
-      emptyState?.toggleAttribute('hidden', visibleIndex > 0);
+      emptyState?.toggleAttribute('hidden', visibleCount > 0);
 
       if (updateUrl) {
         const url = new URL(window.location.href);
@@ -114,12 +115,14 @@ const t = ui[locale];
 </script>
 
 <style>
-  [data-category-filter][data-active='true'] {
-    background: var(--color-ink);
-    color: var(--color-paper);
+  [data-category-filter] {
+    text-decoration-line: none;
+    text-decoration-color: transparent;
+    text-underline-offset: 6px;
   }
 
-  [data-category-filter][data-active='true']:hover {
-    color: var(--color-paper);
+  [data-category-filter][data-active='true'] {
+    color: var(--color-ink);
+    text-decoration-line: underline;
   }
 </style>
