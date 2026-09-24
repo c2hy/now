@@ -3,7 +3,7 @@ export const profile = {
   siteName: 'Will.OPC',
   site: 'https://willopc.com',
   location: 'Shanghai',
-  email: '',
+  email: 'hello@willopc.com',
   description:
     'I’m Will. I write about questions in how we understand ourselves and live with technology, and turn a few ideas into software.',
 };

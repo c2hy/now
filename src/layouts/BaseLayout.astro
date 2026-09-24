@@ -255,12 +255,23 @@ const structuredData = {
             {new Date().getFullYear()}
             <span class="mx-2">·</span>
             {locale === 'zh' ? '上海' : 'Shanghai'}</span
-          ><a
-            class="inline-flex min-h-11 items-center"
-            href="#main"
-            data-drip-placement="footer_back_to_top"
-            aria-label={locale === 'zh' ? '回到顶部' : 'Back to top'}>↑</a
-          >
+          ><div class="flex items-center gap-4">
+            {
+              profile.email && (
+                <a
+                  class="inline-flex min-h-11 items-center"
+                  href={`mailto:${profile.email}`}
+                >
+                  {profile.email}
+                </a>
+              )
+            }<a
+              class="inline-flex min-h-11 items-center"
+              href="#main"
+              data-drip-placement="footer_back_to_top"
+              aria-label={locale === 'zh' ? '回到顶部' : 'Back to top'}>↑</a
+            >
+          </div>
         </div>
       </footer>
     </div>
