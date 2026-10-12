@@ -35,6 +35,7 @@ npm run build          # 正式构建，排除所有 sample / draft 内容
 - `src/styles/global.css`：Tailwind 4 主题（浅色与夜间两套色彩变量）、全局样式与正文排版。字体经 npm 包本地打包、不依赖 Google CDN，且全部使用 `font-display: swap` 避免加载阻塞：正文为 Inter 与 Noto Sans SC，标题为 Newsreader 与 Noto Serif SC，均为 OFL 授权；中文字体按 unicode-range 子集按需下载，Inter 主字体在页面预加载。
 - `public/images/`：项目配图。`public/images/projects/` 保存各项目中英文宽幅配图，作品未配置 `cover` 时作为画廊回退；`public/images/project-covers/` 保存画廊使用的三张原创概念封面，中英文共用，生成方式与完整提示词见 `docs/project-covers.md`。
 - `src/utils/og.ts`、`src/pages/og/`：构建时生成 1200×630 的中英文站点与文章 OG PNG；文章可通过 frontmatter 的 `cover` 覆盖默认文字版式。
+- 站点图标：`public/avatar.svg` 是唯一的矢量品牌图标（页面 favicon、结构化数据共用）；`public/favicon.ico`（16/32）与 `public/apple-touch-icon.png`（180）由它用 sharp 栅格化生成，覆盖不支持 SVG 图标的浏览器、收藏夹与 iOS 主屏。
 
 标记为 `sample` / `draft` 的内容仅由 `dev` / `build:preview` 显式开启，`build` 强制关闭（当前没有此类内容）。当前默认允许搜索引擎收录；如需让预览或测试部署不被收录，可明确设置 `PUBLIC_INDEXING_ENABLED=false`。Drip 仅在正式构建中、配置 `PUBLIC_DRIP_WRITE_KEY` 后加载，采集 `page_view`、作品浏览、商店点击和标记过的链接点击；开发环境不会生成身份、不读写浏览器存储，也不会发出请求。来源标记遵循 UTM 优先、外部 referrer 兜底：读取 `utm_source`、`utm_medium`、`utm_campaign`、`utm_content`，无 UTM 时保留外部 referrer hostname；X、Twitter 和 t.co 统一记为 `source=x`。同时为同一浏览会话生成并复用 `attribution_id`，不上传完整 referrer URL。Vercel Analytics 继续保留，用于网站访问统计。
 
