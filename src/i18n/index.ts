@@ -18,64 +18,42 @@ export const contentPath = (locale: Locale, kind: ContentKind, slug: string) =>
   path(locale, `${segment(kind)}/${slug}`);
 export const ui = {
   en: {
-    homeIntroTitle: 'I’m Will.',
-    homeIntroDescription:
-      'I’ve made a few apps for recording things. I also write about what I notice in everyday life.',
+    homeTitle: 'Does it really have to work this way?',
     siteIntro:
-      'I’m Will. I write about questions in how we understand ourselves and live with technology, and turn a few ideas into software.',
-    writing: 'Notes',
+      'Will’s observations, experiments, and changes of mind. An independent developer in Shanghai, exploring technology and everyday life.',
+    aboutIntro:
+      'Will is an independent developer in Shanghai. After years as an engineer, he now builds Yipa, Huddle, and Tablow on his own, and writes down what the attempts teach him.',
+    writing: 'Writing',
     projects: 'Projects',
     about: 'About',
-    language: '中文',
+    language: '中',
     langLabel: '切换到中文',
-    home: 'Home',
+    themeLabel: 'Switch color theme',
     skip: 'Skip to content',
-    back: 'Back to',
-    allWriting: 'Browse all notes',
-    allProjects: 'Explore all projects',
-    read: 'Read the story',
-    live: 'Live',
-    noting: 'Recent notes',
-    aboutLink: 'A little more about me',
-    elsewhere: 'Elsewhere',
     empty: 'Nothing published here yet.',
-    allCategories: 'All notes',
-    categoryFilterLabel: 'Filter notes by audience',
-    noCategoryResults: 'No notes in this category yet.',
     notesIntro:
-      'Writing about how we understand ourselves, how technology shapes everyday life, and the decisions behind the things I make.',
+      'Everyday observations, technical decisions, and things I’ve tried. Some are worked through; others are questions I’m still turning over.',
     projectsIntro:
-      'Three launched products: Yipa for self-observation, Huddle for smaller social spaces, and Tablow for remembering when something last happened.',
+      'A few ideas I’ve put into practice: remembering the last time, sharing with familiar people, and taking another look at our experiences.',
   },
   zh: {
-    homeIntroTitle: '我是 Will。',
-    homeIntroDescription:
-      '我做了几个用来记录东西的 App，也写日常里留意到的事。',
+    homeTitle: '事情真的必须这样吗？',
     siteIntro:
-      '我是 Will。我记录人与自我、数字生活里的真实问题，也把少数想法做成软件。',
-    writing: '记录',
+      'Will 的个人网站。在上海做独立开发，喜欢多问一句为什么，也会自己动手试试。这里有作品，有日常，还有做过之后才明白的事。',
+    aboutIntro:
+      '关于 Will：在上海做独立开发。做过很多年工程师，现在一个人做 Yipa、泡泡留言板和橘小记，也把试过之后才明白的事写在这里。',
+    writing: '文章',
     projects: '作品',
     about: '关于',
     language: 'EN',
     langLabel: 'Switch to English',
-    home: '首页',
+    themeLabel: '切换深浅色主题',
     skip: '跳至正文',
-    back: '返回',
-    allWriting: '查看全部记录',
-    allProjects: '看看全部作品',
-    read: '了解背后的故事',
-    live: '已上线',
-    noting: '最近的记录',
-    aboutLink: '再多了解我一点',
-    elsewhere: '在别处',
     empty: '这里暂时没有已发布的内容。',
-    allCategories: '全部记录',
-    categoryFilterLabel: '按内容方向筛选记录',
-    noCategoryResults: '这个分类下暂时没有记录。',
     notesIntro:
-      '记录人与自我、数字生活里的真实问题，也写下做产品时的判断与取舍。',
+      '这里写生活里的观察，也聊技术和做产品的事。有些问题想明白了，有些还在琢磨，都先记下来，过段时间再回头看看。',
     projectsIntro:
-      '三个已经上线的产品：用于自我观察的 Yipa、属于小圈子的泡泡留言板，以及记录“上一次”的橘小记。',
+      '这是我做的几个产品。起点都很日常：想记住上一次，想和熟悉的人分享生活，也想慢慢看清自己。',
   },
 };
 export const writingCategoryLabels: Record<
@@ -90,7 +68,7 @@ export const writingCategoryLabels: Record<
   zh: {
     'life-observation': '生活观察',
     'technical-sharing': '技术分享',
-    'product-building': '产品与构建',
+    'product-building': '做产品',
   },
 };
 export const date = (value: Date, locale: Locale) =>

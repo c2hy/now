@@ -12,76 +12,50 @@ translationKey: 'why-i-cant-read-your-yipa-notes'
 
 “Why would you go out of your way to encrypt things for your users?”
 
-I froze for a moment when I heard that. To me, this was exactly what Yipa needed to do.
+I froze for a moment when I heard that. To me, this was exactly what Yipa had to do.
 
-Yipa is an app for keeping track of emotions, thoughts, and the state of everyday life. It has no community, likes, comments, or private messages. Users are entirely separate from one another; what you write is meant for you alone. From the beginning, I wanted it to feel as private as possible. So when I later added cloud sync, I chose end-to-end encryption. A record is encrypted before it is uploaded, and the server stores only ciphertext. Under normal circumstances, I have no way to know what it says.
+Yipa is an app for recording emotions, thoughts, and the state of everyday life. No community, no likes, no comments, no direct messages; users are entirely separate from one another, and what you write is meant for you alone. From the start I wanted it to feel like a truly private thing, so when I added cloud sync I chose end-to-end encryption: a record is encrypted before upload, and the server stores only ciphertext. Under normal circumstances, I have no way to know what anything says.
 
-This wasn’t a “privacy feature” added for marketing. To me, it was closer to a boundary the product should have. If an app holds someone’s most private feelings, relationships, anxieties, and details of daily life, its developers shouldn’t have the ability to look at them whenever they want. At least, I don’t want that ability myself.
+That wasn't a "privacy feature" added for the marketing page. To me it was closer to a boundary the product should have. If an app holds someone's most private feelings, relationships, anxieties, and daily details, its developers shouldn't have the ability to read them at will. At the very least, I didn't want that ability.
 
-Things became complicated when I went through Yipa’s cybersecurity filing.
+Things got complicated when Yipa went through its cybersecurity filing.
 
-At first, I assumed the process would mostly concern server security, data security, and the app’s features. After all, Yipa isn’t a content platform. Users can’t publish anything publicly or show their records to other people. In theory, it would be difficult even to use it as a conventional communication tool.
+At first I assumed the process would be about server security, data security, and features. Yipa isn't a content platform; users can't publish anything or show their records to anyone. In theory it would be hard even to use as an ordinary messaging tool. So I was surprised to be told that user input also needed to be reviewable.
 
-So I was surprised when I was told that user input also needed to be reviewable.
+I explained, more than once: this is a personal journaling app with no community features; people write about their feelings and their lives; the server only ever receives ciphertext, and I can't read it either. Then the other person asked:
 
-I tried to explain several times. I said it was a personal journaling app with no community features, where people wrote about their feelings and their lives. I also explained Yipa’s end-to-end encryption: the server receives only ciphertext, and I can’t read what users write. Then the other person asked me:
+"Why would you go out of your way to encrypt things for your users?"
 
-“Why would you go out of your way to encrypt things for your users?”
+That was when I realized our starting points might be entirely different.
 
-That was the first time I realized we might be approaching the question from entirely different starting points.
+I've always thought the best state for a privacy product isn't "trust me, I won't look at your data." It's "even if you don't trust me, I can't see it." The two sound similar; they work very differently. The first runs on promises. The company won't look, won't misuse, won't sell—those promises matter, but as long as the server holds directly readable content, what users are really trusting is people: the developers, the admins, the permission system, the hope that no account gets compromised, nothing gets misconfigured, and whoever inherits the product years from now still honors today's promises.
 
-I’ve always thought the best outcome for a privacy-focused product isn’t “Trust me, I won’t look at your data.” It’s “Even if you don’t trust me, I can’t see your data.”
+End-to-end encryption isn't trying to prove a developer deserves trust. It's trying to shrink how much trust the user has to hand over. If the system never stores plaintext, a whole class of problems never reaches the point where anyone's good intentions matter. A developer can't open the admin panel one curious afternoon and read what someone wrote. A misconfigured permission can't expose a trove of private records. Not because everyone is perfectly restrained—because the product never offers the opportunity. I've always liked that kind of design: rather than hoping the people inside never err, make some errors impossible to commit.
 
-There’s a real difference between the two. The first depends on a promise. A developer tells users that the company won’t look at, misuse, or sell their data. Those promises matter, of course. But if a server keeps content in a form that can be read directly, users still have to trust the people running the service. They have to trust the developer, the administrators, the permission system, that no account will be compromised, that nothing will be misconfigured, and that whoever takes over the product in the future will honor the promises made today.
+Later, another person talked it through with me at length, from a different angle. People give up some privacy in public places, he said, because of the realities of being there; the internet is similar, and once information travels across it, it's hard to treat it as entirely outside public oversight.
 
-End-to-end encryption is trying to solve a different problem. It isn’t about proving that a developer deserves trust; it’s about reducing how much trust users have to place in one. If the system never stores the plaintext, many problems don’t have to be solved by relying on people’s good intentions. A developer can’t open the admin panel out of curiosity and read what someone wrote. A misconfigured permission can’t expose a trove of private records stored in plaintext.
+At first I didn't accept the comparison. What someone writes in a private journaling app and what someone posts on a platform seemed like different things to me.
 
-That’s not because everyone is perfectly restrained. It’s because the product doesn’t give them the opportunity.
+Then he brought up cloud drives, which hold photos, videos, files—plenty of it deeply personal. And he asked a more specific question. Yipa syncs across devices; what if one account were shared by several people instead of one person on several devices? In theory they could pass messages by writing and syncing records, and because everything is end-to-end encrypted, the server couldn't read any of it.
 
-That’s a kind of design I’ve always liked. A system is often most reliable not because the people in it will never make mistakes, but because it makes some mistakes impossible in the first place.
+That was when I understood where the conflict actually sat. In that conversation, the question on his side was: if a service can carry information, should its provider retain some ability to govern the content? The question on mine was: if a product holds someone's most private records, should its provider be architecturally unable to read them? Those two goals don't point in the same direction.
 
-Later, another person spent a long time talking this through with me. He tried to explain it from a different angle. One comparison, roughly speaking, was that people give up some privacy in public places because of the realities of being there; the internet is similar. Once information travels over the internet, it can be difficult to treat it as entirely outside public oversight.
+Once I saw that, I felt less like arguing. This wasn't going to be solved by "changing the product a little."
 
-At first, I couldn’t quite understand the comparison. To me, what someone writes in a private journaling app is very different from what they post publicly on an internet platform.
+If I wanted the filing approved, I could give the server the ability to read users' records again. Remove end-to-end encryption, keep a server-side decryption path, design a review process that can step into user content. None of that is technically hard.
 
-Then he gave another example: cloud drives. They can hold many photos, videos, and files, some of them deeply personal. After that, he raised a more specific question. Yipa syncs across multiple devices, but what if one account were shared by several people rather than used by one person on several devices? In theory, they could exchange messages by writing to records and syncing them. And because those records are end-to-end encrypted, the server itself couldn’t read them.
+The real question was whether the result would still be the Yipa I wanted to build.
 
-That was when I began to understand where the conflict really was.
+If I were making a public community, moderation would be part of the product. If I were making a messenger, there'd be a different set of security questions to answer. But Yipa was meant, from day one, to be a space for records as private as possible. Someone writes down what they ate today; someone keeps notes about work; someone writes things they've never told anyone. If users have to assume a developer can look at any of that whenever they want, the product has already drifted away from what it was for.
 
-At least in this filing conversation, the question on the other person’s mind was whether a service that can carry information should retain some ability to govern its content. My question was whether a product that holds someone’s most private records should be designed so that its provider cannot read them.
+So in the end I stopped trying to get the filing approved. Not because I was sure one side was wrong, but because I finally understood the conflict wouldn't bend, and I chose to step away.
 
-Those two goals don’t point in quite the same direction.
+The experience kept me thinking for a long time about what privacy actually is.
 
-Once I understood that, I felt less inclined to keep arguing. This wasn’t simply a matter of changing a feature.
+We used to ask, of any online service: will it peek at my data, use it to train a model, sell it to advertisers, leak it? All fair questions. But the one I now ask first is more basic: can it see my data at all? "We won't look" is a rule. "We can't see" is an architecture. For especially private information, I increasingly prefer the second. I don't want a service to keep assuring me that no one here will open it. I'd rather it be able to say, from day one: even if we wanted to, we couldn't.
 
-If I wanted to meet the requirement, I could give Yipa’s server the ability to read users’ records again. I could remove end-to-end encryption, keep a mechanism that lets the server decrypt the content, or design some process for intervening in what users write. From an engineering perspective, none of that would be impossible.
+Since then I've paid attention to this with other products too. I still use cloud sync; it's genuinely convenient. What I look at now isn't just whether data goes up to a server, but what the server actually receives—content it can read, or data only my devices can decrypt—and whether the limits come from company policy or from the technology itself. For ordinary data the difference may not matter much. But if a service holds years of journal entries, private feelings, relationship notes, things you'd never want a stranger to see, the difference gets large. What you're really betting on isn't that today's operators are decent people. It's that no part of the system will go wrong at any point in the years ahead.
 
-The real question was: after doing that, would it still be the Yipa I wanted to build?
+Rather than bet on every part staying correct forever, I'd rather delete some unnecessary capabilities outright.
 
-If I were making a public community, content moderation would naturally be part of the product. If I were building an instant messaging tool, I would have a different set of security questions to address. But from the beginning, Yipa was meant to be a space for keeping records as privately as possible. Someone might write down what they ate that day, keep notes about work, or record something they had never told anyone else.
-
-If users have to assume that a developer can look at those things whenever they want, then, at least to me, the product has moved away from what it was meant to be.
-
-So in the end, I stopped trying to get this filing approved.
-
-Not because I thought one side had to be wrong, but because I had finally understood that this was a conflict I couldn’t resolve by “changing the product a little more.” So I chose to step away.
-
-That experience made me think for a long time about what privacy really means.
-
-When we talk about whether an internet service protects privacy, we often ask: Will the platform look at my data? Use it to train a model? Sell it to advertisers? Let it leak? These are all important questions. But now I think there’s a more basic one to ask first: does the platform have the ability to see my data at all?
-
-“We won’t look” is a rule. “We can’t see it” is an architectural choice. Rules can constrain behavior, but architecture can limit what a service is capable of doing.
-
-For especially private information, I’m increasingly drawn to the latter. I don’t want a service to keep reassuring me, “Don’t worry, no one here will open it.” I’d rather it be able to say from the start, “Even if we wanted to, we couldn’t read it.”
-
-Since that filing experience, I’ve paid more attention to this when using other products, too. I still use cloud sync; it’s very convenient. What matters to me now isn’t just whether data is uploaded to a server, but what the server receives: content it can read directly, or data only my devices can decrypt. I also look at how much access the service provider has, and whether those limits come from company policy or from the technology itself.
-
-For ordinary data, the difference may not matter very much. But if a service holds years of journal entries, private feelings, relationship notes, or anything you’d never want a stranger to see, the distinction starts to matter. What you really need to trust may not be the people running the product today, but that no part of the system will fail at any point over the years to come.
-
-I’d rather remove some unnecessary capabilities than trust every part of the system to always get things right.
-
-Yipa will continue to use end-to-end encryption. The server can help you sync your data, but it shouldn’t know what you’ve written. Neither should I.
-
-That isn’t because I want to prove to users that I’m a developer worth trusting.
-
-It’s because I’ve come to believe that good privacy design shouldn’t ask users to trust the developer first. It should make that trust as unnecessary as possible.
+Yipa will keep end-to-end encryption. The server helps you sync your data, but it doesn't know what you wrote, and neither do I. Not because I want to prove I'm a developer worth trusting, but because I've come to think good privacy design shouldn't ask users to trust anyone in the first place. The less trust it demands, the better.

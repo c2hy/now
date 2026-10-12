@@ -8,7 +8,7 @@ export default defineConfig({
     { name: 'webkit', use: { browserName: 'webkit' } },
   ],
   webServer: {
-    command: 'npm run dev -- --host 127.0.0.1',
+    command: 'node scripts/test-server.mjs',
     url: 'http://127.0.0.1:4321',
     reuseExistingServer: !process.env.CI,
   },

@@ -14,6 +14,14 @@ const projectImage = image.extend({
   width: z.number().int().positive(),
   height: z.number().int().positive(),
 });
+const home = defineCollection({
+  loader: glob({ pattern: '*.md', base: './src/content/home' }),
+  schema: z.object({
+    locale: z.enum(['en', 'zh']),
+    title: z.string(),
+    description: z.string(),
+  }),
+});
 const writing = defineCollection({
   loader: glob({
     pattern: '**/*.md',
@@ -50,6 +58,7 @@ const projects = defineCollection({
     featured: z.boolean(),
     status: z.enum(['active', 'maintained', 'archived']).optional(),
     hero: projectImage,
+    cover: projectImage.optional(),
     links: z
       .array(
         z.object({
@@ -61,4 +70,4 @@ const projects = defineCollection({
       .default([]),
   }),
 });
-export const collections = { writing, projects };
+export const collections = { home, writing, projects };

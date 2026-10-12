@@ -1,61 +1,85 @@
 ---
-import { ui, path, type Locale } from '../i18n';
+import { type Locale } from '../i18n';
 import { about } from '../data/about';
+import { profile, social } from '../data/profile';
 const { locale } = Astro.props as { locale: Locale };
 const content = about[locale];
-const t = ui[locale];
+const contact =
+  locale === 'zh'
+    ? {
+        title: '联系我',
+        intro: '聊聊产品、分享想法，或者只是打个招呼，都欢迎。',
+        email: '邮箱',
+        profile: '查看主页',
+      }
+    : {
+        title: 'Get in touch',
+        intro:
+          'Have a question, an idea to share, or just want to say hello? I’d love to hear from you.',
+        email: 'Email',
+        profile: 'View profile',
+      };
 ---
 
-<section class="pt-10 pb-8 md:pt-16 md:pb-10">
-  <p class="eyebrow mb-5 text-muted">
-    {locale === 'en' ? 'About Will' : '关于 Will'}
-  </p><h1 class="display page-title">
+<article class="reading-column about-page">
+  <header class="reading-header">
+    <h1>{locale === 'en' ? 'About Will' : '关于 Will'}</h1>
+  </header>
+  <div class="prose">
+    {content.paragraphs.map((text) => <p>{text}</p>)}
     {
-      locale === 'en' ? (
-        <>
-          Hello, I’m Will<span class="text-accent">.</span>
-        </>
-      ) : (
-        <>
-          你好，我是 Will<span class="text-accent">。</span>
-        </>
-      )
+      content.sections.map((section) => (
+        <section>
+          <h2>{section.title}</h2>
+          {section.paragraphs.map((text) => (
+            <p>{text}</p>
+          ))}
+        </section>
+      ))
     }
-  </h1>
-</section>
-<div
-  class="grid gap-10 border-t border-line pt-10 md:grid-cols-[.6fr_1.4fr] md:gap-20"
->
-  <aside class="text-muted">
-    <img
-      src="/avatar.svg"
-      alt={locale === 'en' ? 'Will.OPC avatar' : 'Will.OPC 头像'}
-      width="144"
-      height="144"
-      class="mb-8 h-36 w-36 rounded-full border border-line"
-    /><p class="eyebrow">
-      {
-        locale === 'en'
-          ? 'Independent developer · Shanghai'
-          : '独立开发者 · 上海'
-      }
-    </p>
-  </aside><div class="max-w-[700px]">
-    <p class="font-display text-[27px] leading-[1.4] md:text-[38px]">
-      {content.lead}
-    </p><div class="prose">
-      {content.paragraphs.map((text) => <p>{text}</p>)}{
-        content.sections.map((section) => (
-          <section>
-            <h2>{section.title}</h2>
-            {section.paragraphs.map((text) => (
-              <p>{text}</p>
-            ))}
-          </section>
-        ))
-      }
-    </div><a class="text-link mt-6" href={path(locale, 'projects')}
-      >{t.allProjects}<span aria-hidden="true">→</span></a
-    >
   </div>
-</div>
+  {
+    (profile.email || social.length > 0) && (
+      <section id="contact" class="about-contact" aria-labelledby="contact-title">
+        <h2 id="contact-title">{contact.title}</h2>
+        <p class="contact-intro">{contact.intro}</p>
+        <ul class="contact-list" role="list">
+          {profile.email && (
+            <li>
+              <a
+                class="contact-link"
+                href={`mailto:${profile.email}`}
+                data-drip-placement="about_email"
+              >
+                <span class="contact-label">{contact.email}</span>
+                <span class="contact-account">{profile.email}</span>
+                <span class="contact-arrow" aria-hidden="true">
+                  ↗
+                </span>
+              </a>
+            </li>
+          )}
+          {social.map((link) => (
+            <li>
+              <a
+                class="contact-link"
+                href={link.href}
+                data-drip-placement="about_social"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <span class="contact-label">{link.label}</span>
+                <span class="contact-account">
+                  {link.account ?? contact.profile}
+                </span>
+                <span class="contact-arrow" aria-hidden="true">
+                  ↗
+                </span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
+</article>

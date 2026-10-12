@@ -1,13 +1,13 @@
 ---
-import { getCollection, type CollectionEntry } from 'astro:content';
+import { getCollection, getEntry, type CollectionEntry } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ContentDetail from '../components/ContentDetail.astro';
 import Home from '../components/Home.astro';
 import About from '../components/About.astro';
 import WritingList from '../components/WritingList.astro';
-import WritingFilters from '../components/WritingFilters.astro';
 import ProjectFeature from '../components/ProjectFeature.astro';
 import { locales, ui, path, contentPath, type Locale } from '../i18n';
+import { profile } from '../data/profile';
 import { visible, translation } from '../utils/content';
 export async function getStaticPaths() {
   const routes = [];
@@ -45,40 +45,43 @@ interface Props {
 }
 const { locale, page, entry } = Astro.props as Props;
 const t = ui[locale];
+const home = page === 'home' ? await getEntry('home', locale) : undefined;
+if (page === 'home' && !home)
+  throw new Error(`Missing ${locale} opening essay`);
 const article = entry?.collection === 'writing' ? entry : undefined;
 const project = entry?.collection === 'projects' ? entry : undefined;
 const title =
   article?.data.title ??
   project?.data.name ??
-  (page === 'home' ? t.siteIntro : t[page as 'writing' | 'projects' | 'about']);
+  home?.data.title ??
+  t[page as 'writing' | 'projects' | 'about'];
 const metaTitle =
   article?.data.seoTitle ??
   (page === 'home'
-    ? locale === 'en'
-      ? 'Will.OPC — Notes and Software by Will'
-      : 'Will.OPC｜Will 的记录与作品'
+    ? profile.siteName
     : page === 'writing'
       ? locale === 'en'
-        ? 'Notes on Self, Technology, and Everyday Life'
-        : '关于人与自我、数字生活的记录'
+        ? 'Writing — Observations, Decisions, and Experiments'
+        : '文章｜生活、技术和做产品'
       : page === 'projects'
         ? locale === 'en'
-          ? 'Projects — Yipa, Huddle, and Tablow'
-          : '作品｜Yipa、泡泡留言板与橘小记'
+          ? 'Projects — Ideas Put into Practice'
+          : '作品｜把想法做出来'
         : page === 'about'
           ? locale === 'en'
-            ? 'About Will — Notes and Software'
-            : '关于 Will｜记录与作品'
+            ? 'About Will — Independent Developer in Shanghai'
+            : '关于 Will｜独立开发者'
           : undefined);
 const pageDescription =
   entry?.data.description ??
+  home?.data.description ??
   (page === 'writing'
     ? t.notesIntro
     : page === 'projects'
-      ? locale === 'en'
-        ? 'Yipa, Huddle, and Tablow — three launched products by independent developer Will.'
-        : 'Yipa、泡泡留言板与橘小记：独立开发者 Will 已上线的三个产品。'
-      : t.siteIntro);
+      ? t.projectsIntro
+      : page === 'about'
+        ? t.aboutIntro
+        : t.siteIntro);
 const alternate = entry
   ? await translation(entry.collection, entry.data.translationKey, locale)
   : undefined;
@@ -104,7 +107,6 @@ const projects =
           (a, b) => b.data.year - a.data.year || a.data.order - b.data.order,
         )
     : [];
-const groups = [...new Set(projects.map((e) => String(e.data.year)))];
 ---
 
 <BaseLayout
@@ -118,48 +120,27 @@ const groups = [...new Set(projects.map((e) => String(e.data.year)))];
   article={article?.data}
   ogImage={ogImage}
 >
-  {page === 'home' && <Home locale={locale} />}
+  {home && <Home entry={home} />}
   {page === 'about' && <About locale={locale} />}
   {
     !entry && (page === 'writing' || page === 'projects') && (
-      <>
-        <section class="pt-10 pb-10 md:pt-16 md:pb-14">
-          <>
-            {page === 'projects' && (
-              <p class="eyebrow mb-5 text-muted">
-                {locale === 'en' ? 'Independent products' : '独立产品'}
-              </p>
-            )}
-            <h1 class="display page-title">
-              {t[page]}
-              {page === 'projects' && <span class="text-accent">.</span>}
-            </h1>
-            <p class="mt-7 max-w-xl text-base leading-relaxed text-muted">
-              {page === 'writing' ? t.notesIntro : t.projectsIntro}
-            </p>
-          </>
-        </section>
+      <section
+        class={page === 'projects' ? 'project-gallery-page' : 'reading-column'}
+      >
+        <header class="reading-header">
+          <h1>{t[page]}</h1>
+        </header>
         {page === 'writing' ? (
-          <>
-            <WritingFilters locale={locale} />
-            <WritingList items={writing} locale={locale} topRule />
-          </>
+          <WritingList items={writing} locale={locale} />
         ) : (
-          groups.map((group, groupIndex) => (
-            <section class:list={[groupIndex > 0 && 'mt-14 md:mt-20']}>
-              <h2 class="eyebrow mb-6 text-muted">{group}</h2>
-              {projects
-                .filter((e) => String(e.data.year) === group)
-                .map((item, index) => (
-                  <ProjectFeature item={item} locale={locale} index={index} />
-                ))}
-            </section>
-          ))
+          <div class="project-gallery">
+            {projects.map((item) => (
+              <ProjectFeature item={item} locale={locale} />
+            ))}
+            {!projects.length && <p class="text-muted">{t.empty}</p>}
+          </div>
         )}
-        {page === 'projects' && !projects.length && (
-          <p class="border-t border-line py-8 text-muted">{t.empty}</p>
-        )}
-      </>
+      </section>
     )
   }
   {entry && <ContentDetail entry={entry} locale={locale} />}

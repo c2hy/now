@@ -1,12 +1,23 @@
 ---
 name: 'Yipa'
-statement: 'A tool that combines notes and AI to help you keep observing yourself over time.'
-description: 'Write down what is happening now, then let separate notes illuminate one another as recurring themes, tensions, and changes come into view.'
+statement: 'Recording is more than recording.'
+description: 'Yipa is an AI-native private journal. End-to-end encryption—no one can read your records, not even the developer—so you can write freely. If you choose, AI can read them and surface clues you might have missed.'
 year: 2026
 order: 0
 featured: true
 status: 'active'
-hero: { 'src': '/images/projects/yipa-landscape-en.png', 'alt': 'Yipa landscape graphic with an English timeline screenshot', 'width': 2400, 'height': 1260 }
+hero:
+  {
+    'src': '/images/projects/yipa-landscape-en.png',
+    'alt': 'Yipa landscape graphic with an English timeline screenshot',
+    'width': 2400,
+    'height': 1260,
+  }
+cover:
+  src: /images/project-covers/yipa-v1.webp
+  alt: Traces on translucent sheets gradually overlap
+  width: 1200
+  height: 800
 links:
   - label: 'Website'
     href: 'https://yipa.willopc.com'
@@ -24,19 +35,23 @@ translationKey: 'yipa'
 
 ## Why I made this
 
-A single note can usually preserve only one moment. Feeling anxious today, staying up late once, or having an unexpected thought may mean very little on its own. Some patterns become visible only after those fragments accumulate and are placed beside one another again.
+After AI arrived, understanding what we write down will be an enormous gold mine. But it has a precondition: people first need to feel safe writing down their most honest selves.
 
-I wanted to make something that would not rush to offer an answer. It would first preserve what is happening now, then let time provide the context that one moment cannot.
+That safety shouldn't rest on "trust me, I won't look," but on "I can't see it." In Yipa, every record is end-to-end encrypted before it leaves your device; the server stores only ciphertext, and even I can't read what you've written. That is the highest level of security a private journal can offer.
+
+With that in place, if you're willing, AI can then read your records and help you find what you might have missed.
+
+Write it down first, without rushing to explain. Some things are hard to put into words and not meant for anyone else; only when you look back do you notice they keep coming back.
 
 ## What it became
 
-Yipa begins with a note about what you are experiencing or feeling. AI offers another angle on that moment. As more notes accumulate, the timeline brings separate fragments back together, making recurring themes, tensions, and small changes easier to notice.
+Start with something that just happened, or with how you feel right now. Notes line up along a timeline for looking back later: which thoughts keep returning, which changes are happening slowly.
 
-It is not a personality test and does not offer a diagnosis. AI helps you take a second look, but it does not decide who you are.
+AI analysis is for reference; it doesn't decide who you are. Yipa is not a personality test and offers no diagnosis.
 
 ## Selected details
 
-- Record what happened without asking every note to produce an immediate conclusion.
-- Let separate fragments accumulate on a timeline so repetition can add context.
-- Use AI to offer another angle without turning life into a score.
-- Help the person writing see more without pretending to define them.
+- The highest level of privacy: end-to-end encryption—not even the developer can read your records.
+- Write whenever you want, without asking every note for a conclusion.
+- Whether AI reads your records is up to you.
+- Recording is more than recording.

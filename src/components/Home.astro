@@ -1,120 +1,20 @@
 ---
-import { getCollection } from 'astro:content';
-import { sectionPath, ui, type Locale } from '../i18n';
-import { visible } from '../utils/content';
-import WritingList from './WritingList.astro';
-import ProjectFeature from './ProjectFeature.astro';
-import { social } from '../data/profile';
-
-const { locale } = Astro.props as { locale: Locale };
-const t = ui[locale];
-const all = (await getCollection('writing'))
-  .filter((entry) => entry.data.locale === locale && visible(entry.data))
-  .sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf());
-const selected = all.filter((entry) => entry.data.featured);
-const writing = (selected.length ? selected : all).slice(0, 5);
-const projects = (await getCollection('projects'))
-  .filter(
-    (entry) =>
-      entry.data.locale === locale &&
-      visible(entry.data) &&
-      entry.data.featured,
-  )
-  .sort((a, b) => a.data.order - b.data.order);
+import { render, type CollectionEntry } from 'astro:content';
+import { sectionPath } from '../i18n';
+const { entry } = Astro.props as { entry: CollectionEntry<'home'> };
+const { Content } = await render(entry);
+const locale = entry.data.locale;
 ---
 
-<section class="home-intro" aria-labelledby="home-title">
-  <h1 id="home-title" class="display home-title">
-    {t.homeIntroTitle}
-  </h1>
-  <p class="home-description">{t.homeIntroDescription}</p>
-</section>
-
-<section class="home-projects" aria-labelledby="home-projects-title">
-  <div class="section-bar mb-6 md:mb-8">
-    <h2 id="home-projects-title" class="eyebrow text-muted">
-      {t.projects}
-    </h2>
+<article class="reading-column home-essay">
+  <div class="prose"><Content /></div>
+  <div class="home-contact">
     <a
-      class="section-more"
-      href={sectionPath(locale, 'projects')}
-      data-drip-placement="home_projects_index"
+      href={`${sectionPath(locale, 'about')}#contact`}
+      data-drip-placement="home_contact"
     >
-      {t.allProjects}<span aria-hidden="true">↗</span>
+      {locale === 'zh' ? '联系我' : 'Get in touch'}
+      <span aria-hidden="true">→</span>
     </a>
   </div>
-  {
-    projects.map((item, index) => (
-      <ProjectFeature
-        item={item}
-        locale={locale}
-        index={index}
-        placement="home_project_overview"
-      />
-    ))
-  }
-</section>
-
-<section id="notes" class="home-section" aria-labelledby="home-notes-title">
-  <div class="section-bar mb-6 md:mb-8">
-    <div>
-      <p class="eyebrow mb-3 text-muted">{t.writing}</p>
-      <h2 id="home-notes-title" class="display section-title">{t.noting}</h2>
-    </div>
-    <a
-      class="section-more"
-      href={sectionPath(locale, 'writing')}
-      data-drip-placement="home_notes_index"
-    >
-      {t.allWriting}<span aria-hidden="true">↗</span>
-    </a>
-  </div>
-  <WritingList items={writing} locale={locale} />
-</section>
-
-<section
-  class="home-section grid gap-7 md:grid-cols-[0.7fr_1.3fr] md:gap-16"
-  aria-labelledby="home-about-title"
->
-  <div>
-    <p class="eyebrow mb-3 text-muted">{t.about}</p>
-    <h2 id="home-about-title" class="display section-title">
-      {locale === 'zh' ? '关于 Will' : 'About Will'}
-    </h2>
-  </div>
-  <div>
-    <p class="max-w-2xl text-[18px] leading-[1.7] md:text-[22px]">
-      {
-        locale === 'zh'
-          ? '几个 App 从不同的问题开始，后来在一次次取舍中慢慢有了自己的样子。我在这里写做它们时的选择，也写那些可能永远不会变成 App 的日常小事。'
-          : 'A few apps began with different questions and took shape through the choices I made while building them. I write about those choices here, alongside everyday things that may never become an app.'
-      }
-    </p>
-    <a
-      class="text-link mt-5"
-      href={sectionPath(locale, 'about')}
-      data-drip-placement="home_about"
-    >
-      {t.aboutLink}<span aria-hidden="true">↗</span>
-    </a>
-  </div>
-</section>
-
-{
-  social.length > 0 && (
-    <section class="mt-14 flex flex-wrap gap-6 border-t border-line pt-7">
-      <h2 class="eyebrow mr-auto">{t.elsewhere}</h2>
-      {social.map((link) => (
-        <a
-          class="text-link"
-          href={link.href}
-          data-drip-placement="social_link"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          {link.label} ↗
-        </a>
-      ))}
-    </section>
-  )
-}
+</article>

@@ -12,56 +12,44 @@ translationKey: 'remember-not-improve'
 
 For a long time, I tried to fit my life into a series of precise plans.
 
-It started with getting up early to exercise. I kept it up for a few weeks, getting up and working out on schedule every day. It did feel good; the day seemed to have suddenly grown longer. Each time I checked off a task in my to-do app, I got a solid little confirmation—the feeling that life was finally moving along the right track.
+It started with getting up early to exercise. I kept it up for a few weeks, getting up and working out on schedule every day, and it did feel good—the day seemed to have grown longer. Each time I checked off a task in my to-do app, I got the same small, solid confirmation: life was finally on the right track.
 
-The crack appeared on an ordinary morning. I had worked too late the night before, and when the alarm went off, I simply couldn’t get up. The first time I turned it off, I felt only mildly annoyed. But over the next two weeks, the same thing happened two or three more times.
+Then came an ordinary morning. I had worked too late the night before, and when the alarm went off I simply couldn't get up. The first time I turned it off, I felt only mildly annoyed. But over the next two weeks it happened two or three more times.
 
-Strangely, my attention quickly shifted from “I didn’t get up today” to “Maybe this whole plan simply isn’t right for me.” What had started as a few episodes of exhaustion soon became a rejection of the plan itself. Eventually, the early-rising plan that had once been checked off every day quietly stopped altogether.
+Which should have been fine—everyone has mornings like that. What I noticed, though, was how quickly I stopped thinking "I didn't get up today" and started thinking "maybe this plan just isn't for me." A few episodes of exhaustion turned into a verdict on the whole plan. Soon the early-rising routine I had checked off every day simply stopped, and I never formally decided to quit it.
 
-Later, I noticed this didn’t happen only with getting up early.
+Later I noticed this didn't happen only with getting up early.
 
-Diet was the same. After following strict restrictions for a while, one day stress led me to eat an extra serving of carbohydrates. What really broke the plan wasn’t those few hundred calories, but the thought that flashed through my mind: “If I’ve already broken it, then none of the effort before this means anything.”
+Diet was the same. After a stretch of strict control, one stressful day I ate an extra serving of carbs. Looking back, the damage wasn't the few hundred calories; it was the thought that came right after: "Well, today's already broken, so the effort was wasted anyway." I gave up faster than I'd eaten.
 
-Sleep was the same, too. When Todo’s bedtime reminder appeared, I knew I should go to bed, yet I found myself wanting to resist it. That unchecked box slowly turned from encouragement into a silent reproach.
+Sleep, too. When the bedtime reminder appeared, I knew I should sleep and still wanted to resist it. That unchecked box, over time, stopped looking like encouragement and started looking like a reprimand.
 
-I used to easily conflate not doing something with the plan failing. Many difficult-to-sustain things were interrupted exactly this way.
+I used to treat one miss as the failure of the whole thing. Plenty of abandoned habits ended exactly that way. The feeling of "I'm getting better" that came from each checkmark carried, underneath it, "I'm not good enough yet." That's why a single slip could weigh so much—enough to crush the whole thing.
 
-The feeling of “I’m getting better” that came from completing a checkmark was unconsciously tied to “I don’t feel good enough.” So once I deviated, its weight was magnified without limit, heavy enough to crush the whole thing.
+Then one month, my payslip arrived.
 
-Until one day, I received my payslip for the month.
+There was a line for lateness deductions. I stared at the number, and my first reaction wasn't guilt; it was confusion. How had I been late that many times?
 
-There was a line for deductions due to lateness. Looking at the number, my first reaction wasn’t self-blame but confusion: how had I been late so many times?
+For once, I didn't write myself a stricter "never be late" rule. Instead, I went down the list of dates and thought back to what had happened the day before each one.
 
-For the first time, I didn’t immediately make myself a stricter “never be late” rule. Instead, I followed those dates back and thought through what had happened before each late arrival.
+The pattern turned out to be simple: whenever I worked too late, I was almost certain to be late the next morning.
 
-Then I noticed that whenever I had worked too late the day before, I was almost certain to be late the next day.
+I had always assumed this was a morning discipline problem. It wasn't a morning problem at all. That day I had worked until eleven, hurried home, washed up, and when I got into bed and saw "Time for bed" on my phone, I simply didn't want to sleep. Going to sleep right then would have meant the day was just gone—eyes open to eyes closed, all of it handed over to work.
 
-The “self-discipline problem” I thought happened in the morning wasn’t rooted in the morning at all. That day, I had worked until eleven at night, hurried home, and washed up. When I got into bed and saw the reminder on my phone saying “Time for bed,” I simply didn’t want to sleep.
+It's not that work can't be part of life. But during that period, I hadn't seen much of any self outside of it for a long time.
 
-If I went to sleep just like that, the day felt as if it would disappear—everything from opening my eyes to closing them handed over to work.
+When things actually began to change, I had stopped tending to those routine checkboxes.
 
-I don’t think work can’t be part of life, but I suddenly realized that during that period, I hadn’t experienced a self outside of work for a long time.
+Near quitting time I would remind myself that some things could wait until tomorrow, and tried to leave the office before dark. Nothing dramatic happened. It was just that the sky was still light when I left, my movements after getting home slowed down, and I could let myself lie on the sofa and do nothing for a while.
 
-When things actually began to change, I didn’t continue checking off those sleep and routine boxes.
+At some point I realized I was feeling better, and I hadn't touched the sleep check-in in a long time.
 
-I started reminding myself near quitting time that some things could wait until tomorrow, and tried to leave the office before dark. Nothing happened that seemed worth recording. The scenery on the way home simply became clearer, my movements after getting home slowed down, and I could even let myself lie on the sofa and do nothing for a while.
+Now, if I miss a morning, my reaction is different. I don't think "I've failed again." I just note it: all right, skipped today. Then I wonder why—too tired the day before? Stress? Or I just felt like staying in bed.
 
-Before I noticed, I was feeling better, and I had stopped paying attention to that sleep check-in box long ago.
+I still write things down, but the spirit of it has changed.
 
-Now, if I fail to get up on time one morning, my response is different. I no longer feel “I’ve failed again.” I just acknowledge to myself: “All right, I skipped today.”
+I no longer use plans to frame every future day. Sometimes I just want to know: when did I last clean the apartment? How long since I saw a friend? And when I open the app, I'm not the person being chased by reminders. Usually I have a bit of spare energy, or I was about to do the thing anyway, and I come back to browse the records.
 
-Then I might think about why: was I too tired the day before, or has stress been a little high lately? Or did I simply feel like staying in bed?
+Plans still work, and I'll keep making them. I just don't treat one unplanned detour as proof that the whole thing, or I, have failed.
 
-Asking who is to blame is only a way of expressing emotion; looking at the cause is where thinking begins. A single deviation is just information life is giving you. It is not a verdict.
-
-I still record some things, but my mindset has changed.
-
-I no longer use plans to frame every day in the future. Sometimes I just want to know: “When was the last time I cleaned the house?” or “How long has it been since I last got together with a friend?”
-
-When I open the app, I’m no longer someone being chased by reminders. Usually, I return to look through the records only when I happen to have some energy to spare, or when I’ve already decided to do the thing.
-
-Plans are useful, of course, and I will keep making them. I just won’t immediately decide that the whole thing has failed—or that I’m incapable—because of one deviation from the plan.
-
-Writing things down isn’t necessarily about using them to evaluate myself. Sometimes it’s simply so that much later, I can look back and see how my recent life actually unfolded.
-
-More than whether life has followed the direction I imagined, I care about whether, overall, it is staying in a state that feels comfortable.
+Writing things down doesn't have to be an audit of myself. Most of the time it's just keeping them around, so that much later I can look back and see how those days actually went.

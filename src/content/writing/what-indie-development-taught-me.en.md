@@ -9,138 +9,46 @@ slug: 'what-indie-development-taught-me'
 translationKey: 'what-indie-development-taught-me'
 ---
 
-When I started indie development, I thought the difficult part was building the product.
+When I started indie development, I thought the hard part was building the product.
 
-That was the part I knew how to think about. An idea could be broken down into smaller problems: architecture, interfaces, data, edge cases, release. If I kept solving those problems, eventually there would be something I could put in front of people.
+That was the part I knew how to think about. An idea could be broken down: architecture, interfaces, data, edge cases, release. Keep solving those problems, and eventually there would be something to put in front of people.
 
-I still remember submitting my first app to the App Store. When it was approved, I was genuinely excited. It felt like I had finally crossed some invisible line.
+I remember submitting my first app to the App Store, and how genuinely excited I was when it was approved. It felt like crossing some invisible line.
 
-For the next few months, I checked App Store Connect almost every day.
+Later I learned that building it was the small step.
 
-Every new user felt important. I would see someone sign up, feel briefly encouraged, then check again the next day.
+For the next few months I checked App Store Connect almost every day. A new user would show up; I'd feel briefly encouraged; the next day I'd check again. Usually they were gone, and the number I'd been so pleased about settled back to where it started.
 
-Usually they were gone.
+At first I read this as "people don't know how to use it." That's the trap engineers fall into most easily: if someone doesn't use the product, the onboarding must be unclear, a feature must be missing, an interaction must need work. So I added features, changed the onboarding, studied other products, and eventually started feeding my own flows into AI tools and asking, over and over, where I was going wrong.
 
-At first, I assumed this was a product problem in the narrowest sense. Maybe people did not understand how to use it. Maybe the onboarding was unclear. Maybe something important was missing.
+I also tried promotion. Some of it looks fairly naive now. I made cute AI-generated videos and imitated the way commercial products advertised on social media. At the time I thought I was learning marketing. Mostly I was learning how little I understood about why anyone stops to look at anything.
 
-So I did what came naturally to me: I kept working on the software.
+For a long time I held on to a comforting explanation: people just hadn't understood the value yet. The nice thing about that explanation is that it asks you to change almost nothing. The product is fine; the message just needs to be clearer. New copy, a better demo, and someone will get it.
 
-I added features, changed the onboarding, studied other products, reconsidered interactions. Later, when AI tools became good enough, I even started feeding parts of my own product into them and asking what I might be doing wrong.
+Sometimes that's true. But a lot of the time, people understand perfectly well what you built and simply don't need it much. From the outside the two look identical. For the person building, they point in opposite directions: one means keep explaining; the other means going back and re-examining the need itself. It took me longer than I'd like to admit to tell them apart.
 
-I also tried to promote it.
+Eventually I set myself a deadline: if I still couldn't find an answer, I'd switch projects. There was nothing dramatic about the decision. Engineers are odd this way—as soon as a new problem shows up, attention drifts toward it. The frustration from the old project doesn't vanish, but something new is always exciting again.
 
-Some of those attempts look fairly naive to me now. I made cute AI-generated videos and tried to imitate the way commercial products advertised themselves on social media. At the time, I thought I was learning marketing.
+The second project didn't start well either; I couldn't even say clearly who it was for. This time I didn't design a growth strategy in advance. I just kept improving the experience and occasionally wrote about the process online.
 
-Mostly, I was learning how little I understood about why people pay attention to something in the first place.
+What changed my mind wasn't a well-designed campaign. If anything, it was the opposite. While I was pushing hard, almost nobody came. Later I got busy with other work and left the project alone for a while—and users slowly started arriving anyway.
 
-For a long time, I held on to a comforting explanation: people simply had not understood the value of the product yet.
+The growth was nothing to brag about. But it was the first time I could see, concretely, that some growth has little to do with which marketing move you finally got right: there was a need sitting behind the product all along, and the people who genuinely have it don't need to be educated about why it's useful.
 
-That explanation lets you keep almost everything else intact. The product is useful; the message just needs to be clearer. Maybe the landing page needs better copy. Maybe the demo needs to be shorter. Maybe you need to explain the idea from another angle.
+Since then, my picture of indie development has changed quite a bit, and AI has made the change starker. Code is easier to write now, which means the questions the technical difficulty used to cover up are standing there in the open: does anyone actually care about this problem? How do they cope with it today? Why would they switch? Why does someone say "that's interesting" and never come back the next day? Those questions are much harder than shipping a feature.
 
-Sometimes that is true.
+I used to think indie development was a wrestling match with technology. The longer I do it, the more it looks like a wrestling match with my own judgment. It's easy to overestimate a need because you find the problem interesting; to treat a few kind comments as validation; to treat constant product tweaks as progress; to treat a busy day as movement toward the right answer. And since there is always another feature to build, another page to redesign, another experiment to run, it's easy to never get around to the simpler, more uncomfortable possibility: maybe this matters less to other people than it does to me.
 
-But sometimes people understand perfectly well what you have built and still do not need it very much.
+Another product I worked on later showed me the same thing from a different angle. Much of it is just recording: writing down what happened, what I thought, what state I was in. Once, going back through older entries, I realized I'd been doing badly for a while without noticing. From inside, everything looked fine—there was work every day, problems getting solved, a sense of moving forward. Only from a distance could I see how much my judgment had been bent by that state. It felt a bit like waking from a dream that had lasted too long.
 
-It took me longer than I would like to admit to understand the difference.
+There's also a rarely discussed difficulty in working alone: almost nobody volunteers to warn you. No manager tells you the direction is off, no colleague questions the assumption in a meeting, no teammate notices you've been circling the same problem for weeks. That freedom is a large part of the appeal. Its other side is that every important judgment eventually lands back on you: is this worth another month? Am I persisting, or just unwilling to let go? Am I solving the problem in front of me, or just staying busy because the harder conclusion is uncomfortable?
 
-Eventually, I gave myself a deadline. If I still could not find an answer, I would move on to something else.
+So the longer I do this, the more I value things that let me look back. Data, a diary, old products, things I wrote, decisions I made. They don't necessarily tell me what to do next. They show me things that were invisible while I was living them.
 
-There was no dramatic decision behind it. Once another problem became interesting enough, my attention moved surprisingly quickly.
+People occasionally ask whether starting indie development at 35 is still worth it. I find it hard to give a clean yes or no. It isn't magical—being technically good doesn't summon users and revenue, and you can build something elegant and discover almost nobody wants it. But it isn't merciless either; no door slams shut at a particular age.
 
-The next project did not begin with much more certainty. I was not even sure who it was for.
+Looking back, the most valuable thing these years gave me isn't a stack of new technologies. It's slowly being able to tell apart things that used to look identical to me: a need that exists and a need I wish existed; something worth continuing and something I keep going only because I've already spent so much on it; what looks like progress and what is only motion; and, once I notice the direction might be wrong, whether I can admit it a little sooner than last time.
 
-This time, though, I spent less time trying to invent a growth strategy in advance. I mostly worked on the experience and occasionally wrote about the process online.
+If age brings any advantage, I doubt it's experience in the usual sense. More likely it's having been wrong enough times to be a bit more careful about where the time goes next.
 
-Then something happened that changed how I thought about all of this.
-
-When I had been actively trying to promote the project, very few people came. Later, I became busy with other work and left it mostly alone for a while.
-
-The user count started growing anyway.
-
-It was slow. Nothing about it looked like the growth curves people like to share online. But it was the first time I felt that a product was being pulled by something outside my own effort.
-
-Some people were finding it because they already had a reason to want it.
-
-That distinction has stayed with me.
-
-Marketing can help people discover something. It can make an idea easier to understand. But it cannot manufacture the underlying need forever.
-
-A product with a real reason to exist feels different from one that survives only while you are constantly pushing it in front of people.
-
-Since then, my view of indie development has changed quite a bit.
-
-AI has made this even more obvious.
-
-People sometimes talk about AI as if making software easier means coding is becoming less valuable. From where I sit, the more interesting change is that implementation is no longer able to hide the harder questions.
-
-You can build something much faster now.
-
-You still have to know whether anyone cares.
-
-You still have to understand how people currently deal with the problem, why they would change their behavior, and why someone who says “this is interesting” so often never comes back.
-
-Those are not engineering problems, at least not in the usual sense.
-
-When I began, I thought indie development was mostly a struggle with technology. Now I think a large part of it is a struggle with your own perception.
-
-It is easy to overestimate a need because you personally find the problem interesting. It is easy to treat a few positive comments as evidence. It is easy to mistake activity for progress, especially when you are capable of producing a lot of activity.
-
-There is always another feature to build, another page to redesign, another experiment to run.
-
-That can make it surprisingly easy to avoid a simpler possibility: perhaps the thing does not matter to other people as much as it matters to you.
-
-One of the products I worked on later made me think about this from a different direction.
-
-A central part of it is simply keeping a record: what happened, what you were thinking, what your state was at the time.
-
-Once, while looking through some older entries, I realized that I had been doing quite badly for a period of time without really noticing it while it was happening.
-
-From inside that period, life had still looked productive. I was working, solving problems and making decisions. There was no single moment when something had obviously gone wrong.
-
-Only later could I see how much my judgment had been affected by the state I was in.
-
-It felt a little like waking up from a dream.
-
-Working independently has a strange quality to it. There is very little external resistance.
-
-No manager tells you that you have spent too long on the wrong thing. No coworker questions an assumption in a meeting. No team member notices that you have been circling the same problem for weeks.
-
-That freedom is one of the reasons I like working this way.
-
-It is also one of its risks.
-
-Eventually, almost every important judgment comes back to you. You have to decide whether something deserves another month. You have to tell the difference between persistence and reluctance to let go. Sometimes you have to work out whether you are actually solving the problem in front of you or simply staying busy because the harder conclusion is uncomfortable.
-
-Over time, I have become more interested in having ways to look back.
-
-Old notes help. So do product decisions, usage data, unfinished ideas, things I wrote years ago.
-
-They do not necessarily tell me what I should do next. They are useful because they show me something that was difficult to see while I was living through it.
-
-In that sense, they become a kind of mirror.
-
-People occasionally ask whether starting indie development at 35 is still worth doing.
-
-I do not think there is a particularly satisfying yes-or-no answer.
-
-Indie development does not reward you simply because you are technically good. You can build something elegant and still discover that almost nobody wants it.
-
-But there is no particular age at which the door closes either.
-
-Looking back, the most useful thing I have gained from doing this is not a framework, a programming language, or even a specific product skill.
-
-I have become a little better at distinguishing between things that once looked almost identical to me.
-
-A need that exists and a need I want to exist.
-
-Something worth continuing and something I simply do not want to abandon.
-
-Progress and motion.
-
-And when I get those things wrong, I am a little quicker to admit it than I used to be.
-
-If getting older offers any advantage here, I am not sure it is experience in the usual sense.
-
-Maybe it is simply having been wrong enough times to become more careful about what you choose to keep doing.
-
-For independent work, that may matter more than being able to write the code.
+For independent work, that may matter more than another technology.

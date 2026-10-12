@@ -1,65 +1,36 @@
 ---
 import type { CollectionEntry } from 'astro:content';
-import { ui, path, type Locale } from '../i18n';
-interface Props {
+import { contentPath, type Locale } from '../i18n';
+const { item, locale } = Astro.props as {
   item: CollectionEntry<'projects'>;
   locale: Locale;
-  index: number;
-  placement?: string;
-}
-const { item, locale, index, placement = 'project_item' } = Astro.props;
-const t = ui[locale];
+};
+const cover = item.data.cover ?? item.data.hero;
+const titleId = `project-title-${item.data.slug}`;
 ---
 
-<article
-  class="grid gap-6 border-t border-line pt-7 pb-12 md:grid-cols-[0.7fr_1.3fr] md:gap-16 md:pt-9 md:pb-16"
->
-  <div class="flex flex-col items-start">
-    <span class="eyebrow mb-5 text-muted"
-      >{String(index + 1).padStart(2, '0')}
-      <span class="mx-3">/</span>
-      {item.data.year}
-      {
-        item.data.status === 'active' && (
-          <>
-            <span class="mx-3">/</span>
-            {t.live}
-          </>
-        )
-      }</span
-    ><h3 class="mb-4 font-display text-[34px] tracking-tight md:text-[46px]">
-      <a
-        href={path(locale, `projects/${item.data.slug}`)}
-        data-drip-placement={placement}
-        data-drip-product={item.data.slug}>{item.data.name}</a
-      >
-    </h3><p class="max-w-xs text-lg leading-relaxed">{item.data.statement}</p><p
-      class="mt-4 max-w-xs text-sm leading-relaxed text-muted"
-    >
-      {item.data.description}
-    </p><a
-      class="text-link mt-7 md:mt-auto md:pt-8"
-      href={path(locale, `projects/${item.data.slug}`)}
-      data-drip-placement={placement}
-      data-drip-product={item.data.slug}
-      >{t.read}<span class="arrow" aria-hidden="true">↗</span></a
-    >
-  </div>
-  <figure>
-    <a
-      href={path(locale, `projects/${item.data.slug}`)}
-      data-drip-placement={placement}
-      data-drip-product={item.data.slug}
-      aria-label={item.data.name}
-      class="flex w-full justify-center"
-      ><img
-        src={item.data.hero.src}
-        alt={item.data.hero.alt}
-        width={item.data.hero.width}
-        height={item.data.hero.height}
+<article class="gallery-project">
+  <a
+    class="gallery-project-link"
+    href={contentPath(locale, 'projects', item.data.slug)}
+    aria-labelledby={titleId}
+    data-drip-placement="project_item"
+    data-drip-product={item.data.slug}
+  >
+    <figure class="gallery-cover">
+      <img
+        src={cover.src}
+        alt={cover.alt}
+        width={cover.width}
+        height={cover.height}
         loading="lazy"
-        class="mx-auto block h-auto w-auto max-h-[520px] max-w-full object-contain"
-      /></a
-    >
-  </figure>
+        decoding="async"
+      />
+    </figure>
+    <div class="gallery-project-copy">
+      <h2 id={titleId}>{item.data.name}</h2>
+      <p class="gallery-statement">{item.data.statement}</p>
+      <p class="gallery-description">{item.data.description}</p>
+    </div>
+  </a>
 </article>

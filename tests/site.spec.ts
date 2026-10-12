@@ -1,164 +1,277 @@
 import { expect, test } from '@playwright/test';
 
 const sites = [
-  {
-    locale: 'zh',
-    home: '/zh/',
-    introTitle: '我是 Will。',
-    introDescription: '我做了几个用来记录东西的 App，也写日常里留意到的事。',
-    projects: [
-      { name: 'Yipa', slug: 'yipa' },
-      { name: '泡泡留言板', slug: 'bubbles' },
-      { name: '橘小记', slug: 'tablow' },
-    ],
-  },
-  {
-    locale: 'en',
-    home: '/',
-    introTitle: 'I’m Will.',
-    introDescription:
-      'I’ve made a few apps for recording things. I also write about what I notice in everyday life.',
-    projects: [
-      { name: 'Yipa', slug: 'yipa' },
-      { name: 'Huddle', slug: 'bubbles' },
-      { name: 'Tablow', slug: 'tablow' },
-    ],
-  },
+  { locale: 'zh', home: '/zh/' },
+  { locale: 'en', home: '/' },
 ] as const;
 
 for (const site of sites) {
-  test(`${site.locale} homepage introduces Will and all three works on mobile`, async ({
+  test(`${site.locale} homepage presents an untitled, normal-weight opening essay`, async ({
     page,
   }) => {
     await page.setViewportSize({ width: 375, height: 812 });
     await page.goto(site.home);
-    await expect(page.getByRole('heading', { level: 1 })).toHaveText(
-      site.introTitle,
-    );
-    await expect(page.locator('.home-description')).toHaveText(
-      site.introDescription,
-    );
-
-    const sections = page.locator('#main > section[aria-labelledby]');
-    await expect(sections).toHaveCount(4);
-    await expect(
-      page.locator('section[aria-labelledby="home-projects-title"]'),
-    ).toHaveCount(1);
-    await expect(page.locator('.overview-grid')).toHaveCount(0);
-
-    const sectionOrder = await sections.evaluateAll((elements) =>
-      elements.map((element) => element.getAttribute('aria-labelledby')),
-    );
-    expect(sectionOrder).toEqual([
-      'home-title',
-      'home-projects-title',
-      'home-notes-title',
-      'home-about-title',
-    ]);
-
-    const projects = page.locator(
-      'section[aria-labelledby="home-projects-title"] > article',
-    );
-    await expect(projects).toHaveCount(3);
-    for (const [index, project] of site.projects.entries()) {
-      const item = projects.nth(index);
-      const headingLink = item
-        .getByRole('heading', { name: project.name })
-        .getByRole('link');
-      await expect(headingLink).toBeVisible();
-      await expect(headingLink).toHaveAttribute(
-        'href',
-        new RegExp(`/projects/${project.slug}$`),
-      );
-      await expect(
-        item.locator('a[data-drip-placement="home_project_overview"]'),
-      ).toHaveCount(3);
-    }
+    await expect(page.getByRole('heading', { level: 1 })).toHaveCount(0);
     expect(
-      await page.evaluate(
-        () => document.documentElement.scrollWidth <= innerWidth,
-      ),
-    ).toBe(true);
+      await page.locator('.home-essay .prose > p').count(),
+    ).toBeGreaterThan(6);
+    await expect(page.locator('#main img, #main aside, footer')).toHaveCount(0);
+    await expect(page.locator('.home-essay .prose p').first()).toHaveCSS(
+      'font-weight',
+      '400',
+    );
+    await expect(page.locator('html')).toHaveCSS(
+      'background-color',
+      'rgb(255, 255, 255)',
+    );
+    const contact = page.locator('.home-contact a');
+    await contact.scrollIntoViewIfNeeded();
+    await contact.click();
+    await expect(page).toHaveURL(
+      `${site.locale === 'zh' ? '/zh/about' : '/about'}#contact`,
+    );
+    await expect(
+      page.getByRole('link', { name: 'hello@willopc.com' }),
+    ).toBeVisible();
   });
 }
 
-test('language navigation keeps the homepage and project entry reachable', async ({
+test('night theme follows the system until a manual choice is stored', async ({
+  page,
+}) => {
+  await page.emulateMedia({ colorScheme: 'dark' });
+  await page.goto('/');
+  const html = page.locator('html');
+  const toggle = page.getByRole('button', { name: 'Switch color theme' });
+  await expect(html).toHaveAttribute('data-theme', 'dark');
+  await expect(html).toHaveCSS('background-color', 'rgb(20, 20, 23)');
+  await expect(page.locator('.home-contact a')).toHaveCSS(
+    'color',
+    'rgb(226, 104, 92)',
+  );
+  await expect(toggle).toHaveAttribute('aria-pressed', 'true');
+  await toggle.click();
+  await expect(html).toHaveAttribute('data-theme', 'light');
+  await expect(html).toHaveCSS('background-color', 'rgb(255, 255, 255)');
+  await expect(page.locator('.home-contact a')).toHaveCSS(
+    'color',
+    'rgb(192, 57, 43)',
+  );
+  await expect(toggle).toHaveAttribute('aria-pressed', 'false');
+  await page.reload();
+  await expect(html).toHaveCSS('background-color', 'rgb(255, 255, 255)');
+});
+
+test('site header stays on top while scrolling behind frosted glass', async ({
+  page,
+}) => {
+  await page.goto('/zh/notes/why-i-cant-read-your-yipa-notes');
+  const header = page.locator('.site-header');
+  await expect(header).toHaveCSS('position', 'sticky');
+  await expect(header).toHaveCSS(
+    'background-color',
+    /rgba\(255, 255, 255, 0\.72\)/,
+  );
+  const backdrop = await header.evaluate((element) => {
+    const style = getComputedStyle(element);
+    return (
+      style.getPropertyValue('backdrop-filter') ||
+      style.getPropertyValue('-webkit-backdrop-filter')
+    );
+  });
+  expect(backdrop).toContain('blur');
+  await page.evaluate(() => window.scrollTo(0, 800));
+  await expect
+    .poll(() => page.evaluate(() => window.scrollY))
+    .toBeGreaterThan(400);
+  await expect
+    .poll(() =>
+      header.evaluate((element) =>
+        Math.round(element.getBoundingClientRect().top),
+      ),
+    )
+    .toBe(0);
+});
+
+test('typography pairs serif headings with reading-tuned body text', async ({
+  page,
+}) => {
+  await page.goto('/zh/notes/why-i-cant-read-your-yipa-notes');
+  await expect(page.locator('article h1')).toHaveCSS(
+    'font-family',
+    /Newsreader Variable/,
+  );
+  await expect
+    .poll(() =>
+      page.evaluate(() =>
+        document.fonts.check('500 1em "Newsreader Variable"', 'Notes'),
+      ),
+    )
+    .toBe(true);
+  await expect
+    .poll(() =>
+      page.evaluate(() =>
+        document.fonts.check('500 1em "Noto Serif SC Variable"', '为什么'),
+      ),
+    )
+    .toBe(true);
+  await expect(page.locator('article .prose p').first()).toHaveCSS(
+    'line-height',
+    /^35\.(1|09)/,
+  );
+  await page.goto('/notes/why-i-cant-read-your-yipa-notes');
+  await expect(page.locator('article .prose p').first()).toHaveCSS(
+    'line-height',
+    /^33\.(3|29)/,
+  );
+  await page.goto('/zh/notes');
+  await expect(page.locator('.entry-date').first()).toHaveCSS(
+    'font-variant-numeric',
+    'tabular-nums',
+  );
+});
+
+test('language navigation preserves context and all projects remain reachable', async ({
   page,
 }) => {
   await page.goto('/zh/');
   await page.getByRole('link', { name: 'Switch to English' }).click();
   await expect(page).toHaveURL('/');
-  await page.getByRole('heading', { name: 'Yipa' }).getByRole('link').click();
-  await expect(page).toHaveURL('/projects/yipa');
+  await page.getByRole('link', { name: 'Projects', exact: true }).click();
+  await expect(page).toHaveURL('/projects');
+  await page.getByRole('link', { name: 'Tablow', exact: true }).click();
+  await expect(page).toHaveURL('/projects/tablow');
+  await expect(
+    page.locator('article header a[href="https://tablow.willopc.com"]'),
+  ).toBeVisible();
+  await page.getByRole('link', { name: '切换到中文' }).click();
+  await expect(page).toHaveURL('/zh/projects/tablow');
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('橘小记');
+  for (const [route, names] of [
+    ['/projects', ['Yipa', 'Huddle', 'Tablow']],
+    ['/zh/projects', ['Yipa', '泡泡留言板', '橘小记']],
+  ] as const) {
+    await page.goto(route);
+    await expect(page.locator('.gallery-project')).toHaveCount(3);
+    for (const name of names) {
+      const card = page.getByRole('link', { name, exact: true });
+      await card.scrollIntoViewIfNeeded();
+      await expect(card.getByRole('img')).toBeVisible();
+      await expect
+        .poll(() =>
+          card
+            .getByRole('img')
+            .evaluate((image: HTMLImageElement) => image.naturalWidth),
+        )
+        .toBeGreaterThan(0);
+    }
+  }
+  await page
+    .getByRole('link', { name: 'Yipa', exact: true })
+    .getByRole('img')
+    .click();
+  await expect(page).toHaveURL('/zh/projects/yipa');
   await expect(
     page.locator('article header a[href="https://yipa.willopc.com"]'),
   ).toBeVisible();
-
-  await page.goto('/zh/projects');
-  await expect(
-    page.locator('article a[data-drip-placement="project_item"]').first(),
-  ).toBeVisible();
-  await expect(
-    page.locator('article a[data-drip-placement="home_project_overview"]'),
-  ).toHaveCount(0);
 });
 
-test('keyboard navigation reaches the first project from the skip link', async ({
+test('keyboard navigation reaches the contact link from the skip link', async ({
   page,
 }) => {
   await page.goto('/zh/');
   const nextLink = test.info().project.name === 'webkit' ? 'Alt+Tab' : 'Tab';
   await page.keyboard.press(nextLink);
   await expect(page.getByRole('link', { name: '跳至正文' })).toBeFocused();
-  const firstProject = page
-    .locator('section[aria-labelledby="home-projects-title"] article h3 a')
-    .first();
-  let reachedProject = false;
+  const contact = page.locator('.home-contact a');
+  let reachedContact = false;
   for (let step = 0; step < 12; step += 1) {
     await page.keyboard.press(nextLink);
     if (
-      await firstProject.evaluate(
-        (element) => element === document.activeElement,
-      )
+      await contact.evaluate((element) => element === document.activeElement)
     ) {
-      reachedProject = true;
+      reachedContact = true;
       break;
     }
   }
-  expect(reachedProject).toBe(true);
+  expect(reachedContact).toBe(true);
+  await page.keyboard.press('Enter');
+  await expect(page).toHaveURL('/zh/about#contact');
 });
 
-test('core pages remain readable across supported widths', async ({ page }) => {
-  for (const width of [320, 375, 768, 1440]) {
+test('top navigation opens writing and the article language switch preserves the reader', async ({
+  page,
+}) => {
+  await page.goto('/zh/');
+  await page.getByRole('link', { name: '文章', exact: true }).click();
+  await expect(page).toHaveURL('/zh/notes');
+  await expect(page.locator('[data-writing-item]')).toHaveCount(4);
+  await page
+    .locator(
+      '[data-drip-placement="note_item"][href="/zh/notes/why-i-cant-read-your-yipa-notes"]',
+    )
+    .click();
+  await expect(page).toHaveURL('/zh/notes/why-i-cant-read-your-yipa-notes');
+  await expect(page.locator('article .prose p').first()).toBeVisible();
+  await expect(page.locator('article .prose p').first()).toHaveCSS(
+    'font-weight',
+    '400',
+  );
+  await page.getByRole('link', { name: 'Switch to English' }).click();
+  await expect(page).toHaveURL('/notes/why-i-cant-read-your-yipa-notes');
+  await expect(page.locator('html')).toHaveAttribute('lang', 'en');
+  await expect(page.locator('article time').first()).toBeVisible();
+  await page.getByRole('link', { name: 'About', exact: true }).click();
+  await expect(page).toHaveURL('/about');
+  await expect(
+    page.getByRole('link', { name: 'hello@willopc.com' }),
+  ).toHaveAttribute('href', 'mailto:hello@willopc.com');
+});
+
+test('all page types fit supported widths and retain readable content', async ({
+  page,
+}) => {
+  for (const width of [320, 375, 768, 1024, 1440]) {
     await page.setViewportSize({ width, height: 900 });
-    for (const route of ['/zh/', '/', '/zh/projects/yipa']) {
+    for (const route of [
+      '/zh/',
+      '/',
+      '/zh/about',
+      '/about',
+      '/zh/projects',
+      '/projects',
+      '/zh/notes',
+      '/notes',
+      '/zh/projects/yipa',
+      '/projects/bubbles',
+      '/zh/projects/tablow',
+      '/zh/notes/why-i-cant-read-your-yipa-notes',
+      '/notes/why-i-cant-read-your-yipa-notes',
+      '/zh/404',
+      '/404',
+    ]) {
       await page.goto(route);
-      await expect(page.getByRole('heading', { level: 1 })).toHaveCount(1);
+      await expect(page.getByRole('heading', { level: 1 })).toHaveCount(
+        route === '/' || route === '/zh/' ? 0 : 1,
+      );
       expect(
         await page.evaluate(
           () => document.documentElement.scrollWidth <= innerWidth,
         ),
         `${route} overflows at ${width}px`,
       ).toBe(true);
+      const clippedText = await page
+        .locator('#main h1, #main h2, #main h3, #main p')
+        .evaluateAll(
+          (elements) =>
+            elements.filter((element) => {
+              const box = element.getBoundingClientRect();
+              return (
+                box.width > 0 && (box.left < -1 || box.right > innerWidth + 1)
+              );
+            }).length,
+        );
+      expect(clippedText, `${route} clips text at ${width}px`).toBe(0);
     }
-  }
-  await page.setViewportSize({ width: 768, height: 900 });
-  for (const route of [
-    '/zh/notes',
-    '/zh/projects',
-    '/zh/about',
-    '/zh/notes/remember-not-improve',
-    '/notes',
-    '/projects',
-    '/about',
-  ]) {
-    await page.goto(route);
-    await expect(page.getByRole('heading', { level: 1 })).toHaveCount(1);
-    expect(
-      await page.evaluate(
-        () => document.documentElement.scrollWidth <= innerWidth,
-      ),
-      `${route} overflows at 768px`,
-    ).toBe(true);
   }
 });

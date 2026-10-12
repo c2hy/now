@@ -10,6 +10,11 @@ const walk = (dir) =>
     e.isDirectory() ? walk(join(dir, e.name)) : [join(dir, e.name)],
   );
 const files = walk('dist').filter((f) => f.endsWith('.html'));
+// The opening essay is intentionally untitled: no h1 on the home pages.
+const untitledPages = new Set([
+  join('dist', 'index.html'),
+  join('dist', 'zh', 'index.html'),
+]);
 const canonicals = new Set();
 const pngDimensions = (file) => {
   const buffer = readFileSync(file);
@@ -20,7 +25,10 @@ const pngDimensions = (file) => {
   );
   return { width: buffer.readUInt32BE(16), height: buffer.readUInt32BE(20) };
 };
-const contentFiles = walk('src/content').filter((f) => f.endsWith('.md'));
+const contentFiles = walk('src/content').filter(
+  (f) =>
+    f.endsWith('.md') && (f.includes('/writing/') || f.includes('/projects/')),
+);
 const sourceEntries = contentFiles.map((file) => {
   const source = readFileSync(file, 'utf8').split('---')[1];
   const data = parse(source);
@@ -58,13 +66,10 @@ for (const file of files) {
   const html = readFileSync(file, 'utf8');
   assert.equal(
     (html.match(/<h1(?:\s|>)/g) || []).length,
-    1,
+    untitledPages.has(file) ? 0 : 1,
     `${file}: h1 count`,
   );
-  assert.match(
-    html,
-    new RegExp(`name="robots" content="${robotsContent}"`),
-  );
+  assert.match(html, new RegExp(`name="robots" content="${robotsContent}"`));
   const canonical = html.match(/rel="canonical" href="([^"]+)"/)?.[1];
   assert(canonical && !canonicals.has(canonical), `${file}: canonical`);
   canonicals.add(canonical);

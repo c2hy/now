@@ -1,8 +1,9 @@
 import { readdirSync, readFileSync } from 'node:fs';
 import { extname, resolve, sep } from 'node:path';
+import { openSync, type Font } from 'fontkit';
 import sharp from 'sharp';
+import { getEntry } from 'astro:content';
 import {
-  ui,
   writingCategoryLabels,
   type Locale,
   type WritingCategory,
@@ -31,72 +32,112 @@ interface OgLayout {
 // Astro bundles static endpoints before prerendering them. Use the build cwd
 // so font and public asset paths still point at the project after bundling.
 const projectRoot = resolve(process.cwd());
-const notoFontDirectory = resolve(
-  projectRoot,
-  'node_modules/@fontsource-variable/noto-sans-sc/files',
-);
-const fontSources = [
-  {
-    family: 'Inter',
-    file: resolve(
-      projectRoot,
-      'node_modules/@fontsource-variable/inter/files/inter-latin-wght-normal.woff2',
-    ),
-  },
-  ...readdirSync(notoFontDirectory)
-    .filter((file) => file.endsWith('.woff2'))
-    .map((file, index) => ({
-      family: `NotoSubset${index}`,
-      file: resolve(notoFontDirectory, file),
-    })),
+
+// sharp's bundled librsvg cannot load data-URL @font-face fonts, so all text
+// is converted to SVG outlines with fontkit. Stacks mirror the site's
+// --font-heading (Newsreader + Noto Serif SC) and --font-sans (Inter +
+// Noto Sans SC) using the static 400 files for deterministic rendering.
+const staticFontDirectory = (pkg: string) =>
+  resolve(projectRoot, `node_modules/@fontsource/${pkg}/files`);
+const openFont = (path: string): Font => openSync(path) as Font;
+const latinFont = (pkg: string) =>
+  openFont(resolve(staticFontDirectory(pkg), `${pkg}-latin-400-normal.woff2`));
+const cjkSubsets = (pkg: string) =>
+  readdirSync(staticFontDirectory(pkg))
+    .filter((file) => file.endsWith('400-normal.woff2'))
+    .map((file) => openFont(resolve(staticFontDirectory(pkg), file)));
+
+const serifStack: Font[] = [
+  latinFont('newsreader'),
+  ...cjkSubsets('noto-serif-sc'),
 ];
-const fontFamily = fontSources.map(({ family }) => family).join(', ');
-const notoFontFamily = fontSources
-  .slice(1)
-  .map(({ family }) => family)
-  .join(', ');
-const fontFaceCss = fontSources
-  .map(({ family, file }) => {
-    const data = readFileSync(file).toString('base64');
-    return `@font-face{font-family:${family};font-style:normal;font-weight:100 900;src:url(data:font/woff2;base64,${data}) format('woff2');}`;
-  })
-  .join('');
+const sansStack: Font[] = [latinFont('inter'), ...cjkSubsets('noto-sans-sc')];
 
-const escapeXml = (value: string) =>
-  value.replace(
-    /[&<>"']/g,
-    (character) =>
-      ({
-        '&': '&amp;',
-        '<': '&lt;',
-        '>': '&gt;',
-        '"': '&quot;',
-        "'": '&apos;',
-      })[character] ?? character,
-  );
+const fontForCharacter = (stack: Font[], character: string) => {
+  const codePoint = character.codePointAt(0) ?? 0;
+  for (const font of stack) {
+    if (font.characterSet?.includes(codePoint)) return font;
+  }
+  return stack[0];
+};
 
-const isCjk = (value: string) =>
-  /[\u1100-\u11ff\u2e80-\u2fff\u3000-\u303f\u3040-\u30ff\u3100-\u312f\u3130-\u318f\u31a0-\u31bf\u3200-\u32ff\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff]/u.test(
-    value,
-  );
+const measureText = (
+  stack: Font[],
+  text: string,
+  fontSize: number,
+  letterSpacing = 0,
+) => {
+  let width = 0;
+  for (const character of Array.from(text)) {
+    const font = fontForCharacter(stack, character);
+    const glyph = font.layout(character).glyphs[0];
+    width += (glyph.advanceWidth * fontSize) / font.unitsPerEm + letterSpacing;
+  }
+  return width;
+};
 
-const estimatedWidth = (value: string, fontSize: number) =>
-  Array.from(value).reduce(
-    (width, character) =>
-      width +
-      (isCjk(character)
-        ? fontSize
-        : /\s/u.test(character)
-          ? fontSize * 0.3
-          : fontSize * 0.56),
-    0,
-  );
+const commandsToPathData = (
+  commands: ReadonlyArray<{
+    command: string;
+    args: number[];
+  }>,
+  scale: number,
+  offsetX: number,
+  baselineY: number,
+) =>
+  commands
+    .map(({ command, args }) => {
+      const point = (index: number) =>
+        `${(offsetX + args[index] * scale).toFixed(2)} ${(
+          baselineY -
+          args[index + 1] * scale
+        ).toFixed(2)}`;
+      switch (command) {
+        case 'moveTo':
+          return `M${point(0)}`;
+        case 'lineTo':
+          return `L${point(0)}`;
+        case 'quadraticCurveTo':
+          return `Q${point(0)} ${point(2)}`;
+        case 'bezierCurveTo':
+          return `C${point(0)} ${point(2)} ${point(4)}`;
+        case 'closePath':
+          return 'Z';
+        default:
+          return '';
+      }
+    })
+    .join('');
+
+const textToPathData = (
+  stack: Font[],
+  text: string,
+  fontSize: number,
+  x: number,
+  baselineY: number,
+  letterSpacing = 0,
+) => {
+  const segments: string[] = [];
+  let cursorX = x;
+  for (const character of Array.from(text)) {
+    const font = fontForCharacter(stack, character);
+    const glyph = font.layout(character).glyphs[0];
+    const scale = fontSize / font.unitsPerEm;
+    segments.push(
+      commandsToPathData(glyph.path.commands, scale, cursorX, baselineY),
+    );
+    cursorX += (glyph.advanceWidth * fontSize) / font.unitsPerEm + letterSpacing;
+  }
+  const width = cursorX - x - (text.length ? letterSpacing : 0);
+  return { data: segments.join(''), width };
+};
 
 const wrapText = (
   value: string,
   locale: Locale,
   fontSize: number,
   maxWidth: number,
+  letterSpacing: number,
 ) => {
   const units =
     locale === 'zh'
@@ -120,19 +161,26 @@ const wrapText = (
   for (const unit of units) {
     const candidate =
       locale === 'zh' ? `${line}${unit}` : `${line}${line ? ' ' : ''}${unit}`;
-    if (line && estimatedWidth(candidate, fontSize) > maxWidth) {
+    if (
+      line &&
+      measureText(serifStack, candidate, fontSize, letterSpacing) > maxWidth
+    ) {
       lines.push(line);
       line = unit;
       continue;
     }
-    if (!line && estimatedWidth(unit, fontSize) > maxWidth) {
+    if (
+      !line &&
+      measureText(serifStack, unit, fontSize, letterSpacing) > maxWidth
+    ) {
       const characters = Array.from(unit);
       let characterLine = '';
       for (const character of characters) {
         const characterCandidate = `${characterLine}${character}`;
         if (
           characterLine &&
-          estimatedWidth(characterCandidate, fontSize) > maxWidth
+          measureText(serifStack, characterCandidate, fontSize, letterSpacing) >
+            maxWidth
         ) {
           lines.push(characterLine);
           characterLine = character;
@@ -149,26 +197,41 @@ const wrapText = (
   return lines;
 };
 
-const fitTitle = (title: string, locale: Locale, maxWidth: number) => {
+const fitTitle = (
+  title: string,
+  locale: Locale,
+  maxWidth: number,
+  letterSpacing: number,
+) => {
   for (
     let fontSize = locale === 'zh' ? 76 : 82;
     fontSize >= 38;
     fontSize -= 2
   ) {
-    const lines = wrapText(title, locale, fontSize, maxWidth);
+    const lines = wrapText(title, locale, fontSize, maxWidth, letterSpacing);
     const lineHeight = Math.round(fontSize * (locale === 'zh' ? 1.27 : 1.12));
     if ((lines.length - 1) * lineHeight <= 255) return { fontSize, lines };
   }
-  return { fontSize: 38, lines: wrapText(title, locale, 38, maxWidth) };
+  return {
+    fontSize: 38,
+    lines: wrapText(title, locale, 38, maxWidth, letterSpacing),
+  };
 };
 
-const textLines = (lines: string[], x: number, y: number, lineHeight: number) =>
+const titlePaths = (lines: string[], x: number, firstBaseline: number, fontSize: number, lineHeight: number, letterSpacing: number) =>
   lines
-    .map(
-      (line, index) =>
-        `<tspan x="${x}" y="${y + index * lineHeight}">${escapeXml(line)}</tspan>`,
-    )
-    .join('');
+    .map((line, index) => {
+      const { data } = textToPathData(
+        serifStack,
+        line,
+        fontSize,
+        x,
+        firstBaseline + index * lineHeight,
+        letterSpacing,
+      );
+      return data;
+    })
+    .join(' ');
 
 const coverDataUrl = (src: string) => {
   if (!src.startsWith('/'))
@@ -193,53 +256,59 @@ const coverDataUrl = (src: string) => {
   return `data:${mime};base64,${buffer.toString('base64')}`;
 };
 
-const svgFor = ({
-  locale,
-  title,
-  kind,
-  footer,
-  coverDataUrl: cover,
-}: OgLayout) => {
-  const section =
-    kind === 'site'
-      ? locale === 'zh'
-        ? '首页'
-        : 'HOME'
-      : locale === 'zh'
-        ? '记录'
-        : 'NOTES';
-  const heading =
-    kind === 'site'
-      ? `<text x="88" y="326" fill="#111111" font-family="${fontFamily}" font-size="112" font-weight="650" letter-spacing="${locale === 'zh' ? 0 : -5}">${escapeXml(title)}</text>
-       <text fill="#505050" font-family="${fontFamily}" font-size="29" font-weight="450">${textLines(wrapText(ui[locale].homeIntroDescription, locale, 29, 1000), 88, 414, 43)}</text>`
-      : (() => {
-          const { fontSize, lines } = fitTitle(
-            title,
-            locale,
-            cover ? 660 : 1020,
-          );
-          const lineHeight = Math.round(
-            fontSize * (locale === 'zh' ? 1.27 : 1.12),
-          );
-          return `<text fill="#111111" font-family="${fontFamily}" font-size="${fontSize}" font-weight="650" letter-spacing="${locale === 'zh' ? 0 : -1.8}">${textLines(lines, 88, 265, lineHeight)}</text>`;
-        })();
-  const coverMarkup =
-    cover && kind === 'article'
-      ? `<rect x="814" y="176" width="298" height="340" fill="#f0f0ef"/><image href="${cover}" x="814" y="176" width="298" height="340" preserveAspectRatio="xMidYMid slice"/>`
-      : '';
+const svgFor = ({ locale, title, footer, coverDataUrl: cover }: OgLayout) => {
+  const letterSpacing = locale === 'zh' ? 0 : -1;
+  const { fontSize, lines } = fitTitle(title, locale, cover ? 660 : 1020, letterSpacing);
+  const lineHeight = Math.round(fontSize * (locale === 'zh' ? 1.27 : 1.12));
+  const coverMarkup = cover
+    ? `<image href="${cover}" x="814" y="176" width="298" height="340" preserveAspectRatio="xMidYMid slice"/>`
+    : '';
+
+  // Brand wordmark: serif, with a red dot — each part rendered from its own
+  // glyph outlines at the position the previous part ended.
+  let brandX = 76;
+  const brandParts: string[] = [];
+  for (const [part, fill] of [
+    ['Will', '#343940'],
+    ['.', '#c0392b'],
+    ['OPC', '#343940'],
+  ] as const) {
+    const { data, width } = textToPathData(
+      serifStack,
+      part,
+      28,
+      brandX,
+      94,
+      -0.5,
+    );
+    brandParts.push(`<path d="${data}" fill="${fill}"/>`);
+    brandX += width + (part.length ? -0.5 : 0);
+  }
+
+  const titleOutlines = titlePaths(
+    lines,
+    76,
+    265,
+    fontSize,
+    lineHeight,
+    letterSpacing,
+  );
+  const footerLeft = textToPathData(sansStack, footer, 17, 76, 575);
+  const footerRight = textToPathData(
+    sansStack,
+    'willopc.com',
+    17,
+    1112 - measureText(sansStack, 'willopc.com', 17),
+    575,
+  );
 
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${OG_WIDTH}" height="${OG_HEIGHT}" viewBox="0 0 ${OG_WIDTH} ${OG_HEIGHT}">
-  <style>${fontFaceCss}</style>
-  <rect width="${OG_WIDTH}" height="${OG_HEIGHT}" fill="#fafafa"/>
-  <text x="88" y="94" fill="#111111" font-family="Inter" font-size="42" font-weight="700" letter-spacing="-1.5">WILL.OPC</text>
-  <text x="1112" y="90" text-anchor="end" fill="#6f6f6f" font-family="${notoFontFamily}" font-size="17" font-weight="600" letter-spacing="2">${escapeXml(section)}</text>
-  <line x1="88" y1="128" x2="1112" y2="128" stroke="#111111" stroke-width="2"/>
-  <rect x="88" y="159" width="64" height="7" fill="#e0301e"/>
+  <rect width="${OG_WIDTH}" height="${OG_HEIGHT}" fill="#ffffff"/>
+  ${brandParts.join('\n  ')}
   ${coverMarkup}
-  ${heading}
-  <line x1="88" y1="544" x2="1112" y2="544" stroke="#d6d6d6" stroke-width="2"/>
-  <text x="88" y="586" fill="#6f6f6f" font-family="${fontFamily}" font-size="17" font-weight="500">${escapeXml(footer)}</text>
-  <text x="1112" y="586" text-anchor="end" fill="#6f6f6f" font-family="Inter" font-size="17" font-weight="500">WILLOPC.COM</text>
+  <path d="${titleOutlines}" fill="#343940"/>
+  <path d="${footerLeft.data}" fill="#6b7482"/>
+  <path d="${footerRight.data}" fill="#6b7482"/>
 </svg>`;
 };
 
@@ -256,15 +325,21 @@ const renderArticle = (data: ArticleOgData, cover?: string) =>
     }),
   );
 
-export const renderSiteOg = (locale: Locale) =>
-  renderSvg(
+export const renderSiteOg = async (locale: Locale) => {
+  const home = await getEntry('home', locale);
+  if (!home) throw new Error(`Missing ${locale} opening essay`);
+  return renderSvg(
     svgFor({
       locale,
-      title: ui[locale].homeIntroTitle,
+      title: home.data.title,
       kind: 'site',
-      footer: locale === 'zh' ? '记录 / 作品' : 'NOTES / PROJECTS',
+      footer:
+        locale === 'zh'
+          ? 'Will · 上海 · 独立开发者'
+          : 'Will · Shanghai · Independent developer',
     }),
   );
+};
 
 export const renderArticleOg = async (data: ArticleOgData) => {
   let cover: string | undefined;

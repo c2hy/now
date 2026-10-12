@@ -1,12 +1,23 @@
 ---
 name: 'Huddle'
 statement: 'Share everyday life with just the right people.'
-description: 'Different relationships can live in separate spaces, sharing the everyday moments that belong to them instead of crowding into one public feed.'
+description: 'A WeChat mini program. The more contacts we gather, the less we dare to post. Huddle gives each relationship its own space—a quick photo, a small update, shared with just the right people.'
 year: 2026
 order: 1
 featured: true
 status: 'active'
-hero: { 'src': '/images/projects/huddle-landscape-en.png', 'alt': 'Huddle landscape graphic with a Chinese-language moment detail screen', 'width': 2400, 'height': 1260 }
+hero:
+  {
+    'src': '/images/projects/huddle-landscape-en.png',
+    'alt': 'Huddle landscape graphic with a Chinese-language moment detail screen',
+    'width': 2400,
+    'height': 1260,
+  }
+cover:
+  src: /images/project-covers/bubbles-v1.webp
+  alt: A blue paper clip connects a few everyday photographs
+  width: 1200
+  height: 800
 links: []
 locale: 'en'
 slug: 'bubbles'
@@ -15,18 +26,20 @@ translationKey: 'bubbles'
 
 ## Why I made this
 
-We share different histories, ways of speaking, and context with different people. Yet many social products still place those otherwise distinct relationships inside the same feed.
+The more contacts we gather on WeChat, the less we dare to post. The people who see a post are exactly the ones who affect our real lives. Before posting, you think it over: who might see this, what they might think. So many things simply go unsaid.
 
-Huddle began as a place to leave messages. As people started posting photos, recording ordinary days, and replying to one another, it gradually became a small place a group could share.
+Huddle is a WeChat mini program that gives each relationship its own space: one space for family, another for old friends. A space holds only the people you put in it, and what you post there is seen only by them.
 
-## What it became
+It began as a place to leave messages. As people started posting photos, recording ordinary days, and replying to one another, it gradually became a small place a group could share.
 
-In Huddle, each space belongs to a particular group. People can post moments, leave replies, and return later to see what has been happening among them.
+## In each space, only the people you choose
 
-The space itself gives its people and posts their context. What Huddle tries to preserve is not the scale of a feed, but the sense of who an everyday moment belongs with.
+Each space holds only the people you want to share with. Post moments, leave replies, and come back later to see what everyone has been up to.
+
+What Huddle tries to preserve is not the scale of a feed, but the sense of who an everyday moment belongs with.
 
 ## Selected details
 
-- Give each space to a particular group rather than making it a category inside a public square.
-- Let the same person join different spaces, with relationships and shared history providing the context.
-- Preserve everyday posts as moments the group can continue to reply to and revisit.
+- The unit of sharing is a space: one space, one relationship.
+- Join different spaces, each with its own people and shared history.
+- Posts stay in the space, ready for replies and revisits.
