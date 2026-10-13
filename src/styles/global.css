@@ -209,10 +209,14 @@ h1 {
 :lang(en) .prose {
   line-height: 1.85;
 }
+/* WebKit's text-wrap: pretty balancer断行对 CJK 过于激进（每行提前约 2 字换行），
+   因此仅对拉丁文段落启用。 */
+:lang(en) .prose p {
+  text-wrap: pretty;
+}
 .prose p {
   margin: 0 0 1.25em;
   font-weight: 400;
-  text-wrap: pretty;
 }
 .prose > :last-child,
 .prose section > :last-child {
