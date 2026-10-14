@@ -50,6 +50,7 @@ const projects = defineCollection({
   schema: z.object({
     ...base,
     name: z.string(),
+    seoTitle: z.string().optional(),
     description: z.string(),
     statement: z.string(),
     translationKey: z.string(),
@@ -58,6 +59,7 @@ const projects = defineCollection({
     featured: z.boolean(),
     status: z.enum(['active', 'maintained', 'archived']).optional(),
     hero: projectImage,
+    ogImage: projectImage.optional(),
     cover: projectImage.optional(),
     links: z
       .array(

@@ -40,7 +40,7 @@ const browserTitle =
     : resolvedTitle;
 const dripEndpoint =
   import.meta.env.PUBLIC_DRIP_ENDPOINT?.trim() ||
-  'https://drip-api.hyperge.top/v1/events';
+  'https://drip-api.willopc.com/v1/events';
 const dripWriteKey = import.meta.env.PUBLIC_DRIP_WRITE_KEY?.trim();
 const dripEnabled = import.meta.env.PUBLIC_DRIP_ENABLED !== 'false';
 const dripConfigured = import.meta.env.PROD && dripEnabled && !!dripWriteKey;

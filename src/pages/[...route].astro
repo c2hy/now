@@ -57,6 +57,7 @@ const title =
   t[page as 'writing' | 'projects' | 'about'];
 const metaTitle =
   article?.data.seoTitle ??
+  project?.data.seoTitle ??
   (page === 'home'
     ? profile.siteName
     : page === 'writing'
@@ -90,7 +91,9 @@ const ogImage = article
       path: `/og/${locale}/notes/${article.data.slug}.png`,
       alt: article.data.title,
     }
-  : undefined;
+  : project?.data.ogImage
+    ? { path: project.data.ogImage.src, alt: project.data.ogImage.alt }
+    : undefined;
 const writing =
   page === 'writing' && !entry
     ? (await getCollection('writing'))

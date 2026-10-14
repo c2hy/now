@@ -1,12 +1,15 @@
 # 作品画廊封面
 
-生成方式：内置 image_gen 图像生成工具。三个项目分别生成，图片不包含文字，中英文共用同一张封面。
+Yipa 和泡泡留言板沿用内置 image_gen 生成的无文字封面，中英文共用。Tablow 于 2026-10-14 改用新版商店横版素材，中英文分别展示对应文案和真实记录卡片。
 
 成品：
 
 - Yipa：`public/images/project-covers/yipa-v1.webp`
 - 泡泡留言板 / Huddle：`public/images/project-covers/bubbles-v1.webp`
-- 橘小记 / Tablow：`public/images/project-covers/tablow-v1.webp`
+- 橘小记 / Tablow：`public/images/project-covers/tablow-v4-{zh,en}.webp`（1200×586，WebP quality 94）
+- Tablow 分享图：`public/images/projects/tablow-v4-{zh,en}.png`（1200×630，以暖白背景等比留边，无主体裁切）
+
+Tablow 原始素材来自 `../tablow/tablow-app/screenshots/aso/horizontal/{zh,en}/google-play-1024x500.png`，为热力图日期减轻后的版本。旧 `tablow-v1.webp` 保留为历史素材。以下 Tablow 生成提示词仅记录旧版来源。
 
 ## 完整生成提示词
 

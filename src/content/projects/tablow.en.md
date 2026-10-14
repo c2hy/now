@@ -1,23 +1,27 @@
 ---
 name: 'Tablow'
-statement: 'One tap. Remember it.'
-description: 'When was your last haircut, filter change, or dinner with a friend? A simple offline app: one tap keeps the date. Just enough features, so remembering never becomes a chore.'
+statement: 'Keep the moment. Know when it last happened.'
+seoTitle: 'Tablow — Track when you last did something'
+description: 'Track when you last did something with Tablow: haircuts, filter changes, chores and meetups. See time since your last entry, heatmaps, calendar and notes. Works offline, no account needed.'
 year: 2026
 order: 2
 featured: true
 status: 'active'
 hero:
-  {
-    'src': '/images/projects/tablow-og-en.png',
-    'alt': 'Tablow — Life Tracker · No Streaks',
-    'width': 2400,
-    'height': 1260,
-  }
-cover:
-  src: /images/project-covers/tablow-v1.webp
-  alt: One orange tile marks an occurrence among pale time tiles
+  src: /images/projects/tablow-v4-en.png
+  alt: 'Tablow horizontal artwork: Remember in a tap, know when it last happened, with a real walking record card'
   width: 1200
-  height: 800
+  height: 630
+ogImage:
+  src: /images/projects/tablow-v4-en.png
+  alt: 'Tablow horizontal artwork: Remember in a tap, know when it last happened, with a real walking record card'
+  width: 1200
+  height: 630
+cover:
+  src: /images/project-covers/tablow-v4-en.webp
+  alt: 'Tablow horizontal artwork: Remember in a tap, know when it last happened, with a real walking record card'
+  width: 1200
+  height: 586
 links:
   - label: 'Website'
     href: 'https://tablow.willopc.com'
@@ -33,32 +37,37 @@ slug: 'tablow'
 translationKey: 'tablow'
 ---
 
-## Some things are surprisingly hard to remember
+## When did you last do it? How long has it been?
 
-When did I last change my toothbrush? When did I last clean the air conditioner? How long has it been since I saw a friend? These questions seem small until I need an answer, and then my memory gives me little more than a guess.
+When was your last haircut? How long has that water filter been in use? When did you last change the bedsheets? Everyday things don't always happen on a schedule, and their dates are easy to forget.
 
-They don't always belong on a calendar. Most of the time, I just want to know when it last happened. That gap between what I remember and what actually happened is why I started building Tablow.
+Tablow is an offline life tracker for recording when you last did something, available on iPhone, iPad and Android. Create a tracker, tap when it happens, and keep the date and time. Come back later to see your latest entry and how much time has passed since then.
 
-## Just enough features
+## A last-time tracker for chores, haircuts and everyday moments
 
-Tablow does exactly one thing: when something happens, tap once, and the date is kept.
+Choose what you want to remember and customize each tracker's name, icon and color:
 
-Add much more, and remembering starts to get complicated—schedules to set, goals to define, streaks to maintain. What began as keeping a date quietly turns into a daily task. Tablow leaves all that out. Just enough features, so remembering stays simple and never becomes a source of anxiety.
+- **Personal care**: keep haircut and toothbrush replacement dates, then check how long it has been.
+- **Chores and home maintenance**: record bedsheet changes, air filter cleaning and water filter replacements so you can look up when each task was done.
+- **Walking and exercise**: log walks, runs or hikes and use a heatmap to see activity across time.
+- **Meetups and life events**: save a dinner with a friend, a museum visit or a trip, with a note to bring back the details.
 
-## Not everything needs to become a habit
+Keep a history of what actually happened, then decide when to do it again on your own terms.
 
-A to-do list reminds me what comes next. A calendar helps me choose when. A habit tracker looks for consistency. But plenty of ordinary things don't happen on a fixed schedule: changing a filter, getting a haircut, meeting a friend, or going for a hike.
+## One tap to log, a heatmap and calendar to look back
 
-Tablow keeps that history close at hand and leaves the decision to me.
+Each home card shows the activity, its latest record and the time since that entry. Tap the record button to log it; add a note when a timestamp alone isn't enough.
 
-## One tap to keep the date
+The heatmap uses color intensity to show how records are distributed across days. The monthly calendar brings a month's entries, monthly statistics and the selected day's records into one view. The history list keeps dates, times and notes together so you can find the details of a particular occasion.
 
-Create a tracker for something you want to remember. When it happens, tap once to record the date; add a note when the date alone doesn't tell the whole story. Later, open it to see the most recent date, how much time has passed, calendar marks, and the full history.
+## Offline, no account required, stored on your device
 
-Some records are practical: bedsheets, filters, haircuts. Others you just want to keep: dinner with a friend, a walk, a trip, a day at a museum. They don't need the same rhythm, and they don't need to become goals.
+You can record and browse without signing up or connecting to the internet. Records stay on your device by default. A one-time Premium purchase unlocks unlimited active trackers, import and export, backdated entries and date-range filters.
 
-## Keep a record, then get on with your day
+Tablow supports English, Simplified Chinese, Traditional Chinese, Japanese, German, French, Spanish, Portuguese and Korean. Follow the App Store or Google Play links on this page for app and purchase details.
 
-Tablow is a simple standalone app: records stay on your device by default, no account required, works offline. A one-time Premium unlock adds unlimited active trackers, import and export, backdated entries, and date-range filters.
+## Just enough features to remember
 
-Sometimes, knowing when something last happened is enough.
+I built Tablow because I wanted to know when something last happened without having to set up goals, schedules or daily streaks just to keep a date.
+
+Its features stay focused on recording and looking back: one tap to keep the time, notes when needed, and cards, heatmaps, calendar and history to find it again. Sometimes, knowing when it last happened is enough.
