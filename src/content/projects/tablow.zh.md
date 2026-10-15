@@ -1,30 +1,30 @@
 ---
 name: '橘小记'
-statement: '随手记录，随时知道上次。'
+statement: '记住上次是什么时候。'
 seoTitle: '橘小记 Tablow｜记录上次时间，查看距上次多久'
-description: '橘小记（Tablow）是记录上次时间的离线 App。理发、换滤芯、换床单或朋友见面，点一下记下日期和时间，自动显示距上次多久；用热力图、月历和备注回看生活记录。无需账号，数据保存在本机。'
+description: '理发、换床单、清洗滤网，发生时点一下记下日期和时间。下次打开橘小记（Tablow），查看上次是哪天、已经过去多久。无需账号，离线可用。'
 year: 2026
 order: 2
 featured: true
 status: 'active'
 hero:
-  src: /images/projects/tablow-2.1.1-zh.png
-  alt: 橘小记横版展示：随手记录，随时知道上次，搭配真实散步记录卡片
+  src: /images/projects/tablow-2.1.1-last-time-zh.png
+  alt: 橘小记横版展示：上次是哪天，距今多久了，搭配真实换床单记录卡片
   width: 1200
   height: 600
 ogImage:
-  src: /images/projects/tablow-2.1.1-zh.png
-  alt: 橘小记横版展示：随手记录，随时知道上次，搭配真实散步记录卡片
+  src: /images/projects/tablow-2.1.1-last-time-zh.png
+  alt: 橘小记横版展示：上次是哪天，距今多久了，搭配真实换床单记录卡片
   width: 1200
   height: 600
 cover:
-  src: /images/project-covers/tablow-2.1.1-zh.webp
-  alt: 橘小记横版展示：随手记录，随时知道上次，搭配真实散步记录卡片
+  src: /images/project-covers/tablow-2.1.1-last-time-zh.webp
+  alt: 橘小记横版展示：上次是哪天，距今多久了，搭配真实换床单记录卡片
   width: 1200
   height: 600
 links:
   - label: '官方网站'
-    href: 'https://tablow.willopc.com'
+    href: 'https://tablow.willopc.com/zh'
     type: 'website'
   - label: 'App Store'
     href: 'https://apps.apple.com/cn/app/tablow/id6747320605'
@@ -39,13 +39,13 @@ translationKey: 'tablow'
 
 ## 上次是什么时候？距上次多久了？
 
-上次理发是哪天？净水器滤芯用了多久？床单什么时候换的？有些生活小事没有固定周期，真正需要知道时，却很难想起上一次的日期。
+上次理发是哪天？净水器滤芯用了多久？床单什么时候换的？有些生活小事隔一阵才做一次，真正需要知道时，却很难想起上一次的日期。
 
 橘小记（Tablow）是一款记录上次时间的生活记录 App，适用于 iPhone、iPad 和 Android。为想记住的事情建一条小记，发生时点一下，留下日期和时间。下次打开，直接看到最近一次记录，以及距上次已经过去多久。
 
-## 从理发到换滤芯，记住没有固定周期的小事
+## 从理发、换床单开始
 
-你可以按自己的需要创建记录项，自定义名称、图标和颜色：
+先从一两件你确实想查日期的事开始。创建记录项，自定义名称、图标和颜色：
 
 - **个人护理**：记录理发、换牙刷的日期，查看距上次多久。
 - **家务与维护**：记录换床单、清洗空调滤网、换净水器滤芯，回看实际做过的时间。
@@ -62,7 +62,9 @@ translationKey: 'tablow'
 
 ## 无需账号，离线可用，记录留在本机
 
-橘小记无需注册账号，离线也能记录和查看，数据默认保存在自己的设备上。一次性购买 Premium 可解锁不限进行中的小记数量、导入导出、指定日期补记和历史日期区间筛选。
+橘小记无需注册账号，离线也能记录和查看，数据默认保存在自己的设备上。免费版可保留最多 8 条进行中的小记，记录今天发生的事、添加备注，并查看历史和月历。一次性购买 Premium 可解锁不限进行中的小记数量、导入导出、指定日期补记和历史日期区间筛选。
+
+记录不会自动云端同步。换机前需先用 Premium 导出备份，再在新设备导入。
 
 应用支持简体中文、繁体中文、英语、日语、德语、法语、西班牙语、葡萄牙语和韩语。你可以在本页的 App Store 或 Google Play 链接中查看应用与购买信息。
 

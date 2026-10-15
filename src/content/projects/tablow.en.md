@@ -1,25 +1,25 @@
 ---
 name: 'Tablow'
-statement: 'Keep the moment. Know when it last happened.'
+statement: 'Remember when you last did it.'
 seoTitle: 'Tablow — Track when you last did something'
-description: 'Track when you last did something with Tablow: haircuts, filter changes, chores and meetups. See time since your last entry, heatmaps, calendar and notes. Works offline, no account needed.'
+description: 'Log haircuts, bedsheet changes and filter cleaning in a tap. Next time you open Tablow, see the last date and how long it has been. Works offline, no account needed.'
 year: 2026
 order: 2
 featured: true
 status: 'active'
 hero:
-  src: /images/projects/tablow-2.1.1-en.png
-  alt: 'Tablow horizontal artwork: Remember in a tap, know when it last happened, with a real walking record card'
+  src: /images/projects/tablow-2.1.1-last-time-en.png
+  alt: 'Tablow horizontal artwork: When was the last time, with a real bedsheet record card'
   width: 1200
   height: 600
 ogImage:
-  src: /images/projects/tablow-2.1.1-en.png
-  alt: 'Tablow horizontal artwork: Remember in a tap, know when it last happened, with a real walking record card'
+  src: /images/projects/tablow-2.1.1-last-time-en.png
+  alt: 'Tablow horizontal artwork: When was the last time, with a real bedsheet record card'
   width: 1200
   height: 600
 cover:
-  src: /images/project-covers/tablow-2.1.1-en.webp
-  alt: 'Tablow horizontal artwork: Remember in a tap, know when it last happened, with a real walking record card'
+  src: /images/project-covers/tablow-2.1.1-last-time-en.webp
+  alt: 'Tablow horizontal artwork: When was the last time, with a real bedsheet record card'
   width: 1200
   height: 600
 links:
@@ -43,9 +43,9 @@ When was your last haircut? How long has that water filter been in use? When did
 
 Tablow is an offline life tracker for recording when you last did something, available on iPhone, iPad and Android. Create a tracker, tap when it happens, and keep the date and time. Come back later to see your latest entry and how much time has passed since then.
 
-## A last-time tracker for chores, haircuts and everyday moments
+## Start with a haircut or a bedsheet change
 
-Choose what you want to remember and customize each tracker's name, icon and color:
+Start with one or two things whose dates you actually want to look up. Choose a name, icon and color for each tracker:
 
 - **Personal care**: keep haircut and toothbrush replacement dates, then check how long it has been.
 - **Chores and home maintenance**: record bedsheet changes, air filter cleaning and water filter replacements so you can look up when each task was done.
@@ -62,7 +62,9 @@ The heatmap uses color intensity to show how records are distributed across days
 
 ## Offline, no account required, stored on your device
 
-You can record and browse without signing up or connecting to the internet. Records stay on your device by default. A one-time Premium purchase unlocks unlimited active trackers, import and export, backdated entries and date-range filters.
+You can record and browse without signing up or connecting to the internet. Records stay on your device by default. The free version includes up to 8 active trackers, today’s entries, notes, history and the monthly calendar. A one-time Premium purchase unlocks unlimited active trackers, import and export, backdated entries and date-range filters.
+
+Records do not sync to the cloud automatically. Before changing phones, export a backup with Premium, then import it on your new device.
 
 Tablow supports English, Simplified Chinese, Traditional Chinese, Japanese, German, French, Spanish, Portuguese and Korean. Follow the App Store or Google Play links on this page for app and purchase details.
 

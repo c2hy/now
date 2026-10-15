@@ -6,10 +6,10 @@
 
 - Yipa：`public/images/project-covers/yipa-v1.webp`，中英文共用，下方保留生成提示词。
 - 泡泡留言板 / Huddle：`public/images/project-covers/bubbles-v1.webp`，中英文共用，下方保留生成提示词。
-- 橘小记 / Tablow：`public/images/project-covers/tablow-2.1.1-{zh,en}.webp`，1200×600、WebP quality 94。
-- Tablow 分享图：`public/images/projects/tablow-2.1.1-{zh,en}.png`，1200×600 PNG。
+- 橘小记 / Tablow：`public/images/project-covers/tablow-2.1.1-last-time-{zh,en}.webp`，1200×600、WebP quality 94。
+- Tablow 分享图：`public/images/projects/tablow-2.1.1-last-time-{zh,en}.png`，1200×600 PNG。
 
-Tablow 使用与发布版本对应的商店横版素材，当前来源为 `../production-management/products/tablow/assets/store/2026-10-15-store-2.1.1/aso/horizontal/{zh,en}/google-play-1024x500.png`。画廊显示比例为 2:1：原图居中裁成 1000×500，再输出 1200×600 PNG 与 WebP，保留文案和真实记录卡片主体。
+Tablow 使用与当前产品界面对应的商店横版素材（换床单记录卡片与日期回查承诺），当前来源为 `../production-management/products/tablow/assets/batches/2026-10-16-last-time-horizontal-v1/{zh,en}/google-play-1024x500.png`。画廊显示比例为 2:1：原图居中裁成 1000×500，再输出 1200×600 PNG 与 WebP，保留文案和真实记录卡片主体。
 
 在项目根目录运行 `node scripts/render-tablow-project-artwork.mjs`；升级版本时先更新脚本的输入批次和输出文件名，再更新中英文项目 frontmatter 的 `hero`、`cover`、`ogImage` 及实际尺寸。其他站点与文章默认 OG 图由站点构建生成，尺寸为 1200×630。
 

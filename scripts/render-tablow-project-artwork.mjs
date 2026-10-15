@@ -4,15 +4,15 @@ import sharp from 'sharp';
 const root = process.cwd();
 const sourceRoot = resolve(
   root,
-  '../production-management/products/tablow/assets/store/2026-10-15-store-2.1.1/aso/horizontal',
+  '../production-management/products/tablow/assets/batches/2026-10-16-last-time-horizontal-v1',
 );
 const width = 1200;
 const height = 600;
 
 for (const locale of ['zh', 'en']) {
   const source = resolve(sourceRoot, locale, 'google-play-1024x500.png');
-  const png = resolve(root, `public/images/projects/tablow-2.1.1-${locale}.png`);
-  const webp = resolve(root, `public/images/project-covers/tablow-2.1.1-${locale}.webp`);
+  const png = resolve(root, `public/images/projects/tablow-2.1.1-last-time-${locale}.png`);
+  const webp = resolve(root, `public/images/project-covers/tablow-2.1.1-last-time-${locale}.webp`);
   const image = sharp(source).resize(width, height, {
     fit: 'cover',
     position: 'centre',

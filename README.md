@@ -28,8 +28,8 @@ npm run build          # 正式构建，排除所有 sample / draft 内容
 ## 内容与样式
 
 - `src/content/home/zh.md`、`src/content/home/en.md`：长期保留的中英文开篇文章，独立于文章列表维护。
-- `src/content/writing/`、`src/content/projects/`：Markdown 正文与 frontmatter。`translationKey` 关联译文；slug 可不同。文章使用必填的 `category` 归入生活观察、技术分享或做产品；写作时可给未完成的内容标记 `sample: true` 或 `draft: true`，此类内容仅在预览构建可见。首页通过正文中的链接介绍作品；作品画廊展示 `cover` 封面、名称、`statement` 一句话说明与 `description` 作品描述，按年份与 `order` 排序，未配置 `cover` 时使用 `hero`。
-- `src/data/profile.ts`：个人资料与已确认的公开链接。关于页的「联系我」区域展示邮箱与社交账号；`social` 条目包含 `label`（平台名称）、`href`（公开链接）和可选的 `account`（展示的账号名，未填写时展示「查看主页」）。没有配置的渠道不显示。
+- `src/content/writing/`、`src/content/projects/`：Markdown 正文与 frontmatter。`translationKey` 关联译文；slug 可不同。文章使用必填的 `category` 归入生活观察、技术分享或做产品；写作时可给未完成的内容标记 `sample: true` 或 `draft: true`，此类内容仅在预览构建可见。首页正文保留当前开篇文章；作品画廊展示 `cover` 封面、名称、`statement` 一句话说明与 `description` 作品描述，按年份与 `order` 排序，未配置 `cover` 时使用 `hero`。
+- `src/data/profile.ts`：个人资料与已确认的公开链接。关于页的「联系我」区域展示邮箱与社交账号；`social` 条目包含 `label`（平台名称）、`id`（固定统计标识）、`href`（公开链接）和可选的 `account`（展示的账号名，未填写时展示「查看主页」）。没有配置的渠道不显示。
 - `src/data/about.ts`：中英文人物介绍。邮箱与已确认的社交链接展示在关于页。
 - `src/i18n/index.ts`：双语界面文案与路径工具。
 - `src/styles/global.css`：Tailwind 4 主题（浅色与夜间两套色彩变量）、全局样式与正文排版。字体经 npm 包本地打包、不依赖 Google CDN，且全部使用 `font-display: swap` 避免加载阻塞：正文为 Inter 与 Noto Sans SC，标题为 Newsreader 与 Noto Serif SC，均为 OFL 授权；中文字体按 unicode-range 子集按需下载，Inter 主字体在页面预加载。
@@ -38,9 +38,11 @@ npm run build          # 正式构建，排除所有 sample / draft 内容
 - 项目可通过 `seoTitle` 覆盖页面与 OG 标题，通过 `ogImage` 指定分享图。图片尺寸由项目元数据声明，构建校验会核对 PNG 实际尺寸；Tablow 项目图为 1200×600。标题、摘要和正文应一起维护，准确描述已有功能及会员限制。
 - 站点图标：`public/avatar.svg` 是唯一的矢量品牌图标（页面 favicon、结构化数据共用）；`public/favicon.ico`（16/32）与 `public/apple-touch-icon.png`（180）由它用 sharp 栅格化生成，覆盖不支持 SVG 图标的浏览器、收藏夹与 iOS 主屏。
 
-标记为 `sample` / `draft` 的内容仅由 `dev` / `build:preview` 显式开启，`build` 强制关闭（当前没有此类内容）。当前默认允许搜索引擎收录；如需让预览或测试部署不被收录，可明确设置 `PUBLIC_INDEXING_ENABLED=false`。Drip 仅在正式构建中、配置 `PUBLIC_DRIP_WRITE_KEY` 后加载，采集 `page_view`、作品浏览、商店点击和标记过的链接点击；开发环境不会生成身份、不读写浏览器存储，也不会发出请求。来源标记遵循 UTM 优先、外部 referrer 兜底：读取 `utm_source`、`utm_medium`、`utm_campaign`、`utm_content`，无 UTM 时保留外部 referrer hostname；X、Twitter 和 t.co 统一记为 `source=x`。同时为同一浏览会话生成并复用 `attribution_id`，不上传完整 referrer URL。Vercel Analytics 继续保留，用于网站访问统计。
+标记为 `sample` / `draft` 的内容仅由 `dev` / `build:preview` 显式开启，`build` 强制关闭（当前没有此类内容）。当前默认允许搜索引擎收录；如需让预览或测试部署不被收录，可明确设置 `PUBLIC_INDEXING_ENABLED=false`。
 
-在 Drip 中创建 `now` app 和 production web public ingest key，将输出的 public write key 配置为 `PUBLIC_DRIP_WRITE_KEY`。它可以出现在浏览器 bundle 中；不要配置 Drip server key。当前 `now` app 已允许 `https://willopc.com` 与 `https://now.willopc.com` 两个公开入口。
+Drip 仅在配置 public write key 的正式构建、且浏览器 origin 命中允许列表时启用；开发、`build:preview` 和 Vercel preview 不生成 Drip 身份或请求。采集页面访问、作品详情浏览、商店点击和显式标记的链接点击；来源上下文跨站内页面保留，30 分钟无活动后新建会话。发送读取服务端回执，暂时性失败复用事件 ID 有限重试，离页用 Beacon 补发。Vercel Analytics 继续提供访问概览。
+
+新版 Drip 的 `now` project、正式 Web key 与事件定义已在新正式库准备好，本机 `.env` 已更新；新版服务上线后，还需同步网站部署环境中的新 key 并发布网站。详见[事件收集与 Drip 接入](docs/analytics.md)，包含旧采集缺陷、事件口径、配置、验证方式及分析边界。前端仅使用 `pk_` public write key。
 
 ## 正式发布前
 
@@ -51,6 +53,6 @@ npm run build          # 正式构建，排除所有 sample / draft 内容
 
 ## 验证与文档维护
 
-修改后按影响范围运行 `npm run check`、`npm run build`，涉及界面或交互时运行 `npm test`。正式构建会检查链接、元信息、H1、索引配置、隐藏内容及项目分享图尺寸；浏览器测试覆盖双语导航、主题、字体和响应式布局。上线后另行确认真实统计入库与公开页面。
+修改后按影响范围运行 `npm run check`、`npm run build`，涉及界面或交互时运行 `npm test`，涉及事件采集时加跑 `npm run test:drip`。正式构建会检查链接、元信息、H1、索引配置、隐藏内容及项目分享图尺寸；浏览器测试覆盖双语导航、主题、字体和响应式布局。上线后另行确认真实统计入库与公开页面。
 
-本仓库文档只保留当前说明与可复用流程：README 维护开发、内容和验证方式，[作品封面](docs/project-covers.md) 维护素材来源与生成方式。日常执行日志、日期命名的验收报告与旧版对比图不再入库；修改时原位更新对应说明。
+本仓库文档只保留当前说明与可复用流程：README 维护开发、内容和验证方式，[事件收集](docs/analytics.md) 维护采集口径与接入流程，[作品封面](docs/project-covers.md) 维护素材来源与生成方式。日常执行日志、日期命名的验收报告与旧版对比图不再入库；修改时原位更新对应说明。

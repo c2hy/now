@@ -40,7 +40,11 @@ const contact =
   </div>
   {
     (profile.email || social.length > 0) && (
-      <section id="contact" class="about-contact" aria-labelledby="contact-title">
+      <section
+        id="contact"
+        class="about-contact"
+        aria-labelledby="contact-title"
+      >
         <h2 id="contact-title">{contact.title}</h2>
         <p class="contact-intro">{contact.intro}</p>
         <ul class="contact-list" role="list">
@@ -64,7 +68,7 @@ const contact =
               <a
                 class="contact-link"
                 href={link.href}
-                data-drip-placement="about_social"
+                data-drip-placement={`about_social_${link.id}`}
                 target="_blank"
                 rel="noopener noreferrer"
               >
