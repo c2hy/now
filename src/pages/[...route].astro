@@ -92,7 +92,12 @@ const ogImage = article
       alt: article.data.title,
     }
   : project?.data.ogImage
-    ? { path: project.data.ogImage.src, alt: project.data.ogImage.alt }
+    ? {
+        path: project.data.ogImage.src,
+        alt: project.data.ogImage.alt,
+        width: project.data.ogImage.width,
+        height: project.data.ogImage.height,
+      }
     : undefined;
 const writing =
   page === 'writing' && !entry

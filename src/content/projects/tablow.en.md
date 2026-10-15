@@ -8,20 +8,20 @@ order: 2
 featured: true
 status: 'active'
 hero:
-  src: /images/projects/tablow-v4-en.png
+  src: /images/projects/tablow-2.1.1-en.png
   alt: 'Tablow horizontal artwork: Remember in a tap, know when it last happened, with a real walking record card'
   width: 1200
-  height: 630
+  height: 600
 ogImage:
-  src: /images/projects/tablow-v4-en.png
+  src: /images/projects/tablow-2.1.1-en.png
   alt: 'Tablow horizontal artwork: Remember in a tap, know when it last happened, with a real walking record card'
   width: 1200
-  height: 630
+  height: 600
 cover:
-  src: /images/project-covers/tablow-v4-en.webp
+  src: /images/project-covers/tablow-2.1.1-en.webp
   alt: 'Tablow horizontal artwork: Remember in a tap, know when it last happened, with a real walking record card'
   width: 1200
-  height: 586
+  height: 600
 links:
   - label: 'Website'
     href: 'https://tablow.willopc.com'

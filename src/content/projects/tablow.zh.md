@@ -8,20 +8,20 @@ order: 2
 featured: true
 status: 'active'
 hero:
-  src: /images/projects/tablow-v4-zh.png
+  src: /images/projects/tablow-2.1.1-zh.png
   alt: 橘小记横版展示：随手记录，随时知道上次，搭配真实散步记录卡片
   width: 1200
-  height: 630
+  height: 600
 ogImage:
-  src: /images/projects/tablow-v4-zh.png
+  src: /images/projects/tablow-2.1.1-zh.png
   alt: 橘小记横版展示：随手记录，随时知道上次，搭配真实散步记录卡片
   width: 1200
-  height: 630
+  height: 600
 cover:
-  src: /images/project-covers/tablow-v4-zh.webp
+  src: /images/project-covers/tablow-2.1.1-zh.webp
   alt: 橘小记横版展示：随手记录，随时知道上次，搭配真实散步记录卡片
   width: 1200
-  height: 586
+  height: 600
 links:
   - label: '官方网站'
     href: 'https://tablow.willopc.com'

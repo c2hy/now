@@ -1,15 +1,17 @@
 # 作品画廊封面
 
-Yipa 和泡泡留言板沿用内置 image_gen 生成的无文字封面，中英文共用。Tablow 于 2026-10-14 改用新版商店横版素材，中英文分别展示对应文案和真实记录卡片。
+作品 frontmatter 的 `cover` 用于画廊封面，`hero` 用于详情页配图，`ogImage` 用于分享预览；未配置 `cover` 时回退 `hero`。替换素材时使用新的版本文件名，同步维护中英文内容与图片尺寸，并运行 `npm run build` 核对图片元数据。
 
-成品：
+## 当前素材与生成方式
 
-- Yipa：`public/images/project-covers/yipa-v1.webp`
-- 泡泡留言板 / Huddle：`public/images/project-covers/bubbles-v1.webp`
-- 橘小记 / Tablow：`public/images/project-covers/tablow-v4-{zh,en}.webp`（1200×586，WebP quality 94）
-- Tablow 分享图：`public/images/projects/tablow-v4-{zh,en}.png`（1200×630，以暖白背景等比留边，无主体裁切）
+- Yipa：`public/images/project-covers/yipa-v1.webp`，中英文共用，下方保留生成提示词。
+- 泡泡留言板 / Huddle：`public/images/project-covers/bubbles-v1.webp`，中英文共用，下方保留生成提示词。
+- 橘小记 / Tablow：`public/images/project-covers/tablow-2.1.1-{zh,en}.webp`，1200×600、WebP quality 94。
+- Tablow 分享图：`public/images/projects/tablow-2.1.1-{zh,en}.png`，1200×600 PNG。
 
-Tablow 原始素材来自 `../tablow/tablow-app/screenshots/aso/horizontal/{zh,en}/google-play-1024x500.png`，为热力图日期减轻后的版本。旧 `tablow-v1.webp` 保留为历史素材。以下 Tablow 生成提示词仅记录旧版来源。
+Tablow 使用与发布版本对应的商店横版素材，当前来源为 `../production-management/products/tablow/assets/store/2026-10-15-store-2.1.1/aso/horizontal/{zh,en}/google-play-1024x500.png`。画廊显示比例为 2:1：原图居中裁成 1000×500，再输出 1200×600 PNG 与 WebP，保留文案和真实记录卡片主体。
+
+在项目根目录运行 `node scripts/render-tablow-project-artwork.mjs`；升级版本时先更新脚本的输入批次和输出文件名，再更新中英文项目 frontmatter 的 `hero`、`cover`、`ogImage` 及实际尺寸。其他站点与文章默认 OG 图由站点构建生成，尺寸为 1200×630。
 
 ## 完整生成提示词
 
@@ -20,8 +22,3 @@ Use case: stylized-concept. Asset type: original cover image for a software proj
 ### bubbles
 
 Use case: stylized-concept. Asset type: original cover image for a software project in a personal website gallery. Landscape 3:2 composition, approximately 1536x1024. A refined tactile studio still-life, photoreal materials, crisp but gentle diffuse daylight, subtle realistic shadows, airy composition with generous negative space. A single clear visual idea readable at thumbnail size. Camera looks diagonally down at the object, shallow three-quarter view. Cool neutral light backdrop, never beige, cream or warm paper. No room interior, desktop accessories, screens, phones, app interface, logos, typography, letters, numbers, badges, watermarks, framing border, or extra decoration. The project name and caption will be HTML outside this image. Primary request: depict a few people sharing small everyday moments in their own space. Subject: three small square photographic prints with simple narrow white borders, loosely overlapping in a relaxed group at the center, attached with one small matte blue paper clip. The actual photographs show quiet ordinary details: blue sea ripples, green leaves in daylight, and window light falling across a plain wall. No people, no text on the prints. The prints sit on a seamless pale icy-blue backdrop. A natural small group of photographs, asymmetrical yet balanced composition, photo print surfaces with fine realistic photographic detail. Entire group occupies about 60 percent of the image. Avoid speech-bubble icons, chat UI, social network symbols and a collage filling the entire canvas.
-
-### tablow
-
-Use case: stylized-concept. Asset type: original cover image for a software project in a personal website gallery. Landscape 3:2 composition, approximately 1536x1024. A refined tactile studio still-life, photoreal materials, crisp but gentle diffuse daylight, subtle realistic shadows, airy composition with generous negative space. A single clear visual idea readable at thumbnail size. Camera looks diagonally down at the object, shallow three-quarter view. Cool neutral light backdrop, never beige, cream or warm paper. No room interior, desktop accessories, screens, phones, app interface, logos, typography, letters, numbers, badges, watermarks, framing border, or extra decoration. The project name and caption will be HTML outside this image. Primary request: depict remembering one occurrence in time, without streaks or pressure to repeat. Subject: a small elegant rectangular tactile calendar-like object made from matte white ceramic, an array of 7 by 5 softly rounded square tiles. Only ONE tile is a distinctive muted tangerine coral-orange, placed off-center in the grid; every other tile is the same very pale cool gray-white. No rows of orange, no streak, no check marks, no numbers or words anywhere. The grid is one thin cohesive object at a gentle three-quarter angle, centered with generous negative space, occupying around 55 percent of the image. Seamless very pale cool gray backdrop with a hint of blue; a subtle shadow emphasizes the tile relief. Crisp ceramic texture, the solitary orange tile is the unmistakable focal point. Avoid clocks, phone frames, interface cards and oversaturated lighting.
-

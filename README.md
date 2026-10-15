@@ -33,8 +33,9 @@ npm run build          # 正式构建，排除所有 sample / draft 内容
 - `src/data/about.ts`：中英文人物介绍。邮箱与已确认的社交链接展示在关于页。
 - `src/i18n/index.ts`：双语界面文案与路径工具。
 - `src/styles/global.css`：Tailwind 4 主题（浅色与夜间两套色彩变量）、全局样式与正文排版。字体经 npm 包本地打包、不依赖 Google CDN，且全部使用 `font-display: swap` 避免加载阻塞：正文为 Inter 与 Noto Sans SC，标题为 Newsreader 与 Noto Serif SC，均为 OFL 授权；中文字体按 unicode-range 子集按需下载，Inter 主字体在页面预加载。
-- `public/images/`：项目配图。`public/images/projects/` 保存各项目中英文宽幅配图，作品未配置 `cover` 时作为画廊回退；`public/images/project-covers/` 保存画廊使用的三张原创概念封面，中英文共用，生成方式与完整提示词见 `docs/project-covers.md`。
+- `public/images/`：项目配图。`public/images/projects/` 保存各项目中英文宽幅配图，作品未配置 `cover` 时作为画廊回退；`public/images/project-covers/` 保存画廊封面，其中 Tablow 使用随版本更新的产品素材，其他作品使用原创概念封面，生成方式见 `docs/project-covers.md`。
 - `src/utils/og.ts`、`src/pages/og/`：构建时生成 1200×630 的中英文站点与文章 OG PNG；文章可通过 frontmatter 的 `cover` 覆盖默认文字版式。
+- 项目可通过 `seoTitle` 覆盖页面与 OG 标题，通过 `ogImage` 指定分享图。图片尺寸由项目元数据声明，构建校验会核对 PNG 实际尺寸；Tablow 项目图为 1200×600。标题、摘要和正文应一起维护，准确描述已有功能及会员限制。
 - 站点图标：`public/avatar.svg` 是唯一的矢量品牌图标（页面 favicon、结构化数据共用）；`public/favicon.ico`（16/32）与 `public/apple-touch-icon.png`（180）由它用 sharp 栅格化生成，覆盖不支持 SVG 图标的浏览器、收藏夹与 iOS 主屏。
 
 标记为 `sample` / `draft` 的内容仅由 `dev` / `build:preview` 显式开启，`build` 强制关闭（当前没有此类内容）。当前默认允许搜索引擎收录；如需让预览或测试部署不被收录，可明确设置 `PUBLIC_INDEXING_ENABLED=false`。Drip 仅在正式构建中、配置 `PUBLIC_DRIP_WRITE_KEY` 后加载，采集 `page_view`、作品浏览、商店点击和标记过的链接点击；开发环境不会生成身份、不读写浏览器存储，也不会发出请求。来源标记遵循 UTM 优先、外部 referrer 兜底：读取 `utm_source`、`utm_medium`、`utm_campaign`、`utm_content`，无 UTM 时保留外部 referrer hostname；X、Twitter 和 t.co 统一记为 `source=x`。同时为同一浏览会话生成并复用 `attribution_id`，不上传完整 referrer URL。Vercel Analytics 继续保留，用于网站访问统计。
@@ -48,14 +49,8 @@ npm run build          # 正式构建，排除所有 sample / draft 内容
 3. 维护已确认的社交链接与邮箱；未配置的渠道不显示。
 4. 配置 Drip public write key 与正式部署，并在上线后检查 `page_view`、`product_view`、`store_click` 和 `link_click` 是否入库。
 
-## 验证
+## 验证与文档维护
 
-2026-10-08 重构已通过 Astro / TypeScript 检查（0 错误、警告、提示）、24 页正式构建与链接和元信息检查，以及 Chromium / WebKit 共 12 项浏览器检查。覆盖首页正常字重、中英文作品画廊的封面加载与点击、文章阅读、语言切换、键盘导航，以及 320、375、768、1024、1440px 的页面排版。另已目视检查中英文首页、桌面与手机作品画廊、中文文章列表、作品详情与站点分享图。尚未部署；未进行真实设备验收。
+修改后按影响范围运行 `npm run check`、`npm run build`，涉及界面或交互时运行 `npm test`。正式构建会检查链接、元信息、H1、索引配置、隐藏内容及项目分享图尺寸；浏览器测试覆盖双语导航、主题、字体和响应式布局。上线后另行确认真实统计入库与公开页面。
 
-作品改为纵向单列并增加描述后，24 页构建与链接检查通过，复跑 Chromium / WebKit 的作品入口和响应式检查共 4 项，均通过；另已检查中英文作品描述、正常字重及桌面和手机效果。
-
-2026-10-13 点缀色由蓝改为红并加入夜间模式后，Astro / TypeScript 检查通过（0 错误、警告、提示），24 页正式构建与链接检查通过，Chromium / WebKit 共 14 项浏览器检查通过（新增夜间模式：跟随系统、手动切换、刷新后记忆）；另已目视检查中英文首页、作品页与文章页在浅色和夜间下的效果，以及 375px 手机端顶栏。
-
-同日清理已不再引用的旧版作品封面与生成源图（`public/images/covers/`）、概念示意图（三个 SVG）、产品截图（`tablow-home-*.png`）及 Newsreader 字体授权文件：`public/` 由约 14MB 降至 3.3MB。清理后正式构建与链接检查通过，Chromium / WebKit 共 14 项浏览器检查通过。
-
-同日升级字体与排版：标题引入 Google Fonts 字体系列 Newsreader（西文）与 Noto Serif SC（中文），经 npm 包自托管、不依赖 Google CDN，全部 @font-face 均为 `font-display: swap`（构建产物 204 条），Inter 主字体在页面内预加载；标题采用流体字号与 `text-wrap: balance`，英文正文行高调整为 1.85，日期使用等宽数字。Astro / TypeScript 检查通过、24 页构建与链接检查通过，Chromium / WebKit 共 16 项浏览器检查通过（覆盖两款衬线字体真实加载、中英行高与日期数字对齐）；另已目视检查中文文章页、中英文列表页、作品页与夜间效果。
+本仓库文档只保留当前说明与可复用流程：README 维护开发、内容和验证方式，[作品封面](docs/project-covers.md) 维护素材来源与生成方式。日常执行日志、日期命名的验收报告与旧版对比图不再入库；修改时原位更新对应说明。

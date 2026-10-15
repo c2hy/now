@@ -85,14 +85,21 @@ for (const file of files) {
     existsSync(ogImageFile),
     `${file}: missing ${new URL(ogImage).pathname}`,
   );
+  const imageDimensions = pngDimensions(ogImageFile);
+  const declaredWidth = Number(
+    html.match(/property="og:image:width" content="(\d+)"/)?.[1],
+  );
+  const declaredHeight = Number(
+    html.match(/property="og:image:height" content="(\d+)"/)?.[1],
+  );
   assert.deepEqual(
-    pngDimensions(ogImageFile),
-    { width: 1200, height: 630 },
-    `${file}: og dimensions`,
+    imageDimensions,
+    { width: declaredWidth, height: declaredHeight },
+    `${file}: og dimensions match metadata`,
   );
   assert.match(html, /property="og:image:type" content="image\/png"/);
-  assert.match(html, /property="og:image:width" content="1200"/);
-  assert.match(html, /property="og:image:height" content="630"/);
+  assert(Number.isInteger(declaredWidth) && declaredWidth > 0, `${file}: og width`);
+  assert(Number.isInteger(declaredHeight) && declaredHeight > 0, `${file}: og height`);
   assert.match(html, /name="twitter:card" content="summary_large_image"/);
   for (const match of html.matchAll(
     /(?:href|src)="(\/[^"#?]*)(?:[?#][^"]*)?"/g,
