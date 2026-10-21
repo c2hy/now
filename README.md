@@ -40,19 +40,19 @@ npm run build          # 正式构建，排除所有 sample / draft 内容
 
 标记为 `sample` / `draft` 的内容仅由 `dev` / `build:preview` 显式开启，`build` 强制关闭（当前没有此类内容）。当前默认允许搜索引擎收录；如需让预览或测试部署不被收录，可明确设置 `PUBLIC_INDEXING_ENABLED=false`。
 
-Drip 仅在配置 public write key 的正式构建、且浏览器 origin 命中允许列表时启用；开发、`build:preview` 和 Vercel preview 不生成 Drip 身份或请求。采集页面访问、作品详情浏览、商店点击和显式标记的链接点击；来源上下文跨站内页面保留，30 分钟无活动后新建会话。发送读取服务端回执，暂时性失败复用事件 ID 有限重试，离页用 Beacon 补发。Vercel Analytics 继续提供访问概览。
+Mixpanel 仅在配置 public project token 的正式构建中启用；开发与 `build:preview` 不加载统计脚本。使用 Mixpanel 内置页面浏览事件，并记录作品详情浏览、商店点击与显式标记的链接点击；UTM 由 Mixpanel 自动采集，且不在后续页面无限继承。关闭 autocapture 与 session replay，不采集完整 URL、完整 referrer、链接全文、邮箱或社交账号。
 
-新版 Drip 的 `now` project、正式 Web key 与事件定义已在新正式库准备好，本机 `.env` 已更新；新版服务上线后，还需同步网站部署环境中的新 key 并发布网站。详见[事件收集与 Drip 接入](docs/analytics.md)，包含旧采集缺陷、事件口径、配置、验证方式及分析边界。前端仅使用 `pk_` public write key。
+在 `.env` 与部署环境配置 `PUBLIC_MIXPANEL_ENABLED`、`PUBLIC_MIXPANEL_TOKEN` 后重新构建即可启用。详见[事件收集与 Mixpanel 接入](docs/analytics.md)，包含事件口径、属性、隐私边界、配置、验证方式及分析边界。
 
 ## 正式发布前
 
 1. 核对中英文开篇文章、About 和个人信息；核对文章与发布日期。
 2. 核对展示的产品界面与发布版本是否一致，并补充 Huddle 已确认的公开入口；Yipa 与 Tablow 已接入官网和商店链接。
 3. 维护已确认的社交链接与邮箱；未配置的渠道不显示。
-4. 配置 Drip public write key 与正式部署，并在上线后检查 `page_view`、`product_view`、`store_click` 和 `link_click` 是否入库。
+4. 配置 Mixpanel public project token 与正式部署，并在上线后检查 `$mp_web_page_view`、`product_viewed`、`store_clicked` 和 `link_clicked` 是否到达项目。
 
 ## 验证与文档维护
 
-修改后按影响范围运行 `npm run check`、`npm run build`，涉及界面或交互时运行 `npm test`，涉及事件采集时加跑 `npm run test:drip`。正式构建会检查链接、元信息、H1、索引配置、隐藏内容及项目分享图尺寸；浏览器测试覆盖双语导航、主题、字体和响应式布局。上线后另行确认真实统计入库与公开页面。
+修改后按影响范围运行 `npm run check`、`npm run build`，涉及界面或交互时运行 `npm test`，涉及事件采集时加跑 `npm run test:analytics`。正式构建会检查链接、元信息、H1、索引配置、隐藏内容及项目分享图尺寸；浏览器测试覆盖双语导航、主题、字体和响应式布局。上线后另行确认真实统计入库与公开页面。
 
 本仓库文档只保留当前说明与可复用流程：README 维护开发、内容和验证方式，[事件收集](docs/analytics.md) 维护采集口径与接入流程，[作品封面](docs/project-covers.md) 维护素材来源与生成方式。日常执行日志、日期命名的验收报告与旧版对比图不再入库；修改时原位更新对应说明。

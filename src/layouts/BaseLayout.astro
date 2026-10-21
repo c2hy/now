@@ -1,5 +1,4 @@
 ---
-import Analytics from '@vercel/analytics/astro';
 import interFontUrl from '@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url';
 import '../styles/global.css';
 import { profile } from '../data/profile';
@@ -42,18 +41,12 @@ const browserTitle =
   current && !resolvedTitle.includes(profile.siteName)
     ? `${resolvedTitle} — ${profile.siteName}`
     : resolvedTitle;
-const dripEndpoint =
-  import.meta.env.PUBLIC_DRIP_ENDPOINT?.trim() ||
-  'https://drip-api.willopc.com/v1/events';
-const dripWriteKey = import.meta.env.PUBLIC_DRIP_WRITE_KEY?.trim();
-const dripOrigins =
-  import.meta.env.PUBLIC_DRIP_ALLOWED_ORIGINS?.trim() ||
-  'https://willopc.com';
-const dripEnabled =
-  import.meta.env.PUBLIC_DRIP_ENABLED !== 'false' &&
-  import.meta.env.PREVIEW_CONTENT !== 'true' &&
-  import.meta.env.VERCEL_ENV !== 'preview';
-const dripConfigured = import.meta.env.PROD && dripEnabled && !!dripWriteKey;
+const mixpanelToken = import.meta.env.PUBLIC_MIXPANEL_TOKEN?.trim();
+const analyticsEnabled =
+  import.meta.env.PUBLIC_MIXPANEL_ENABLED !== 'false' &&
+  import.meta.env.PREVIEW_CONTENT !== 'true';
+const analyticsConfigured =
+  import.meta.env.PROD && analyticsEnabled && !!mixpanelToken;
 // Index pages by default; set PUBLIC_INDEXING_ENABLED=false for previews or
 // other deployments that should remain out of search results.
 const indexingEnabled = import.meta.env.PUBLIC_INDEXING_ENABLED !== 'false';
@@ -132,7 +125,6 @@ const structuredData = {
         }
       </style>
     </noscript>
-    <Analytics />
     <title>{browserTitle}</title><meta
       name="description"
       content={description}
@@ -221,18 +213,15 @@ const structuredData = {
     />
   </head>
   <body
-    data-drip-endpoint={dripConfigured ? dripEndpoint : undefined}
-    data-drip-write-key={dripConfigured ? dripWriteKey : undefined}
-    data-drip-origins={dripConfigured ? dripOrigins : undefined}
-    data-drip-page-title={dripConfigured ? browserTitle : undefined}
-    data-drip-product={dripConfigured ? product : undefined}
+    data-analytics-token={analyticsConfigured ? mixpanelToken : undefined}
+    data-analytics-product={analyticsConfigured ? product : undefined}
   >
     <a class="skip" href="#main">{t.skip}</a>
     <header class="site-header">
       <div class="shell">
         <a
           href={path(locale)}
-          data-drip-placement="header_brand"
+          data-analytics-placement="header_brand"
           class="site-brand"
           aria-label="Will.OPC"
           aria-current={!current ? 'page' : undefined}
@@ -248,7 +237,7 @@ const structuredData = {
               <a
                 aria-current={current === item ? 'page' : undefined}
                 href={sectionPath(locale, item)}
-                data-drip-placement={`nav_${item}`}
+                data-analytics-placement={`nav_${item}`}
               >
                 {t[item]}
               </a>
@@ -257,7 +246,7 @@ const structuredData = {
           <a
             class="language-link"
             href={alternatePath}
-            data-drip-placement="language_switch"
+            data-analytics-placement="language_switch"
             lang={other === 'zh' ? 'zh-CN' : 'en'}
             aria-label={t.langLabel}>{t.language}</a
           >
@@ -304,6 +293,6 @@ const structuredData = {
       <main id="main"><slot /></main>
     </div>
     <script src="../scripts/theme.ts"></script>
-    {dripConfigured && <script src="../scripts/drip.ts" />}
+    {analyticsConfigured && <script src="../scripts/analytics.ts" />}
   </body>
 </html>

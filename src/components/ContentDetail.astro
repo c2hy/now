@@ -40,9 +40,9 @@ const { Content } = await render(entry);
           {project.data.links.map((link) => (
             <a
               href={link.href}
-              data-drip-placement={`project_link_${link.type}`}
-              data-drip-product={project.data.slug}
-              data-drip-destination={
+              data-analytics-placement={`project_link_${link.type.replaceAll('-', '_')}`}
+              data-analytics-product={project.data.slug}
+              data-analytics-store={
                 link.type === 'app-store'
                   ? 'app_store'
                   : link.type === 'google-play'

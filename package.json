@@ -9,7 +9,7 @@
     "build:preview": "node scripts/run.mjs build:preview && node scripts/verify-build.mjs",
     "preview": "node scripts/run.mjs preview",
     "test": "playwright test",
-    "test:drip": "playwright test --config playwright.drip.config.ts"
+    "test:analytics": "playwright test --config playwright.analytics.config.ts"
   },
   "repository": {
     "type": "git",
@@ -34,9 +34,9 @@
     "@fontsource/noto-sans-sc": "^5.3.1",
     "@fontsource/noto-serif-sc": "^5.3.1",
     "@tailwindcss/vite": "^4.3.3",
-    "@vercel/analytics": "^2.0.1",
     "astro": "^7.3.1",
     "fontkit": "^2.0.4",
+    "mixpanel-browser": "^2.84.0",
     "sharp": "^0.35.4",
     "tailwindcss": "^4.3.3",
     "typescript": "^6.0.3"

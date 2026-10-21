@@ -23,12 +23,12 @@ const { locale = 'en' } = Astro.props as { locale?: Locale };
         }
       </p>
       <p class="contact-links">
-        <a href={path(locale)} data-drip-placement="not_found_home"
+        <a href={path(locale)} data-analytics-placement="not_found_home"
           >{locale === 'en' ? 'Back home' : '回到首页'}</a
         >
         <a
           href={sectionPath(locale, 'writing')}
-          data-drip-placement="not_found_notes"
+          data-analytics-placement="not_found_notes"
           >{locale === 'en' ? 'Browse the writing' : '看看文章'}</a
         >
       </p>

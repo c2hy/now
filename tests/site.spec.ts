@@ -208,7 +208,7 @@ test('top navigation opens writing and the article language switch preserves the
   await expect(page.locator('[data-writing-item]')).toHaveCount(5);
   await page
     .locator(
-      '[data-drip-placement="note_item"][href="/zh/notes/schools-and-learning-for-ourselves"]',
+      '[data-analytics-placement="note_item"][href="/zh/notes/schools-and-learning-for-ourselves"]',
     )
     .click();
   await expect(page).toHaveURL('/zh/notes/schools-and-learning-for-ourselves');
@@ -278,20 +278,20 @@ test('all page types fit supported widths and retain readable content', async ({
   }
 });
 
-test('development never configures Drip or creates analytics identity', async ({
-  page,
-}) => {
+test('development never initializes analytics', async ({ page }) => {
   const requests: string[] = [];
   page.on('request', (request) => {
-    if (request.url().includes('/v1/events')) requests.push(request.url());
+    if (request.url().includes('mixpanel.com')) requests.push(request.url());
   });
   await page.goto('/zh/projects/tablow?utm_source=development');
-  await expect(page.locator('body')).not.toHaveAttribute('data-drip-write-key');
+  await expect(page.locator('body')).not.toHaveAttribute(
+    'data-analytics-token',
+  );
   expect(
     await page.evaluate(() => ({
-      local: Object.keys(localStorage).filter((key) => key.startsWith('drip_')),
+      local: Object.keys(localStorage).filter((key) => key.startsWith('mp_')),
       session: Object.keys(sessionStorage).filter((key) =>
-        key.startsWith('drip_'),
+        key.startsWith('mp_'),
       ),
     })),
   ).toEqual({ local: [], session: [] });

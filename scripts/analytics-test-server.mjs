@@ -2,16 +2,13 @@ import { mkdtemp, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
-// Exercise the production bundle with a fake key and intercepted endpoint.
-// Keep the deployment build in dist untouched, including its real public key.
+// Exercise the production bundle with a fake token and intercepted requests.
+// Keep the deployment build in dist untouched.
 process.env.ASTRO_TELEMETRY_DISABLED = '1';
 process.env.PREVIEW_CONTENT = 'false';
-process.env.PUBLIC_DRIP_ENABLED = 'true';
-process.env.PUBLIC_DRIP_WRITE_KEY = 'pk_browser_test';
-process.env.PUBLIC_DRIP_ENDPOINT = 'https://collector.invalid/v1/events';
-process.env.PUBLIC_DRIP_ALLOWED_ORIGINS = 'http://127.0.0.1:14322';
-process.env.VERCEL_ENV = 'production';
-const directory = await mkdtemp(join(tmpdir(), 'now-drip-test-'));
+process.env.PUBLIC_MIXPANEL_ENABLED = 'true';
+process.env.PUBLIC_MIXPANEL_TOKEN = 'test_token';
+const directory = await mkdtemp(join(tmpdir(), 'now-analytics-test-'));
 const outDir = directory;
 const { build, preview } = await import('astro');
 await build({ outDir });
