@@ -205,20 +205,20 @@ test('top navigation opens writing and the article language switch preserves the
   await page.goto('/zh/');
   await page.getByRole('link', { name: '文章', exact: true }).click();
   await expect(page).toHaveURL('/zh/notes');
-  await expect(page.locator('[data-writing-item]')).toHaveCount(4);
+  await expect(page.locator('[data-writing-item]')).toHaveCount(5);
   await page
     .locator(
-      '[data-drip-placement="note_item"][href="/zh/notes/why-i-cant-read-your-yipa-notes"]',
+      '[data-drip-placement="note_item"][href="/zh/notes/schools-and-learning-for-ourselves"]',
     )
     .click();
-  await expect(page).toHaveURL('/zh/notes/why-i-cant-read-your-yipa-notes');
+  await expect(page).toHaveURL('/zh/notes/schools-and-learning-for-ourselves');
   await expect(page.locator('article .prose p').first()).toBeVisible();
   await expect(page.locator('article .prose p').first()).toHaveCSS(
     'font-weight',
     '400',
   );
   await page.getByRole('link', { name: 'Switch to English' }).click();
-  await expect(page).toHaveURL('/notes/why-i-cant-read-your-yipa-notes');
+  await expect(page).toHaveURL('/notes/schools-and-learning-for-ourselves');
   await expect(page.locator('html')).toHaveAttribute('lang', 'en');
   await expect(page.locator('article time').first()).toBeVisible();
   await page.getByRole('link', { name: 'About', exact: true }).click();
@@ -247,6 +247,8 @@ test('all page types fit supported widths and retain readable content', async ({
       '/zh/projects/tablow',
       '/zh/notes/why-i-cant-read-your-yipa-notes',
       '/notes/why-i-cant-read-your-yipa-notes',
+      '/zh/notes/schools-and-learning-for-ourselves',
+      '/notes/schools-and-learning-for-ourselves',
       '/zh/404',
       '/404',
     ]) {

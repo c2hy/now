@@ -11,7 +11,7 @@ npm install
 npm run dev
 ```
 
-打开终端显示的地址（默认 http://localhost:4321）。英文首页 `/`，中文首页 `/zh/`。Writing、Projects 和 About 均可浏览；三个项目与四篇文章各有中英文详情。
+打开终端显示的地址（默认 http://localhost:4321）。英文首页 `/`，中文首页 `/zh/`。Writing、Projects 和 About 均可浏览；三个项目与五篇文章各有中英文详情。
 
 需要 Node.js 22.12 或更新版本。Astro 7 的开发服务在后台运行，可使用 `npm run dev -- stop` 停止。
 
