@@ -1,5 +1,6 @@
 ---
 title: 'Why Even I Can’t Read What You Write in Yipa'
+updatedAt: '2026-10-23'
 seoTitle: 'Why Even I Can’t Read What You Write in Yipa | Will.OPC'
 description: 'A conversation during Yipa’s security filing made me reconsider privacy, end-to-end encryption, and what a service provider should be able to do.'
 publishedAt: '2026-09-24'
@@ -14,7 +15,7 @@ translationKey: 'why-i-cant-read-your-yipa-notes'
 
 I froze for a moment when I heard that. To me, this was exactly what Yipa had to do.
 
-Yipa is an app for recording emotions, thoughts, and the state of everyday life. No community, no likes, no comments, no direct messages; users are entirely separate from one another, and what you write is meant for you alone. From the start I wanted it to feel like a truly private thing, so when I added cloud sync I chose end-to-end encryption: a record is encrypted before upload, and the server stores only ciphertext. Under normal circumstances, I have no way to know what anything says.
+[Yipa](/projects/yipa) is an app for recording emotions, thoughts, and the state of everyday life. No community, no likes, no comments, no direct messages; users are entirely separate from one another, and what you write is meant for you alone. From the start I wanted it to feel like a truly private thing, so when I added cloud sync I chose end-to-end encryption: a record is encrypted before upload, and the server stores only ciphertext. Under normal circumstances, I have no way to know what anything says.
 
 That wasn't a "privacy feature" added for the marketing page. To me it was closer to a boundary the product should have. If an app holds someone's most private feelings, relationships, anxieties, and daily details, its developers shouldn't have the ability to read them at will. At the very least, I didn't want that ability.
 
@@ -59,3 +60,7 @@ Since then I've paid attention to this with other products too. I still use clou
 Rather than bet on every part staying correct forever, I'd rather delete some unnecessary capabilities outright.
 
 Yipa will keep end-to-end encryption. The server helps you sync your data, but it doesn't know what you wrote, and neither do I. Not because I want to prove I'm a developer worth trusting, but because I've come to think good privacy design shouldn't ask users to trust anyone in the first place. The less trust it demands, the better.
+
+## Related reading
+
+- [What Indie Development Has Taught Me](/notes/what-indie-development-taught-me)

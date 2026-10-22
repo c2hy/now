@@ -1,7 +1,8 @@
 ---
 title: 'Schools look for genius. The rest of us need to learn for ourselves'
-seoTitle: 'Schools Look for Genius. The Rest of Us Need to Learn for Ourselves | Will.OPC'
-description: 'The goals of an education system are not necessarily our own. AI gives us a chance to take charge of our learning, starting with the problems we actually want to solve.'
+updatedAt: '2026-10-23'
+seoTitle: 'Learning for Ourselves in the Age of AI | Will.OPC'
+description: 'Schools select for talent; personal learning needs a different goal. On using AI to learn around real problems and take charge of our education.'
 publishedAt: '2026-10-21'
 category: 'life-observation'
 locale: 'en'
@@ -48,3 +49,7 @@ Schools need to find society's next genius.
 For the rest of us, who may never turn out to be that outlier, the age of AI may offer a new opportunity. We can begin answering a different question sooner, instead of waiting for an institution to tell us what to learn next:
 
 What do I need to learn to do the things I actually want to do?
+
+## Related reading
+
+- [Does it really have to work this way?](/notes/does-it-really-have-to-work-this-way)

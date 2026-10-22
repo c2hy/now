@@ -1,6 +1,7 @@
 ---
 title: 'Some Things Are Worth Remembering, But Not Necessarily Worth Improving'
-seoTitle: 'Some Things Are Worth Remembering, But Not Necessarily Worth Improving | Will.OPC'
+updatedAt: '2026-10-23'
+seoTitle: 'Remembering Without Turning Life into a Scorecard | Will.OPC'
 description: 'On plans, setbacks, and learning to look for causes instead of blame.'
 publishedAt: '2026-09-16'
 featured: true
@@ -53,3 +54,7 @@ I no longer use plans to frame every future day. Sometimes I just want to know: 
 Plans still work, and I'll keep making them. I just don't treat one unplanned detour as proof that the whole thing, or I, have failed.
 
 Writing things down doesn't have to be an audit of myself. Most of the time it's just keeping them around, so that much later I can look back and see how those days actually went.
+
+## Related reading
+
+- [The first time something happens, we’re very good at convincing ourselves](/notes/the-first-time-we-convince-ourselves)

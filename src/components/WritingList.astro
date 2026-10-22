@@ -19,6 +19,7 @@ const { items, locale } = Astro.props as {
             {item.data.title}
           </a>
         </h2>
+        <p class="entry-description">{item.data.description}</p>
         <time class="entry-date" datetime={item.data.publishedAt.toISOString()}>
           {date(item.data.publishedAt, locale)}
         </time>

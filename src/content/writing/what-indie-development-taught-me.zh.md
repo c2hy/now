@@ -1,5 +1,6 @@
 ---
 title: '做独立开发以后，我慢慢知道了什么值得做'
+updatedAt: '2026-10-23'
 seoTitle: '做独立开发以后，我慢慢知道了什么值得做 | Will.OPC'
 description: '关于独立开发、真实需求，以及如何在一次次试错后回看自己的判断。'
 publishedAt: '2026-09-26'
@@ -52,3 +53,7 @@ translationKey: 'what-indie-development-taught-me'
 如果年龄真带来了什么优势，我现在觉得未必是经验，可能只是做错过足够多次之后，对接下来把时间放在哪里，会比以前谨慎一点。
 
 对独立开发来说，这也许比多会一种技术更有用。
+
+## 延伸阅读
+
+- [事情真的必须这样吗？](/zh/notes/does-it-really-have-to-work-this-way)

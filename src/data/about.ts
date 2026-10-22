@@ -1,7 +1,7 @@
 export const about = {
   en: {
     paragraphs: [
-      'I’m Will, an independent developer in Shanghai. Before this I wrote code for many years, working my way from junior programmer to architect, until a few years ago I stepped out and started building products on my own.',
+      'I’m Will, an independent developer in Shanghai, building and writing as Will.OPC (willopc). Before this I wrote code for many years, working my way from junior programmer to architect, until a few years ago I stepped out and started building products on my own.',
       'In that first year I thought the hard part was building the product. It took a while to see that building it is the small step. The hard part is telling apart the needs that actually exist from the ones I wish existed, and I’m still learning that.',
     ],
     sections: [
@@ -31,7 +31,7 @@ export const about = {
   },
   zh: {
     paragraphs: [
-      '我是 Will，在上海做独立开发。在这之前写了很多年代码，从初级程序员一路做到架构师，前几年出来，开始一个人做产品。',
+      '我是 Will，在上海做独立开发，也用 Will.OPC（willopc）这个名字做产品和写作。在这之前写了很多年代码，从初级程序员一路做到架构师，前几年出来，开始一个人做产品。',
       '刚开始那一年，我以为最难的是把产品做出来。后来才知道，做出来只是很小的一步。真正难的是分清哪些需求真的存在，哪些只是我希望它存在。这个我到现在也还在学。',
     ],
     sections: [

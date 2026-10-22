@@ -1,6 +1,7 @@
 ---
 title: 'The first time something happens, we’re very good at convincing ourselves'
-seoTitle: 'The First Time Something Happens, We’re Very Good at Convincing Ourselves | Will.OPC'
+updatedAt: '2026-10-23'
+seoTitle: 'How Notes Reveal the Patterns We Explain Away | Will.OPC'
 description: 'On late nights, anxiety, and how keeping notes makes recurring patterns visible.'
 publishedAt: '2026-09-08'
 featured: true
@@ -33,3 +34,7 @@ That's part of why I've been rethinking what keeping a record is for.
 I used to think it was mainly so I'd remember later—where I'd been, what I'd done, how I'd felt. But more and more I think most records don't mean much at the moment they're written. Anxious today: doesn't prove anything. Up late last night: doesn't prove anything. Suddenly exhausted one afternoon: might really just be a bad night's sleep. No need to analyze it right away; leave it there first.
 
 What does the work is usually not any single entry. It's noticing, some time later, that the same thing has come back. Only then do you get to confirm it: ah, so it wasn't an accident.
+
+## Related reading
+
+- [Some Things Are Worth Remembering, But Not Necessarily Worth Improving](/notes/remember-not-improve)

@@ -1,5 +1,6 @@
 ---
 title: 'What Indie Development Has Taught Me'
+updatedAt: '2026-10-23'
 seoTitle: 'What Indie Development Has Taught Me | Will.OPC'
 description: 'Reflections on indie development, real user needs, and learning to look back after years of trial and error.'
 publishedAt: '2026-09-26'
@@ -52,3 +53,7 @@ Looking back, the most valuable thing these years gave me isn't a stack of new t
 If age brings any advantage, I doubt it's experience in the usual sense. More likely it's having been wrong enough times to be a bit more careful about where the time goes next.
 
 For independent work, that may matter more than another technology.
+
+## Related reading
+
+- [Does it really have to work this way?](/notes/does-it-really-have-to-work-this-way)

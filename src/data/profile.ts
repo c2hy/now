@@ -1,6 +1,7 @@
 export const profile = {
   name: 'Will',
   siteName: 'Will.OPC',
+  alternateName: 'willopc',
   site: 'https://willopc.com',
   location: 'Shanghai',
   email: 'hello@willopc.com',

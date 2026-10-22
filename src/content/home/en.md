@@ -1,10 +1,10 @@
 ---
 locale: en
 title: Answers change. The questions stay.
-description: I'm Will, an independent developer in Shanghai building products with AI. This site keeps the questions I ask and the answers only real testing could give.
+description: Will.OPC (willopc) is Will's personal site. An independent developer in Shanghai building Yipa, Huddle, and Tablow with AI, and writing about what he learns.
 ---
 
-I'm Will. The OPC in Will.OPC stands for One Person Company for now: one person, plus AI, carrying a product from end to end.
+I'm Will. I build products and write under the name Will.OPC (willopc). OPC stands for One Person Company for now: one person, plus AI, carrying a product from end to end.
 
 Before going independent, I wrote code for many years, working my way up from junior developer to architect. You'd think building products would be exactly my strength, and it was—until my own product shipped and I saw how little that proved. Building something well and having someone need it are two different things. It took me about a year to admit that.
 

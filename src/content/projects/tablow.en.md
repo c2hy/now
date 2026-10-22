@@ -2,7 +2,7 @@
 name: 'Tablow'
 statement: 'Remember when you last did it.'
 seoTitle: 'Tablow — Track when you last did something'
-description: 'Log haircuts, bedsheet changes and filter cleaning in a tap. Next time you open Tablow, see the last date and how long it has been. Works offline, no account needed.'
+description: 'Track when you last had a haircut, changed bedsheets or cleaned a filter. See the last date and elapsed time. Works offline, no account needed.'
 year: 2026
 order: 2
 featured: true
@@ -73,3 +73,7 @@ Tablow supports English, Simplified Chinese, Traditional Chinese, Japanese, Germ
 I built Tablow because I wanted to know when something last happened without having to set up goals, schedules or daily streaks just to keep a date.
 
 Its features stay focused on recording and looking back: one tap to keep the time, notes when needed, and cards, heatmaps, calendar and history to find it again. Sometimes, knowing when it last happened is enough.
+
+## Related writing
+
+[Some Things Are Worth Remembering, But Not Necessarily Worth Improving](/notes/remember-not-improve)

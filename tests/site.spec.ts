@@ -12,9 +12,9 @@ for (const site of sites) {
     await page.setViewportSize({ width: 375, height: 812 });
     await page.goto(site.home);
     await expect(page.getByRole('heading', { level: 1 })).toHaveCount(0);
-    expect(
-      await page.locator('.home-essay .prose > p').count(),
-    ).toBeGreaterThanOrEqual(2);
+    await expect
+      .poll(() => page.locator('.home-essay .prose > p').count())
+      .toBeGreaterThanOrEqual(2);
     await expect(page.locator('#main img, #main aside, footer')).toHaveCount(0);
     await expect(page.locator('.home-essay .prose p').first()).toHaveCSS(
       'font-weight',
@@ -137,9 +137,7 @@ test('language navigation preserves context and all projects remain reachable', 
   await page.goto('/zh/');
   await page.getByRole('link', { name: 'Switch to English' }).click();
   await expect(page).toHaveURL('/');
-  await page
-    .locator('[data-analytics-placement="nav_projects"]')
-    .click();
+  await page.locator('[data-analytics-placement="nav_projects"]').click();
   await expect(page).toHaveURL('/projects');
   await page.getByRole('link', { name: 'Tablow', exact: true }).click();
   await expect(page).toHaveURL('/projects/tablow');
@@ -277,6 +275,48 @@ test('all page types fit supported widths and retain readable content', async ({
         );
       expect(clippedText, `${route} clips text at ${width}px`).toBe(0);
     }
+  }
+});
+
+test('related writing, author and product links preserve the reading language', async ({
+  page,
+}) => {
+  for (const { prefix, privacyTitle, tablow } of [
+    {
+      prefix: '',
+      privacyTitle: 'Why Even I Can’t Read What You Write in Yipa',
+      tablow: 'Tablow',
+    },
+    {
+      prefix: '/zh',
+      privacyTitle: '为什么连我自己也看不到你在 Yipa 里写了什么',
+      tablow: '橘小记',
+    },
+  ]) {
+    await page.goto(`${prefix}/notes/why-i-cant-read-your-yipa-notes`);
+    await page
+      .locator('main .prose')
+      .getByRole('link', { name: 'Yipa', exact: true })
+      .click();
+    await expect(page).toHaveURL(`${prefix}/projects/yipa`);
+    await page
+      .locator('main .prose')
+      .getByRole('link', { name: privacyTitle, exact: true })
+      .click();
+    await expect(page).toHaveURL(
+      `${prefix}/notes/why-i-cant-read-your-yipa-notes`,
+    );
+    await page.locator('a[rel="author"]').click();
+    await expect(page).toHaveURL(`${prefix}/about`);
+    await page
+      .locator('main .prose')
+      .getByRole('link', { name: tablow, exact: true })
+      .click();
+    await expect(page).toHaveURL(`${prefix}/projects/tablow`);
+    await page.goto(`${prefix}/notes`);
+    await expect(
+      page.locator('[data-writing-item] .entry-description'),
+    ).toHaveCount(6);
   }
 });
 

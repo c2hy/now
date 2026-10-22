@@ -1,4 +1,4 @@
-import mixpanel from 'mixpanel-browser';
+import mixpanel from 'mixpanel-browser/src/loaders/loader-module-core';
 
 const token = document.body.dataset.analyticsToken;
 

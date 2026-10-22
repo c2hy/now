@@ -1,6 +1,7 @@
 ---
 import { render, type CollectionEntry } from 'astro:content';
-import { date, type Locale } from '../i18n';
+import { date, sectionPath, type Locale } from '../i18n';
+import { profile } from '../data/profile';
 const { entry, locale } = Astro.props as {
   entry: CollectionEntry<'writing'> | CollectionEntry<'projects'>;
   locale: Locale;
@@ -16,6 +17,14 @@ const { Content } = await render(entry);
     {
       article && (
         <p class="article-date">
+          <a
+            href={sectionPath(locale, 'about')}
+            rel="author"
+            data-analytics-placement="article_author"
+          >
+            {profile.name}
+          </a>
+          <span aria-hidden="true"> · </span>
           <time datetime={article.data.publishedAt.toISOString()}>
             {date(article.data.publishedAt, locale)}
           </time>

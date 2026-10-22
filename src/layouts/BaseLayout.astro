@@ -1,7 +1,8 @@
 ---
 import interFontUrl from '@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url';
 import '../styles/global.css';
-import { profile } from '../data/profile';
+import { chineseFontStyles } from '../utils/fonts';
+import { profile, social } from '../data/profile';
 import { ui, path, sectionPath, type Locale } from '../i18n';
 interface Props {
   locale: Locale;
@@ -31,8 +32,17 @@ const {
   },
 } = Astro.props;
 const t = ui[locale];
+const content = await Astro.slots.render('default');
+const fontStyles = chineseFontStyles(
+  `${JSON.stringify([t, profile])}${content}`,
+);
 const other = locale === 'en' ? 'zh' : 'en';
-const canonical = new URL(Astro.url.pathname, profile.site).href;
+// Static directory output adds a slash; keep metadata aligned with public links
+// and the sitemap, including the language home pages.
+const canonical = new URL(
+  current ? Astro.url.pathname.replace(/\/+$/, '') : path(locale),
+  profile.site,
+).href;
 const ogImageUrl = new URL(`${ogImage.path}?v=7`, profile.site).href;
 const ogImageWidth = ogImage.width ?? 1200;
 const ogImageHeight = ogImage.height ?? 630;
@@ -50,6 +60,11 @@ const analyticsConfigured =
 // Index pages by default; set PUBLIC_INDEXING_ENABLED=false for previews or
 // other deployments that should remain out of search results.
 const indexingEnabled = import.meta.env.PUBLIC_INDEXING_ENABLED !== 'false';
+const robots = !indexingEnabled
+  ? 'noindex, nofollow'
+  : current === '404'
+    ? 'noindex, follow'
+    : 'index, follow';
 const alternatePath =
   alternate ??
   (current === 'writing' || current === 'projects' || current === 'about'
@@ -68,16 +83,31 @@ const structuredData = {
       '@type': 'Person',
       '@id': `${profile.site}/#person`,
       name: profile.name,
-      url: profile.site,
+      alternateName: [profile.siteName, profile.alternateName],
+      url: `${profile.site}/`,
       image: `${profile.site}/avatar.svg`,
+      sameAs: social.map(({ href }) => href),
     },
-    { '@type': 'WebSite', name: profile.siteName, url: profile.site },
+    {
+      '@type': 'WebSite',
+      '@id': `${profile.site}/#website`,
+      name: profile.siteName,
+      alternateName: profile.alternateName,
+      url: `${profile.site}/`,
+      inLanguage: ['en', 'zh-CN'],
+      publisher: { '@id': `${profile.site}/#person` },
+    },
     ...(article
       ? [
           {
             '@type': 'Article',
+            '@id': `${canonical}#article`,
+            url: canonical,
+            mainEntityOfPage: canonical,
             headline: title,
             description,
+            image: ogImageUrl,
+            inLanguage: locale === 'zh' ? 'zh-CN' : 'en',
             datePublished: article.publishedAt.toISOString(),
             dateModified: (
               article.updatedAt || article.publishedAt
@@ -104,6 +134,7 @@ const structuredData = {
       type="font/woff2"
       crossorigin
     />
+    <style is:inline set:html={fontStyles}></style>
     <script is:inline>
       (() => {
         let stored = null;
@@ -128,9 +159,9 @@ const structuredData = {
     <title>{browserTitle}</title><meta
       name="description"
       content={description}
-    /><meta
+    /><meta name="author" content={profile.siteName} /><meta
       name="robots"
-      content={indexingEnabled ? 'index, follow' : 'noindex, nofollow'}
+      content={robots}
     />
     <link rel="icon" href="/favicon.ico" sizes="32x32" /><link
       rel="icon"
@@ -160,8 +191,16 @@ const structuredData = {
       )
     }
     {
-      !current && (
-        <link rel="alternate" hreflang="x-default" href={profile.site} />
+      paired && (
+        <link
+          rel="alternate"
+          hreflang="x-default"
+          href={
+            locale === 'en'
+              ? canonical
+              : new URL(alternatePath, profile.site).href
+          }
+        />
       )
     }
     <meta property="og:title" content={browserTitle} /><meta
@@ -290,7 +329,7 @@ const structuredData = {
       </div>
     </header>
     <div class="shell">
-      <main id="main"><slot /></main>
+      <main id="main"><Fragment set:html={content} /></main>
     </div>
     <script src="../scripts/theme.ts"></script>
     {analyticsConfigured && <script src="../scripts/analytics.ts" />}

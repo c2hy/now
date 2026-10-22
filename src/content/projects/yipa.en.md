@@ -1,7 +1,8 @@
 ---
 name: 'Yipa'
+seoTitle: 'Yipa — Private AI Journal with End-to-End Encryption'
 statement: 'Recording is more than recording.'
-description: 'Yipa is an AI-native private journal. End-to-end encryption—no one can read your records, not even the developer—so you can write freely. If you choose, AI can read them and surface clues you might have missed.'
+description: 'An AI-native private journal with end-to-end encryption. Record freely, then choose whether AI helps you explore patterns in your own notes.'
 year: 2026
 order: 0
 featured: true
@@ -55,3 +56,7 @@ AI analysis is for reference; it doesn't decide who you are. Yipa is not a perso
 - Write whenever you want, without asking every note for a conclusion.
 - Whether AI reads your records is up to you.
 - Recording is more than recording.
+
+## Related writing
+
+[Why Even I Can’t Read What You Write in Yipa](/notes/why-i-cant-read-your-yipa-notes)

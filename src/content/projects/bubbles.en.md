@@ -1,7 +1,8 @@
 ---
 name: 'Huddle'
+seoTitle: 'Huddle — A WeChat Mini Program for Close Contacts'
 statement: 'Share everyday life with just the right people.'
-description: 'A WeChat mini program. The more contacts we gather, the less we dare to post. Huddle gives each relationship its own space—a quick photo, a small update, shared with just the right people.'
+description: 'A WeChat mini program for sharing photos and everyday updates with close contacts. Give each relationship its own private space.'
 year: 2026
 order: 1
 featured: true
@@ -43,3 +44,7 @@ What Huddle tries to preserve is not the scale of a feed, but the sense of who a
 - The unit of sharing is a space: one space, one relationship.
 - Join different spaces, each with its own people and shared history.
 - Posts stay in the space, ready for replies and revisits.
+
+## Related writing
+
+[What Indie Development Has Taught Me](/notes/what-indie-development-taught-me)

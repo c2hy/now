@@ -39,9 +39,11 @@ Mixpanel SDK 自动读取 `utm_source`、`utm_medium`、`utm_campaign`、`utm_co
 
 ## 初始化配置
 
-`src/scripts/analytics.ts` 使用 `mixpanel-browser`，在美国区域默认 endpoint 上初始化：
+`src/scripts/analytics.ts` 使用 `mixpanel-browser` 官方 core 入口，在美国区域默认 endpoint 上初始化。core 入口不打包本站未使用的录屏与 targeting 模块，保留页面浏览、UTM、持久化和事件发送；统计仍在脚本执行时初始化，不依赖延迟加载或自定义事件队列。
 
 ```ts
+import mixpanel from 'mixpanel-browser/src/loaders/loader-module-core';
+
 mixpanel.init(token, {
   track_pageview: false,
   autocapture: false,

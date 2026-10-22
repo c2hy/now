@@ -1,6 +1,7 @@
 ---
 title: '事情真的必须这样吗？'
-seoTitle: '事情真的必须这样吗？ | Will.OPC'
+updatedAt: '2026-10-23'
+seoTitle: '独立开发凭什么成为一门生意？ | Will.OPC'
 description: '我花了一年多研究怎么把产品做好，上线之后才发现，自己几乎没有认真想过更前面的问题：独立开发凭什么成为一门生意？'
 publishedAt: '2026-10-22'
 category: 'product-building'
@@ -72,3 +73,7 @@ Will.OPC 里的 OPC，现在代表 One Person Company。名字定下来的时候
 以后再回头看，我应该会发现其中不少判断是错的。我花了一年多才发现自己把一个听起来合理的解释当成了理解，以后大概还会再犯。只是希望下一次能发现得早一点。
 
 答案会变，问题留着。
+
+## 延伸阅读
+
+- [做独立开发以后，我慢慢知道了什么值得做](/zh/notes/what-indie-development-taught-me)

@@ -1,9 +1,18 @@
 ---
-import { type Locale } from '../i18n';
+import { contentPath, type Locale } from '../i18n';
 import { about } from '../data/about';
 import { profile, social } from '../data/profile';
 const { locale } = Astro.props as { locale: Locale };
 const content = about[locale];
+const productNames: Record<string, string> = {
+  Yipa: 'yipa',
+  Huddle: 'bubbles',
+  Tablow: 'tablow',
+  泡泡留言板: 'bubbles',
+  橘小记: 'tablow',
+};
+const productParts = (text: string) =>
+  text.split(/(Yipa|Huddle|Tablow|泡泡留言板|橘小记)/g);
 const contact =
   locale === 'zh'
     ? {
@@ -32,7 +41,21 @@ const contact =
         <section>
           <h2>{section.title}</h2>
           {section.paragraphs.map((text) => (
-            <p>{text}</p>
+            <p>
+              {productParts(text).map((part) =>
+                productNames[part] ? (
+                  <a
+                    href={contentPath(locale, 'projects', productNames[part])}
+                    data-analytics-placement="about_product"
+                    data-analytics-product={productNames[part]}
+                  >
+                    {part}
+                  </a>
+                ) : (
+                  part
+                ),
+              )}
+            </p>
           ))}
         </section>
       ))

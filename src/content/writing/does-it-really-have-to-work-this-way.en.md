@@ -1,7 +1,8 @@
 ---
 title: 'Does it really have to work this way?'
-seoTitle: 'Does it really have to work this way? | Will.OPC'
-description: 'I spent more than a year learning to build a product well. Only after launch did I see how rarely I had asked the question in front of it: why can independent development be a business at all?'
+updatedAt: '2026-10-23'
+seoTitle: 'Can Independent Development Become a Business? | Will.OPC'
+description: 'After a year of polishing products, I began asking a harder question: what makes independent development a business?'
 publishedAt: '2026-10-22'
 category: 'product-building'
 locale: 'en'
@@ -72,3 +73,7 @@ This site will probably become something similar. It will hold the products I ma
 Looking back later, I'll probably find a good number of these judgments were wrong. It took me more than a year to notice I'd taken a reasonable-sounding explanation for an understanding, and I'll likely do it again. I just hope I notice a little sooner next time.
 
 Answers change. The questions stay.
+
+## Related reading
+
+- [What Indie Development Has Taught Me](/notes/what-indie-development-taught-me)

@@ -22,7 +22,7 @@ export const ui = {
     siteIntro:
       'Will’s observations, experiments, and changes of mind. An independent developer in Shanghai, exploring technology and everyday life.',
     aboutIntro:
-      'Will is an independent developer in Shanghai. After years as an engineer, he now builds Yipa, Huddle, and Tablow on his own, and writes down what the attempts teach him.',
+      'Meet Will, the independent developer behind Will.OPC (willopc). Based in Shanghai, he builds Yipa, Huddle, and Tablow, and writes about what he learns.',
     writing: 'Writing',
     projects: 'Projects',
     about: 'About',
@@ -41,7 +41,7 @@ export const ui = {
     siteIntro:
       'Will 的个人网站。在上海做独立开发，喜欢多问一句为什么，也会自己动手试试。这里有作品，有日常，还有做过之后才明白的事。',
     aboutIntro:
-      '关于 Will：在上海做独立开发。做过很多年工程师，现在一个人做 Yipa、泡泡留言板和橘小记，也把试过之后才明白的事写在这里。',
+      '关于 Will.OPC（willopc）背后的独立开发者 Will：在上海，一个人做 Yipa、泡泡留言板和橘小记，也把试过之后才明白的事写在这里。',
     writing: '文章',
     projects: '作品',
     about: '关于',

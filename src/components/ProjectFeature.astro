@@ -1,9 +1,14 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 import { contentPath, type Locale } from '../i18n';
-const { item, locale } = Astro.props as {
+const {
+  item,
+  locale,
+  priority = false,
+} = Astro.props as {
   item: CollectionEntry<'projects'>;
   locale: Locale;
+  priority?: boolean;
 };
 const cover = item.data.cover ?? item.data.hero;
 const titleId = `project-title-${item.data.slug}`;
@@ -23,7 +28,8 @@ const titleId = `project-title-${item.data.slug}`;
         alt={cover.alt}
         width={cover.width}
         height={cover.height}
-        loading="lazy"
+        loading={priority ? 'eager' : 'lazy'}
+        fetchpriority={priority ? 'high' : undefined}
         decoding="async"
       />
     </figure>

@@ -1,6 +1,4 @@
 @import 'tailwindcss';
-@import '@fontsource-variable/noto-sans-sc/wght.css';
-@import '@fontsource-variable/noto-serif-sc/wght.css';
 
 @font-face {
   font-family: 'Inter Variable';
@@ -405,6 +403,12 @@ h1 {
 .article-date {
   margin: 15px 0 0;
   line-height: 1.8;
+}
+.article-date a {
+  text-decoration: underline;
+}
+.article-date a:hover {
+  color: var(--color-accent);
 }
 .project-intro {
   margin: 18px 0 0;
