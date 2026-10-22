@@ -18,7 +18,7 @@ export const contentPath = (locale: Locale, kind: ContentKind, slug: string) =>
   path(locale, `${segment(kind)}/${slug}`);
 export const ui = {
   en: {
-    homeTitle: 'Does it really have to work this way?',
+    homeTitle: 'Answers change. The questions stay.',
     siteIntro:
       'Will’s observations, experiments, and changes of mind. An independent developer in Shanghai, exploring technology and everyday life.',
     aboutIntro:
@@ -37,7 +37,7 @@ export const ui = {
       'A few ideas I’ve put into practice: remembering the last time, sharing with familiar people, and taking another look at our experiences.',
   },
   zh: {
-    homeTitle: '事情真的必须这样吗？',
+    homeTitle: '答案会变，问题留着',
     siteIntro:
       'Will 的个人网站。在上海做独立开发，喜欢多问一句为什么，也会自己动手试试。这里有作品，有日常，还有做过之后才明白的事。',
     aboutIntro:

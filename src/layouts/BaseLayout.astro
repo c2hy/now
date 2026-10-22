@@ -33,7 +33,7 @@ const {
 const t = ui[locale];
 const other = locale === 'en' ? 'zh' : 'en';
 const canonical = new URL(Astro.url.pathname, profile.site).href;
-const ogImageUrl = new URL(`${ogImage.path}?v=6`, profile.site).href;
+const ogImageUrl = new URL(`${ogImage.path}?v=7`, profile.site).href;
 const ogImageWidth = ogImage.width ?? 1200;
 const ogImageHeight = ogImage.height ?? 630;
 const resolvedTitle = metaTitle ?? title;

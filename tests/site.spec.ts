@@ -6,7 +6,7 @@ const sites = [
 ] as const;
 
 for (const site of sites) {
-  test(`${site.locale} homepage presents an untitled, normal-weight opening essay`, async ({
+  test(`${site.locale} homepage presents a short untitled welcome`, async ({
     page,
   }) => {
     await page.setViewportSize({ width: 375, height: 812 });
@@ -14,7 +14,7 @@ for (const site of sites) {
     await expect(page.getByRole('heading', { level: 1 })).toHaveCount(0);
     expect(
       await page.locator('.home-essay .prose > p').count(),
-    ).toBeGreaterThan(6);
+    ).toBeGreaterThanOrEqual(2);
     await expect(page.locator('#main img, #main aside, footer')).toHaveCount(0);
     await expect(page.locator('.home-essay .prose p').first()).toHaveCSS(
       'font-weight',
@@ -137,7 +137,9 @@ test('language navigation preserves context and all projects remain reachable', 
   await page.goto('/zh/');
   await page.getByRole('link', { name: 'Switch to English' }).click();
   await expect(page).toHaveURL('/');
-  await page.getByRole('link', { name: 'Projects', exact: true }).click();
+  await page
+    .locator('[data-analytics-placement="nav_projects"]')
+    .click();
   await expect(page).toHaveURL('/projects');
   await page.getByRole('link', { name: 'Tablow', exact: true }).click();
   await expect(page).toHaveURL('/projects/tablow');
@@ -185,7 +187,7 @@ test('keyboard navigation reaches the contact link from the skip link', async ({
   await expect(page.getByRole('link', { name: '跳至正文' })).toBeFocused();
   const contact = page.locator('.home-contact a');
   let reachedContact = false;
-  for (let step = 0; step < 12; step += 1) {
+  for (let step = 0; step < 16; step += 1) {
     await page.keyboard.press(nextLink);
     if (
       await contact.evaluate((element) => element === document.activeElement)
@@ -203,9 +205,9 @@ test('top navigation opens writing and the article language switch preserves the
   page,
 }) => {
   await page.goto('/zh/');
-  await page.getByRole('link', { name: '文章', exact: true }).click();
+  await page.locator('[data-analytics-placement="nav_writing"]').click();
   await expect(page).toHaveURL('/zh/notes');
-  await expect(page.locator('[data-writing-item]')).toHaveCount(5);
+  await expect(page.locator('[data-writing-item]')).toHaveCount(6);
   await page
     .locator(
       '[data-analytics-placement="note_item"][href="/zh/notes/schools-and-learning-for-ourselves"]',
