@@ -102,6 +102,7 @@ button:focus-visible {
   backdrop-filter: blur(14px) saturate(1.6);
 }
 .site-header .shell {
+  max-width: calc(var(--reading) + var(--gutter) * 2);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -427,21 +428,70 @@ h1 {
   font-size: 15px;
   line-height: 2;
 }
+.home-essay {
+  padding-top: 8px;
+}
+.home-essay .prose {
+  font-family: var(--font-heading);
+  font-size: 19px;
+  line-height: 1.95;
+  letter-spacing: 0.01em;
+  font-kerning: normal;
+  font-optical-sizing: auto;
+}
+:lang(en) .home-essay .prose {
+  font-size: 23px;
+  line-height: 1.6;
+  letter-spacing: -0.008em;
+}
+.home-essay .prose > p {
+  margin: 0 0 1.35em;
+}
+.home-essay .prose > p:last-child {
+  margin-top: 1.6em;
+  margin-bottom: 0;
+}
+.home-essay .prose a {
+  text-decoration-color: color-mix(
+    in srgb,
+    var(--color-accent) 35%,
+    transparent
+  );
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+  white-space: nowrap;
+  transition: text-decoration-color 160ms ease;
+}
+.home-essay .prose a:hover {
+  text-decoration-color: var(--color-accent);
+}
 .home-contact {
-  margin-top: 40px;
-  padding-top: 24px;
-  border-top: 1px solid var(--color-line);
-  font-size: 16px;
+  margin-top: 34px;
+  font-size: 14px;
 }
 .home-contact a {
   display: inline-flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   min-height: 44px;
   color: var(--color-accent);
 }
 .home-contact a:hover {
   text-decoration: underline;
+}
+.home-contact span {
+  display: inline-block;
+  font-size: 17px;
+  transition: transform 160ms ease;
+}
+.home-contact a:hover span {
+  transform: translateX(2px);
+}
+@media (prefers-reduced-motion: reduce) {
+  .home-essay .prose a,
+  .home-contact span {
+    transition: none;
+  }
 }
 .about-contact {
   margin-top: 54px;
@@ -513,6 +563,19 @@ h1 {
   }
   .site-brand {
     font-size: 16px;
+  }
+  .home-essay {
+    padding-top: 0;
+  }
+  .home-essay .prose {
+    font-size: 18px;
+  }
+  :lang(en) .home-essay .prose {
+    font-size: 21px;
+    line-height: 1.6;
+  }
+  .home-contact {
+    margin-top: 28px;
   }
   .site-nav {
     gap: 19px;

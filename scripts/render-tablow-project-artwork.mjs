@@ -4,7 +4,7 @@ import sharp from 'sharp';
 const root = process.cwd();
 const sourceRoot = resolve(
   root,
-  '../production-management/products/tablow/assets/batches/2026-10-16-last-time-horizontal-v1',
+  '../productions/products/tablow/assets/batches/2026-10-16-last-time-horizontal-v1',
 );
 const width = 1200;
 const height = 600;
