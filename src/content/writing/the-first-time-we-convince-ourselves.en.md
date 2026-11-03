@@ -31,7 +31,7 @@ And this wasn't the first time. The scattered notes hadn't seemed related, but w
 
 That's part of why I've been rethinking what keeping a record is for.
 
-I used to think it was mainly so I'd remember later—where I'd been, what I'd done, how I'd felt. But more and more I think most records don't mean much at the moment they're written. Anxious today: doesn't prove anything. Up late last night: doesn't prove anything. Suddenly exhausted one afternoon: might really just be a bad night's sleep. No need to analyze it right away; leave it there first.
+I used to think it was mainly so I'd remember later—where I'd been, what I'd done, how I'd felt. But more and more I think most records don't mean much at the moment they're written. Anxious today, up late last night, suddenly exhausted one afternoon—on their own, none of these prove much; it might really just be a bad night's sleep. No need to analyze it right away; leave it there first.
 
 What does the work is usually not any single entry. It's noticing, some time later, that the same thing has come back. Only then do you get to confirm it: ah, so it wasn't an accident.
 

@@ -10,9 +10,9 @@ slug: 'does-it-really-have-to-work-this-way'
 translationKey: 'does-it-really-have-to-work-this-way'
 ---
 
-For more than a year, I put a great deal of energy into learning how to build a product well, and I never tired of it. How a feature should be designed, what was still wrong with the experience, which details could be adjusted next. There is always somewhere further to take a product, so it is easy to keep sinking in.
+For more than a year, I put most of my energy into learning how to build a product well, and I never got tired of it. How a feature should be designed, what was still wrong with the experience, which details could be adjusted next. There is always somewhere further to take a product, so it is easy to keep sinking in.
 
-Only after the product launched and I actually faced promotion and users did I realize I might have been studying the wrong question from the start. I kept thinking about how to make a better product, and almost never seriously asked the question in front of it: why can independent development be a business at all?
+Once the product launched and I was actually facing promotion and users, I realized I might have been studying the wrong question from the start. I kept thinking about how to make a better product, and almost never seriously asked the question in front of it: why can independent development be a business at all?
 
 I had my own answer, of course. For a long time I even thought it was fairly complete. The problem is that things didn't happen the way I imagined. The absurd part is that this should have been the mistake I was best at avoiding.
 
@@ -38,13 +38,13 @@ At first I filed it under promotion. The product exists, there are no users, so 
 
 I was seeing a scene I knew well from my years inside companies: everyone earnestly doing their own part, often doing it well, while the whole thing quietly failed to hold.
 
-I'd assumed that problem would disappear once I went independent. There was only me—no boundaries between engineer, product manager, and designer. I wrote the code, made the design, set the direction. Nobody was confining me to a local view anymore. It took me a while to see that a local view doesn't need an org chart. I had simply handed myself a new role. As an engineer I'd been absorbed in writing code well; as a "product creator" I became absorbed in building the product well. Could the feature be simpler, the interaction smoother, the visuals more complete, should the user's complaint be fixed today—each reasonable on its own, and genuinely enjoyable to do.
+I'd assumed that problem would disappear once I went independent. There was only me—no boundaries between engineer, product manager, and designer. I wrote the code, made the design, set the direction. Nobody was confining me to a local view anymore. It took me a while to see that a local view doesn't need an org chart. I had simply handed myself a new role. As an engineer I'd been absorbed in writing code well; as a "product creator" I became absorbed in building the product well. Could the feature be simpler, the interaction smoother, the visuals more complete? Should the user's complaint be fixed today? Each felt reasonable on its own, and doing them was genuinely enjoyable.
 
 But why would a stranger ever see this product? Why trust it? Why stay after trying it? And once the first users came, where would the next ones come from? I hadn't really worked any of that out, and it wasn't going to fill itself in as the product improved.
 
 What I had actually proven was that one person can increasingly build what used to take a team. "Being able to build the product" and "being able to run the business" are different things, and I'd taken the first as evidence of the second.
 
-Looking back, that's probably because "getting things built" sat in too important a place in my working life for too many years. It was the ability I leaned on hardest. Whether an idea can land is full of practical questions—can this be implemented, how should the system be designed, what do you do when it breaks, how do you tell which things aren't as simple as they look—and being the person who reliably worked through them was real professional capital. I was proud of it.
+Looking back, that's probably because "getting things built" sat in too important a place in my working life for too many years. It was the ability I leaned on hardest. Whether an idea can land is full of practical questions: can this be implemented, how should the system be designed, what do you do when it breaks, how do you tell which things aren't as simple as they look. Being the person who reliably worked through them was real professional capital. I was proud of it.
 
 It's getting less scarce, though. At least for the kind of products I build, many problems that used to stop me don't anymore. Unfamiliar technology can be picked up quickly; work that needed a specialist can now be done by me to a good-enough level.
 
@@ -62,7 +62,7 @@ And I don't mean "AI doesn't understand, humans do." Humans run the same trap. M
 
 Now, with questions like these, I want my judgments to bump into actual results sooner. If I believe a piece of copy makes the product clearer, change it and see if anything moves. If I believe a kind of content will bring users, publish it and see what happens. The results are often less tidy than the version in my head. That turns out to be more useful. Once you're there, no amount of extra reasons can keep the judgment rounded off: nobody came means nobody came; users didn't stay means they didn't stay. At minimum you have to ask again where you went wrong earlier.
 
-So I ask myself more and more often: does it really have to work this way? Not to argue with answers people already accept; defaults that survived until today usually survived for reasons. But it has started to feel wrong to skip the step of understanding why an answer holds just because it's common. Under what conditions does it hold? Do those conditions still exist? If the conditions changed, should the answer change too?
+So I ask myself more often now: does it really have to work this way? Not to argue with answers people already accept; defaults that survived until today usually survived for reasons. But it has started to feel wrong to skip the step of understanding why an answer holds just because it's common. Under what conditions does it hold? Do those conditions still exist? If the conditions changed, should the answer change too?
 
 I don't know where this way of working leads. For now I'm a bit more watchful than before: the more complete an answer sounds, the less reason I have to stop early.
 

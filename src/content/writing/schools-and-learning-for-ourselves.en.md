@@ -10,13 +10,13 @@ slug: 'schools-and-learning-for-ourselves'
 translationKey: 'schools-and-learning-for-ourselves'
 ---
 
-I increasingly wonder whether we overestimate the extent to which schools are designed to teach every individual well, and underestimate their role as a system for identifying and selecting talent.
+I increasingly think we overestimate how well schools teach each individual, and underestimate their role as a selection system.
 
-Schools serve thousands, millions, even hundreds of millions of students, rather than any one particular person. They need a common curriculum, a relatively fixed pace, standardized exams, and a way to compare results. We often find this arrangement too rigid, too indifferent to individual needs. But seen from another angle, that standardization is what allows schooling to operate at scale.
+Schools never face one particular student; they face hundreds of millions at once. They need a common curriculum, a relatively fixed pace, standardized exams, and a way to compare results. We often find this arrangement too rigid, too indifferent to individual needs. But seen from another angle, that standardization is what allows schooling to operate at scale.
 
 Only when enough people encounter similar bodies of knowledge can the system begin to see the outliers. We often ask why someone who will never become a mathematician needs to study so much mathematics, or why someone who will never do physics research needs to learn physics. From an individual's perspective, these are reasonable questions. From society's perspective, the answer is fairly straightforward: until a child has actually encountered mathematics, physics, music, or literature, no one knows whether they might have an exceptional ability in one of those fields.
 
-So universal education and the discovery of exceptional talent are quite compatible. Precisely because extraordinary ability can emerge anywhere, in any family, society needs to give as many people as possible access to a broad range of knowledge. A child who has never encountered something has little chance of discovering a gift for it. In that sense, one of the important missions of schooling may always have been to avoid overlooking people whose abilities might otherwise go unnoticed.
+So universal education and the discovery of exceptional talent are quite compatible. Because extraordinary ability can emerge anywhere, in any family, society needs to give as many people as possible access to a broad range of knowledge. A child who has never encountered something has little chance of discovering a gift for it. In that sense, one of the important missions of schooling may always have been to avoid overlooking people whose abilities might otherwise go unnoticed.
 
 But there is an easily missed distinction here: the goals of a social system do not automatically coincide with those of an individual.
 
@@ -26,17 +26,15 @@ In the past, these two concerns were difficult to separate. The reason is simple
 
 That is the premise AI is beginning to change.
 
-I do not think AI will replace schools anytime soon. Schools also provide qualifications, a community of peers, socialization, laboratory resources, and the formal training many professions require. A chat window cannot easily replace those things. But AI is beginning to make something once very expensive widely available: for the first time, ordinary people can get something approaching one-to-one learning support at very little cost.
+I do not think AI will replace schools anytime soon. Schools also provide qualifications, a community of peers, socialization, laboratory resources, and the formal training many professions require. A chat window cannot easily replace those things. But AI is making something that used to be very expensive common: for the first time, ordinary people can get close to one-on-one learning help at very low cost.
 
 You can tell it what you already know, what you are working on, and why you need to understand a particular subject. When an explanation does not make sense, you can ask for another approach, or go back to the background knowledge you are missing. Learning no longer has to follow the sequence laid out in a course. It can develop around a real problem.
 
-This may be AI's most important effect on how ordinary people learn.
+This may be AI's most important effect on how ordinary people learn. Learning used to be driven by the curriculum: first learn what school says you should know; whether you will ever need it can be settled later. Now it can be driven by a problem instead: start with something you actually want to solve, then follow it wherever it leads, filling in the knowledge you need along the way.
 
-Learning used to be largely driven by the curriculum: first learn what school says you should know; whether you will ever need it can be settled later. Increasingly, it can be driven by a problem instead: start with something you actually want to solve, then follow it wherever it leads, filling in the knowledge you need along the way.
+Say you want to build a product: you learn design, development, marketing, and business around it. Halfway through you realize you don't understand databases, so you go study databases. You need to read financial statements, so you learn accounting; you want to enter an overseas market, so you work on the language and the local culture. Learning becomes a way to develop the ability to solve real problems, rather than simply to complete a course someone else has designed.
 
-If you want to build a product, learn the design, development, marketing, and business skills it calls for. If you get halfway through and realize you do not understand databases, study databases. If you need to read financial statements, learn accounting. If you want to enter an overseas market, work on the language and local culture. Learning becomes a way to develop the ability to solve real problems, rather than simply to complete a course someone else has designed.
-
-That is why I think the question worth reconsidering in the age of AI is how heavily we should depend on schools for our learning, rather than whether we should still attend them.
+That is why I think the question worth reconsidering is not whether we should still attend school, but how heavily our learning should keep depending on schools.
 
 Schools still matter, and they still deserve to be taken seriously. But if you gradually realize that you are not the kind of person traditional education is particularly good at recognizing, you may not need to spend ever more time proving that you can perform better within its selection process. Pushing an exam score from 90 to 95 may well have value. It will not always be a better use of that time than developing an ability you actually need.
 
