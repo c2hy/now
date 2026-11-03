@@ -2,6 +2,7 @@
 locale: zh
 title: 答案会变，问题留着
 description: Will.OPC（willopc）是独立开发者 Will 的个人网站。在上海，一个人加上 AI 做 Yipa、泡泡留言板和橘小记，记录生活、技术与做产品的思考。
+imprint: '在 AI 时代，<br class="imprint-break">什么仍然值得人去做、去记住、去相信、去维持？'
 ---
 
 我是 Will，也用 Will.OPC（willopc）这个名字做产品和写作。OPC 现在是 One Person Company 的意思：一个人，加上 AI，把一个产品从头做到尾。

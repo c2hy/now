@@ -2,6 +2,7 @@
 locale: en
 title: Answers change. The questions stay.
 description: Will.OPC (willopc) is Will's personal site. An independent developer in Shanghai building Yipa, Huddle, and Tablow with AI, and writing about what he learns.
+imprint: 'In the age of AI, what is still worth doing, remembering, believing in, and holding on to?'
 ---
 
 I'm Will. I build products and write under the name Will.OPC (willopc). OPC stands for One Person Company for now: one person, plus AI, carrying a product from end to end.

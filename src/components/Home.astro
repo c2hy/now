@@ -7,6 +7,7 @@ const locale = entry.data.locale;
 ---
 
 <article class="reading-column home-essay">
+  <p class="home-imprint" set:html={entry.data.imprint} />
   <div class="prose"><Content /></div>
   <div class="home-contact">
     <a
@@ -14,7 +15,47 @@ const locale = entry.data.locale;
       data-analytics-placement="home_contact"
     >
       {locale === 'zh' ? '联系我' : 'Get in touch'}
-      <span aria-hidden="true">→</span>
+      <span aria-hidden="true"
+        ><svg
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.6"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M4.5 12h15" />
+          <path d="m13.5 6 6 6-6 6" />
+        </svg></span
+      >
     </a>
   </div>
 </article>
+
+<style is:global>
+  /* 扉页印记：无标题、无容器，小号灰字，单行（移动端在语义处折两行）。
+     字号、颜色、字体栈全部继承现有 token；字体相关全局规则不在此处重复。
+     使用 is:global：scoped 样式会给 .prose 等元素附加 scope 属性，
+     破坏 verify-build 对首页正文结构的正则断言。 */
+  .home-imprint {
+    margin: 0 0 2.6em;
+    font-size: 15px;
+    line-height: 1.9;
+    color: var(--color-muted);
+  }
+  /* 中文问句在窄屏自然折行会断在顿号结尾，故在语义边界放置 br，
+     宽屏隐藏保持单行，窄屏显示强制语义断行。 */
+  .home-imprint .imprint-break {
+    display: none;
+  }
+  @media (max-width: 600px) {
+    .home-imprint {
+      margin-bottom: 2.1em;
+      font-size: 14px;
+    }
+    .home-imprint .imprint-break {
+      display: inline;
+    }
+  }
+</style>

@@ -20,6 +20,7 @@ const home = defineCollection({
     locale: z.enum(['en', 'zh']),
     title: z.string(),
     description: z.string(),
+    imprint: z.string(),
   }),
 });
 const writing = defineCollection({
