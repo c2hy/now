@@ -32,8 +32,8 @@ npm run build          # 正式构建，排除所有 sample / draft 内容
 - `src/data/profile.ts`：个人资料与已确认的公开链接。关于页的「联系我」区域展示邮箱与社交账号；`social` 条目包含 `label`（平台名称）、`id`（固定统计标识）、`href`（公开链接）和可选的 `account`（展示的账号名，未填写时展示「查看主页」）。没有配置的渠道不显示。
 - `src/data/about.ts`：中英文人物介绍。邮箱与已确认的社交链接展示在关于页。
 - `src/i18n/index.ts`：双语界面文案与路径工具。
-- `src/styles/global.css`：Tailwind 4 主题（浅色与夜间两套色彩变量）、全局样式与正文排版。字体经 npm 包本地打包、不依赖 Google CDN，且全部使用 `font-display: swap` 避免加载阻塞：正文为 Inter 与 Noto Sans SC，标题为 Newsreader 与 Noto Serif SC，均为 OFL 授权；中文字体按 unicode-range 子集按需下载，Inter 主字体在页面预加载。
-- 作品列表的首张封面优先加载，后续封面保持懒加载。全站通过 `src/utils/fonts.ts` 根据布局界面文案与实际渲染的正文生成本页所需的中文字体声明，沿用相同字体文件与字重，减少首屏 CSS。内容更新时会自动重新计算字形范围，无需手动维护字形清单。
+- `src/styles/global.css`：Tailwind 4 主题（浅色与夜间两套色彩变量）、全局样式与正文排版。拉丁字体经 npm 包本地打包、不依赖 Google CDN，全部使用 `font-display: swap` 避免加载阻塞：正文为 Inter，标题为 Newsreader，均为 OFL 授权，两者在页面预加载；Newsreader 另配一族按度量对齐的系统衬线后备（Times New Roman），消除 swap 位移。中文不使用 webfont：按平台落到系统字体（macOS/iOS 为 Songti SC，Windows 为宋体，黑体场景为 PingFang SC / Microsoft YaHei，其余平台落到系统 serif/sans）。
+- 作品列表的首张封面优先加载，后续封面保持懒加载。
 - `public/images/`：项目配图。`public/images/projects/` 保存各项目中英文宽幅配图，作品未配置 `cover` 时作为画廊回退；`public/images/project-covers/` 保存画廊封面，其中 Tablow 使用随版本更新的产品素材，其他作品使用原创概念封面，生成方式见 `docs/project-covers.md`。
 - `src/utils/og.ts`、`src/pages/og/`：构建时生成 1200×630 的中英文站点与文章 OG PNG；文章可通过 frontmatter 的 `cover` 覆盖默认文字版式。
 - 项目可通过 `seoTitle` 覆盖页面与 OG 标题，通过 `ogImage` 指定分享图。图片尺寸由项目元数据声明，构建校验会核对 PNG 实际尺寸；Tablow 项目图为 1200×600。标题、摘要和正文应一起维护，准确描述已有功能及会员限制。

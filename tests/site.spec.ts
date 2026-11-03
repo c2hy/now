@@ -101,17 +101,14 @@ test('typography pairs serif headings with reading-tuned body text', async ({
     'font-family',
     /Newsreader Variable/,
   );
+  await expect(page.locator('article h1')).toHaveCSS(
+    'font-family',
+    /Songti SC.+SimSun/,
+  );
   await expect
     .poll(() =>
       page.evaluate(() =>
         document.fonts.check('500 1em "Newsreader Variable"', 'Notes'),
-      ),
-    )
-    .toBe(true);
-  await expect
-    .poll(() =>
-      page.evaluate(() =>
-        document.fonts.check('500 1em "Noto Serif SC Variable"', '为什么'),
       ),
     )
     .toBe(true);

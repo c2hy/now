@@ -18,6 +18,34 @@
     format('woff2');
 }
 
+/* Newsreader 的本地度量匹配后备族：swap 期间用 Times New Roman 顶替，
+   度量对齐 Newsreader，消除 swap 位移。数值用 fontkit 从实际字体文件读出
+   （一次性计算后固化于此；更换字体时需按同法重算）：
+
+   Newsreader（newsreader-latin-wght-normal.woff2，UPE=2000）：
+     ascent 1470，descent -530，lineGap 0，xHeight 852，capHeight 1340
+   Times New Roman（C:\Windows\Fonts\times.ttf，UPE=2048）：
+     ascent 1825，descent -443，lineGap 87，xHeight 916，capHeight 1356
+   （TNR 与 Newsreader 的 x 高差 5%、cap 高差 1%；Georgia x 高差 13%，故选 TNR。
+     macOS 自带 Times New Roman，度量按与 Windows 同版本处理，未实测。）
+
+   以 x-height 对齐（正文感知大小由 x 高主导；若按 capHeight 对齐则
+   size-adjust = (1340/2000)/(1356/2048) = 101.19%，供参考）：
+     size-adjust      = (852/2000) / (916/2048) = 0.426 / 0.44727 ≈ 95.25%
+     ascent-override  = (1470/2000) / 0.952453                ≈ 77.17%
+     descent-override = (530/2000)  / 0.952453                ≈ 27.82%
+     line-gap-override= 0（Newsreader lineGap 为 0，行盒恰为 1.0em）
+   覆盖值在 size-adjust 缩放之上生效，故按目标度量 ÷ s 反推。 */
+@font-face {
+  font-family: 'Newsreader Fallback';
+  src: local('Times New Roman');
+  font-display: swap;
+  size-adjust: 95.25%;
+  ascent-override: 77.17%;
+  descent-override: 27.82%;
+  line-gap-override: 0%;
+}
+
 @theme {
   --color-paper: light-dark(#ffffff, #141417);
   --color-ink: light-dark(#343940, #e8e9ec);
@@ -28,10 +56,9 @@
   --color-selection: light-dark(#f8e3de, #4a2620);
   --color-glass: light-dark(rgba(255, 255, 255, 0.72), rgba(20, 20, 23, 0.72));
   --font-sans:
-    'Inter Variable', 'PingFang SC', 'Noto Sans SC Variable', 'Microsoft YaHei',
-    sans-serif;
+    'Inter Variable', 'PingFang SC', 'Microsoft YaHei', sans-serif;
   --font-heading:
-    'Newsreader Variable', 'Noto Serif SC Variable', 'Songti SC', 'SimSun',
+    'Newsreader Variable', 'Newsreader Fallback', 'Songti SC', 'SimSun',
     serif;
 }
 
@@ -483,6 +510,17 @@ h1 {
   display: inline-block;
   font-size: 17px;
   transition: transform 160ms ease;
+}
+/* 内联 SVG 箭头：替代文本箭头。U+2192/U+2197 不在 Inter 拉丁子集，
+   文本写法会触发 CJK webfont 分片回退下载；SVG 用 currentColor 继承链接色，
+   1em 随上下文字号缩放，尺寸与原 15–17px 文本箭头相当。 */
+.contact-arrow svg,
+.home-contact span svg,
+.project-links a svg {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.12em;
 }
 .home-contact a:hover span {
   transform: translateX(2px);

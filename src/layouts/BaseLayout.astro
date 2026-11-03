@@ -1,7 +1,7 @@
 ---
 import interFontUrl from '@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url';
+import newsreaderFontUrl from '@fontsource-variable/newsreader/files/newsreader-latin-wght-normal.woff2?url';
 import '../styles/global.css';
-import { chineseFontStyles } from '../utils/fonts';
 import { profile, social } from '../data/profile';
 import { ui, path, sectionPath, type Locale } from '../i18n';
 interface Props {
@@ -33,9 +33,6 @@ const {
 } = Astro.props;
 const t = ui[locale];
 const content = await Astro.slots.render('default');
-const fontStyles = chineseFontStyles(
-  `${JSON.stringify([t, profile])}${content}`,
-);
 const other = locale === 'en' ? 'zh' : 'en';
 // Static directory output adds a slash; keep metadata aligned with public links
 // and the sitemap, including the language home pages.
@@ -134,7 +131,13 @@ const structuredData = {
       type="font/woff2"
       crossorigin
     />
-    <style is:inline set:html={fontStyles}></style>
+    <link
+      rel="preload"
+      href={newsreaderFontUrl}
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
     <script is:inline>
       (() => {
         let stored = null;
