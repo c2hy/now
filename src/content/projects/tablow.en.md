@@ -1,8 +1,8 @@
 ---
 name: 'Tablow'
 statement: 'Remember when you last did it.'
-seoTitle: 'Tablow — Track when you last did something'
-description: 'Track when you last had a haircut, changed bedsheets or cleaned a filter. See the last date and elapsed time. Works offline, no account needed.'
+seoTitle: 'Tablow — When did I last? Offline tracker'
+description: 'Track when you last had a haircut, changed bedsheets or cleaned a filter. See the last date and the time since. Offline, no account needed. Free download, one-time Premium unlock.'
 year: 2026
 order: 2
 featured: true
@@ -37,11 +37,19 @@ slug: 'tablow'
 translationKey: 'tablow'
 ---
 
-## When did you last do it? How long has it been?
+## When did I last do it?
+
+Tablow is an offline app for iPhone, iPad and Android that remembers when you last did something. It is free to download from the App Store and Google Play; a one-time $1.99 Premium purchase (US) unlocks the full version.
 
 When was your last haircut? How long has that water filter been in use? When did you last change the bedsheets? Everyday things don't always happen on a schedule, and their dates are easy to forget.
 
-Tablow is an offline life tracker for recording when you last did something, available on iPhone, iPad and Android. Create a tracker, tap when it happens, and keep the date and time. Come back later to see your latest entry and how much time has passed since then.
+Create a tracker, tap when it happens, and keep the date and time. Come back later to see your latest entry and how much time has passed since then.
+
+- **What it is**: a tracker for "when did I last…" questions, not a habit tracker
+- **Platforms**: iPhone, iPad and Android
+- **Price**: free download; one-time $1.99 (US) Premium unlock, no subscription
+- **Where**: App Store and Google Play
+- **Data**: records stay on your device; no account and no automatic cloud sync
 
 ## Start with a haircut or a bedsheet change
 
@@ -73,6 +81,14 @@ Tablow supports English, Simplified Chinese, Traditional Chinese, Japanese, Germ
 I built Tablow because I wanted to know when something last happened without having to set up goals, schedules or daily streaks just to keep a date.
 
 Its features stay focused on recording and looking back: one tap to keep the time, notes when needed, and cards, heatmaps, calendar and history to find it again. Sometimes, knowing when it last happened is enough.
+
+## Common questions
+
+**Is Tablow a habit tracker?** No. It does not ask for goals, streaks or daily check-ins. It keeps the date of what already happened, and how long ago that was.
+
+**Do I need an account?** No. Tablow works offline and does not require an account. Records stay on the device by default.
+
+**Is Premium a subscription?** No. Premium is a one-time purchase. The free version includes up to 8 active trackers, today's entries, notes, history and the monthly calendar.
 
 ## Related writing
 

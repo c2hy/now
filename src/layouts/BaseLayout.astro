@@ -14,6 +14,15 @@ interface Props {
   product?: string;
   article?: { publishedAt: Date; updatedAt?: Date };
   ogImage?: { path: string; alt: string; width?: number; height?: number };
+  app?: {
+    name: string;
+    description: string;
+    category: string;
+    operatingSystem: string;
+    url: string;
+    downloadUrl: string;
+    sameAs: string[];
+  };
 }
 const {
   locale,
@@ -24,6 +33,7 @@ const {
   alternate,
   product,
   article,
+  app,
   ogImage = {
     path: `/og/${locale}/site.png`,
     alt: ui[locale].homeTitle,
@@ -94,6 +104,32 @@ const structuredData = {
       inLanguage: ['en', 'zh-CN'],
       publisher: { '@id': `${profile.site}/#person` },
     },
+    ...(app
+      ? [
+          {
+            '@type': 'SoftwareApplication',
+            '@id': `${canonical}#app`,
+            name: app.name,
+            description: app.description,
+            applicationCategory: app.category,
+            operatingSystem: app.operatingSystem,
+            url: app.url,
+            downloadUrl: app.downloadUrl,
+            sameAs: app.sameAs,
+            inLanguage: locale === 'zh' ? 'zh-CN' : 'en',
+            offers: {
+              '@type': 'Offer',
+              price: 0,
+              priceCurrency: 'USD',
+              description:
+                locale === 'zh'
+                  ? '免费下载；Premium 为一次性购买。'
+                  : 'Free download; Premium is a one-time purchase.',
+            },
+            author: { '@id': `${profile.site}/#person` },
+          },
+        ]
+      : []),
     ...(article
       ? [
           {

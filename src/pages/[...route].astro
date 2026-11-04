@@ -104,6 +104,27 @@ const ogImage = article
         height: project.data.ogImage.height,
       }
     : undefined;
+// SoftwareApplication markup is limited to the app project that ships in both
+// stores, so other project pages keep their existing schema.
+const storeLinks =
+  project?.data.links
+    .filter((link) => link.type === 'app-store' || link.type === 'google-play')
+    .map((link) => link.href) ?? [];
+const app =
+  project?.data.slug === 'tablow' && storeLinks.length
+    ? {
+        name: project.data.name,
+        description: project.data.description,
+        category: 'UtilitiesApplication',
+        operatingSystem: 'iOS, iPadOS, Android',
+        url: new URL(
+          contentPath(locale, 'projects', project.data.slug),
+          profile.site,
+        ).href,
+        downloadUrl: storeLinks[0],
+        sameAs: storeLinks,
+      }
+    : undefined;
 const writing =
   page === 'writing' && !entry
     ? (await getCollection('writing'))
@@ -132,6 +153,7 @@ const projects =
   product={project?.data.slug}
   article={article?.data}
   ogImage={ogImage}
+  app={app}
 >
   {home && <Home entry={home} />}
   {page === 'about' && <About locale={locale} />}
