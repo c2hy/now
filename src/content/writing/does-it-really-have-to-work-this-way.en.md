@@ -1,7 +1,7 @@
 ---
 title: 'Does it really have to work this way?'
 updatedAt: '2026-10-23'
-seoTitle: 'Can Independent Development Become a Business? | Will.OPC'
+seoTitle: 'Can Independent Development Become a Business?'
 description: 'After a year of polishing products, I began asking a harder question: what makes independent development a business?'
 publishedAt: '2026-10-22'
 category: 'product-building'

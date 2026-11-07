@@ -2,7 +2,7 @@
 name: 'Tablow'
 statement: 'Remember when you last did it.'
 seoTitle: 'Tablow — When did I last? Offline tracker'
-description: 'Track when you last had a haircut, changed bedsheets or cleaned a filter. See the last date and the time since. Offline, no account needed. Free download, one-time Premium unlock.'
+description: 'Track when you last had a haircut, changed the bedsheets or cleaned a filter. See the last date and how long it has been. Offline, no account needed.'
 year: 2026
 order: 2
 featured: true

@@ -1,61 +1,383 @@
 ---
-import { render, type CollectionEntry } from 'astro:content';
-import { sectionPath } from '../i18n';
-const { entry } = Astro.props as { entry: CollectionEntry<'home'> };
-const { Content } = await render(entry);
+import type { CollectionEntry } from 'astro:content';
+import { profile, social } from '../data/profile';
+const { entry } = Astro.props as {
+  entry: CollectionEntry<'home'>;
+};
 const locale = entry.data.locale;
+const channelLabel = (channel: (typeof social)[number]) =>
+  locale === 'zh' ? channel.label : channel.labelEn ?? channel.label;
 ---
 
-<article class="reading-column home-essay">
-  <p class="home-imprint" set:html={entry.data.imprint} />
-  <div class="prose"><Content /></div>
-  <div class="home-contact">
-    <a
-      href={`${sectionPath(locale, 'about')}#contact`}
-      data-analytics-placement="home_contact"
-    >
-      {locale === 'zh' ? '联系我' : 'Get in touch'}
-      <span aria-hidden="true"
-        ><svg
-          viewBox="0 0 24 24"
-          aria-hidden="true"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="1.6"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-          <path d="M4.5 12h15" />
-          <path d="m13.5 6 6 6-6 6" />
-        </svg></span
+<article class="home-page">
+  <div class="home-first-screen">
+    <div class="home-hero" aria-hidden="true"></div>
+    <div class="home-axis home-first-text">
+      <div class="home-lead">
+        <p class="home-question" set:html={entry.data.imprint} />
+      </div>
+    </div>
+  </div>
+
+  <div class="home-ending">
+    <div class="home-axis home-second">
+      <div class="home-lead">
+        <div class="prose"><p>{entry.data.intro}</p></div>
+      </div>
+
+      <section class="home-contact" aria-labelledby="home-contact-title">
+        <h2 id="home-contact-title">
+          <a href={`mailto:${profile.email}`} data-analytics-placement="home_contact">
+            {locale === 'zh' ? '联系我' : 'Get in touch'}
+          </a>
+        </h2>
+        <div class="contact-links">
+          {
+            social.map((channel) => (
+              <a
+                href={channel.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                data-analytics-placement={`home_channel_${channel.id}`}
+              >
+                {channelLabel(channel)}
+              </a>
+            ))
+          }
+        </div>
+      </section>
+    </div>
+
+    <section class="home-closing" aria-label={locale === 'zh' ? '作品' : 'Artwork'}>
+      <figure
+        role="img"
+        aria-label={locale === 'zh'
+          ? '克劳德·莫奈，《阿让特伊的池塘》，1874 年'
+          : "Claude Monet, Le bassin d'Argenteuil, 1874"}
       >
-    </a>
+        <div class="home-closing-art"></div>
+        <figcaption>
+          {
+            locale === 'zh'
+              ? '克劳德·莫奈，《阿让特伊的池塘》，1874 年'
+              : "Claude Monet, Le bassin d'Argenteuil, 1874"
+          }
+        </figcaption>
+      </figure>
+    </section>
   </div>
 </article>
 
 <style is:global>
-  /* 扉页印记：无标题、无容器，小号灰字，单行（移动端在语义处折两行）。
-     字号、颜色、字体栈全部继承现有 token；字体相关全局规则不在此处重复。
-     使用 is:global：scoped 样式会给 .prose 等元素附加 scope 属性，
+  /* is:global：scoped 样式会给 .prose 等元素附加 scope 属性，
      破坏 verify-build 对首页正文结构的正则断言。 */
-  .home-imprint {
-    margin: 0 0 2.6em;
-    font-size: 15px;
-    line-height: 1.9;
-    color: var(--color-muted);
+  /* 文档高度下限：滚到底时首屏画下沿必须落在页头下沿以内（页头以下没有画面像素）。
+     全部由 token 推导，行高或行数变化时自动成立：
+       画高 = 视口 − 2×--space-block − 行数×--leading-body（96 = 56 首段上间距
+       + 48 首屏底留白 − 8 视口缓冲，化简后正好两档 48）；
+       页头 = 2×--space-inner + 44（44 是页头导航的触控最小高）；
+       页高下限 = 视口 + 画高 − main 下留白(--space-page-xl) − 页头 + 安全余量。
+     滚到底时 maxScroll = 页高 + 120 − 视口，画下沿 = 画高 − maxScroll
+       = 页头 − 安全余量，留 16px 余量防止取整误差让 1px 画面漏出。
+     内容自身更长时该下限不生效，不会额外加空白。 */
+  .home-page {
+    padding-top: 0;
+    /* 首屏第一段的实际行数：英文长句在 640 列内折成两行，中文一行。 */
+    --home-first-lines: 2;
+    --home-hero-height: calc(
+      100dvh - var(--space-block) * 2 - var(--home-first-lines) *
+        var(--leading-body)
+    );
+    --home-header-height: calc(var(--space-inner) * 2 + 44px);
+    min-height: calc(
+      100dvh + var(--home-hero-height) - var(--space-page-xl) -
+        var(--home-header-height) + var(--space-inner)
+    );
   }
-  /* 中文问句在窄屏自然折行会断在顿号结尾，故在语义边界放置 br，
-     宽屏隐藏保持单行，窄屏显示强制语义断行。 */
-  .home-imprint .imprint-break {
-    display: none;
+  html:lang(zh) .home-page {
+    --home-first-lines: 1;
   }
-  @media (max-width: 600px) {
-    .home-imprint {
-      margin-bottom: 2.1em;
-      font-size: 14px;
+  /* 首页整列与页头 wordmark 同一条左轴（= .shell 的内容左缘：1440 为 208，
+     1024/390 为 30）。用 max(gutter, 50% − canvas/2)，不要额外再加 gutter。 */
+  .home-axis {
+    position: relative;
+    z-index: 1;
+    width: min(var(--reading), calc(100% - var(--gutter) * 2));
+    margin-left: max(var(--gutter), calc(50% - var(--canvas) / 2));
+    margin-right: 0;
+    text-align: left;
+  }
+  /* 首屏：min-height 100dvh + 8px 的纵向 flex。画吃掉页头与第一段之间的全部剩余
+     高度，第一段完整落在首屏内；第二段从视口下沿再往下的 8px 处开始，底边不会
+     露出任何第二段文字。48px 是最后一行到首屏下沿的留白，另 8px 是首屏下沿到
+     视口下沿的留白，合计 56px。
+     行高由 32/26 调整为 34/28 后，原来「首屏恰好等于一件视口」会露出第二段，
+     因此把首屏整体下推 8px，而不是再去压缩第一段的留白。 */
+  .home-first-screen {
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    min-height: calc(100vh + 8px);
+    min-height: calc(100dvh + 8px);
+    padding-bottom: 48px;
+  }
+  .home-first-text {
+    margin-top: 56px;
+  }
+  /* 画作从 y=0 起、通栏铺到页头背后；高度由首屏弹性分配，最小 200px。
+     低于该下限时首屏超过视口，第一段被推到首屏外（不隐藏画）。 */
+  .home-hero {
+    position: relative;
+    flex: 1 1 auto;
+    min-height: 200px;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  /* Claude Monet, Le bassin d'Argenteuil, 1874（Wildenstein 326）。
+     Wikimedia Commons 3200×2364；画作已进入公有领域，原图不入库，只保留派生产物。
+     只切顶部天空：纵向多余量全部从上方裁走，下沿的水面、船、栈桥人物贴底。 */
+  .home-hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-repeat: no-repeat;
+    background-position: 62% 100%;
+    background-size: cover;
+    background-image: url('/art/bassin-argenteuil-1874/monet-1874-1440.webp');
+    background-image: image-set(
+      url('/art/bassin-argenteuil-1874/monet-1874-1440.avif') 1x,
+      url('/art/bassin-argenteuil-1874/monet-1874-2880.avif') 2x
+    );
+  }
+  /* 深色不反相（反相会把莫奈的灰蓝变成荧光橙），压暗并降饱和。 */
+  html[data-theme='dark'] .home-hero::after {
+    filter: brightness(0.52) saturate(0.8);
+  }
+  /* 窄高视口里 cover 改为左右裁切：横向锚点从 62% 左移到 45%，
+     让高桅杆、左下绿船、橙船、栈桥人物留在画面内。 */
+  @media (max-aspect-ratio: 4 / 3) {
+    .home-hero::after {
+      background-position: 45% 100%;
     }
-    .home-imprint .imprint-break {
-      display: inline;
+  }
+  /* 两段同权重：字号、字重、族、颜色全部一致，段落之间只靠 24 留白分句。 */
+  .home-lead {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-group);
+  }
+  .home-lead p {
+    margin: 0;
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: var(--type-body);
+    font-weight: var(--weight-body);
+    line-height: var(--leading-body);
+    letter-spacing: var(--tracking-body);
+  }
+  .home-lead .prose p {
+    margin: 0;
+  }
+  /* 收尾只有一个区块：页级留白 80，标题 16，渠道与联系入口同属一组。 */
+  .home-page .home-contact {
+    margin-top: var(--space-page);
+  }
+  /* 联系标题本身就是 mailto 动作：B 方案 18/300 + 0.06em 字距 + accent 静止下划线，
+     与导语同字号同字重，层级靠颜色、下划线和字距，不再靠 400 字重。 */
+  .home-page .home-contact h2 {
+    margin: 0 0 var(--space-inner);
+    color: var(--color-accent);
+    font-family: var(--font-sans);
+    font-size: var(--type-body);
+    font-weight: var(--weight-body);
+    line-height: var(--leading-body);
+    letter-spacing: var(--tracking-action);
+  }
+  .home-page .home-contact h2 a {
+    color: var(--color-accent);
+    /* 只补下划线本身；粗细 1px 与 offset 4px 继承全站 a 规则。 */
+    text-decoration-line: underline;
+  }
+  .home-page .contact-links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    /* 并排用 24（同组），换行叠放用 8（行内）。 */
+    gap: var(--space-inline) var(--space-group);
+    font-size: var(--type-body);
+    line-height: var(--leading-body);
+  }
+  .home-page .contact-links a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    white-space: nowrap;
+    /* 渠道沿用正文墨色：四个渠道与「联系我」并列时，红色只留给唯一的联系动作。 */
+    color: var(--color-ink);
+    font-weight: var(--weight-body);
+    letter-spacing: var(--tracking-action);
+    /* 只补下划线本身；粗细 1px 与 offset 4px 继承全站 a 规则。 */
+    text-decoration-line: underline;
+  }
+  /* 基色是墨色，hover 转 accent 才构成可见的「可点」反馈。 */
+  .home-page .contact-links a:hover {
+    color: var(--color-accent);
+  }
+
+  /* 作品：完整画作（原始比例 1.3536，不裁切）+ 下方居中说明。
+     画作用 background-image 承载，首页 #main 内不出现 <img>（维持旧不变量）。
+     ≥1015：画作不再是页面末尾的独立区块，而是正文右栏；左栏依次是开篇首段、
+     intro 与 contact，画作置于右栏顶部，顶边与开篇第一段首行齐平，
+     说明在画作正下方、相对画作宽度居中。
+     ≤1014：真正放不下时才回落到单列，画作仍在全部文字下方、占满阅读列宽度。
+     断点推导：文字列 640 + 画作最小宽 300 + 两侧 gutter 30×2 = 940 的可用画布，
+     再留 15px 纵向滚动条，视口下限为 1015；即容器宽 ≥940 时并排。
+     画作列上限 384（画布 1024 − 640），1015–1099 之间按剩余宽度线性收窄（300–384）。 */
+  .home-closing {
+    margin-top: var(--space-page);
+  }
+  .home-closing figure {
+    width: min(384px, calc(100% - var(--gutter) * 2));
+    margin: 0 max(var(--gutter), calc(50% - var(--canvas) / 2)) 0 auto;
+  }
+  @media (max-width: 1014px) {
+    .home-closing figure {
+      width: min(var(--reading), calc(100% - var(--gutter) * 2));
+      margin: 0 0 0 max(var(--gutter), calc(50% - var(--canvas) / 2));
+    }
+  }
+  @media (min-width: 1015px) {
+    /* 页面级两栏：左 640 正文列 + 右侧余量（上限 384，最窄 300），共用同一条左轴。
+       画作从正文开头就与文字并排，不再挂在末尾区块上（不靠负边距硬凑）。
+       首屏与收尾两个包装块用 display: contents 拆掉，让 hero、首段、intro/contact、
+       画作直接成为页级网格的子项；行高全部由内容决定，min-height 只在页尾留白。 */
+    .home-page {
+      --home-axis: max(var(--gutter), calc(50% - var(--canvas) / 2));
+      display: grid;
+      grid-template-columns: var(--reading) minmax(0, 1fr);
+      align-content: start;
+      align-items: start;
+      box-sizing: border-box;
+      padding-inline: var(--home-axis);
+    }
+    .home-first-screen,
+    .home-ending {
+      display: contents;
+    }
+    /* 通栏首屏画：宽度靠负边距抵消页级 padding，仍从 y=0 铺到页头背后。
+       高度 = --home-hero-height（与页高下限共用同一表达式），
+       行数由 --home-first-lines 按语言给出：中文一行、英文两行。 */
+    .home-hero {
+      grid-column: 1 / -1;
+      grid-row: 1;
+      height: var(--home-hero-height);
+      margin-inline: calc(-1 * var(--home-axis));
+    }
+    .home-first-text {
+      grid-column: 1;
+      grid-row: 2;
+      width: auto;
+      margin: 56px 0 0;
+    }
+    .home-second {
+      grid-column: 1;
+      grid-row: 3;
+      width: auto;
+      margin: 0;
+      padding-top: 48px;
+    }
+    /* 画作进右栏顶部，与首段同一行起点：56px 上间距，顶边与开篇第一段首行齐平。 */
+    .home-closing {
+      grid-column: 2;
+      grid-row: 2 / span 2;
+      min-width: 0;
+      margin: 56px 0 0;
+    }
+    .home-closing figure {
+      width: 100%;
+      margin: 0;
+    }
+  }
+  /* 画作容器：aspect-ratio 固定 1440×1064，background-size: contain 完整不裁切。
+     同一组派生图 1200/1440/2400，AVIF 与 WebP 都由 image-set 的 type() 协商，
+     按 1x/2x/3x 选择，不额外写会被压缩器丢弃的回落声明。 */
+  .home-closing-art {
+    width: 100%;
+    aspect-ratio: 1440 / 1064;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    background-size: contain;
+    /* 终态保留一点透明，画作与纸色轻微融合；说明文字不受影响。 */
+    opacity: 0.94;
+    background-image: image-set(
+      url('/art/bassin-argenteuil-1874/monet-1874-1200.avif') type('image/avif') 1x,
+      url('/art/bassin-argenteuil-1874/monet-1874-1200.webp') type('image/webp') 1x,
+      url('/art/bassin-argenteuil-1874/monet-1874-1440.avif') type('image/avif') 2x,
+      url('/art/bassin-argenteuil-1874/monet-1874-1440.webp') type('image/webp') 2x,
+      url('/art/bassin-argenteuil-1874/monet-1874-2400.avif') type('image/avif') 3x,
+      url('/art/bassin-argenteuil-1874/monet-1874-2400.webp') type('image/webp') 3x
+    );
+  }
+  /* 说明在画作正下方、相对画作宽度居中；单列时同样居中。 */
+  .home-closing figcaption {
+    margin-top: var(--space-inner);
+    text-align: center;
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: var(--type-meta);
+    line-height: var(--leading-meta);
+  }
+  /* 只在滚动到页面末端才浮现：时间轴绑定 root 滚动（不是 view() 进入视口），
+     末端最后 400px（maxScroll − 400 → maxScroll）才从 0 淡入到 0.94 并轻微上移。
+     说明文字共用同一条时间轴与同一个缓动，0 → 1 同步淡入（文字保持满对比度终态，
+     只做淡入不做位移，避免两行说明在收尾时抖动）。
+     在此之前即使画作已经在视口内也停在 0，不提前出现。
+     只作用在画作容器与 figcaption 上，其余文字不受影响。
+     纯 CSS scroll-driven：不支持 animation-timeline 的浏览器（如旧版 Firefox）
+     走基础规则的 0.94 / 1 终态；页面不可滚动时滚动时间轴为 inactive、动画不生效，
+     同样落到基础 0.94 / 1，不会永久隐藏；prefers-reduced-motion 直接给终态。 */
+  @supports (animation-timeline: scroll()) {
+    @keyframes home-closing-reveal {
+      from {
+        opacity: 0;
+        transform: translateY(16px);
+      }
+      to {
+        opacity: 0.94;
+        transform: none;
+      }
+    }
+    @keyframes home-caption-reveal {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+    .home-closing-art {
+      animation: home-closing-reveal cubic-bezier(0.22, 0.61, 0.36, 1) both;
+    }
+    .home-closing figcaption {
+      animation: home-caption-reveal cubic-bezier(0.22, 0.61, 0.36, 1) both;
+    }
+    /* 时间轴单独成条：打包时 lightningcss 会把它并进 animation 简写，
+       生成浏览器不识别的 `animation: … scroll()`，整条声明被丢弃。 */
+    .home-closing figure .home-closing-art,
+    .home-closing figcaption {
+      animation-timeline: scroll(root block);
+      animation-range: calc(100% - 400px) 100%;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .home-closing-art {
+      animation: none;
+      opacity: 0.94;
+      transform: none;
+    }
+    .home-closing figcaption {
+      animation: none;
+      opacity: 1;
     }
   }
 </style>

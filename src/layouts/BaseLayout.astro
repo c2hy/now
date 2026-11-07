@@ -1,7 +1,15 @@
 ---
-import interFontUrl from '@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url';
-import newsreaderFontUrl from '@fontsource-variable/newsreader/files/newsreader-latin-wght-normal.woff2?url';
+// 拉丁走系统字体，不再加载 Latin webfont。
+// 中文子集由 scripts/subset-fonts.mjs 生成，随站点打包，运行时无外部请求。
+import sansScFontUrl from '../assets/fonts/sans-sc-400.woff2?url';
+import serifDisplayFontUrl from '../assets/fonts/serif-sc-display-400.woff2?url';
 import '../styles/global.css';
+// 预览构建专用字体诊断源码；正式构建不渲染，因此不会内联、也不会输出 CDN 地址。
+import fontDebugSource from '../scripts/font-debug.js?raw';
+// 预览构建专用的超家族实验：切换字族的 @font-face 与覆盖规则。正式构建不渲染。
+import FontFamilyPreview from '../components/FontFamilyPreview.astro';
+// 预览构建专用的字体变体（?variant=a|b|system）。正式构建不内联。
+import typeVariantsCss from '../styles/type-variants.css?raw';
 import { profile, social } from '../data/profile';
 import { ui, path, sectionPath, type Locale } from '../i18n';
 interface Props {
@@ -11,6 +19,13 @@ interface Props {
   description?: string;
   current?: string;
   alternate?: string;
+  /** 覆盖默认 canonical（预览专用页面用，避免与正式页面重复）。 */
+  canonicalPath?: string;
+  /** 预览专用页面不声明 hreflang，避免指向不存在的语言版本。 */
+  noAlternates?: boolean;
+  noindex?: boolean;
+  /** 首页通栏版式：页头 fixed 浮在画上，正文跳出 .shell 的宽度包裹。 */
+  fullBleed?: boolean;
   product?: string;
   article?: { publishedAt: Date; updatedAt?: Date };
   ogImage?: { path: string; alt: string; width?: number; height?: number };
@@ -31,6 +46,10 @@ const {
   description = ui[locale].siteIntro,
   current,
   alternate,
+  canonicalPath,
+  noAlternates = false,
+  noindex = false,
+  fullBleed = false,
   product,
   article,
   app,
@@ -47,17 +66,22 @@ const other = locale === 'en' ? 'zh' : 'en';
 // Static directory output adds a slash; keep metadata aligned with public links
 // and the sitemap, including the language home pages.
 const canonical = new URL(
-  current ? Astro.url.pathname.replace(/\/+$/, '') : path(locale),
+  canonicalPath ??
+    (current ? Astro.url.pathname.replace(/\/+$/, '') : path(locale)),
   profile.site,
 ).href;
-const ogImageUrl = new URL(`${ogImage.path}?v=7`, profile.site).href;
+const ogImageUrl = new URL(`${ogImage.path}?v=9`, profile.site).href;
 const ogImageWidth = ogImage.width ?? 1200;
 const ogImageHeight = ogImage.height ?? 630;
+// 分享图类型跟随文件扩展名：首页的莫奈照片用 JPG 压到 200KB 以内，
+// 其余构建期生成的文字图仍是 PNG。
+const ogImageType = /\.jpe?g$/i.test(ogImage.path)
+  ? 'image/jpeg'
+  : 'image/png';
 const resolvedTitle = metaTitle ?? title;
-const browserTitle =
-  current && !resolvedTitle.includes(profile.siteName)
-    ? `${resolvedTitle} — ${profile.siteName}`
-    : resolvedTitle;
+// 标题由各页面显式给出品牌（仅首页、关于、404），这里不再统一追加站点名，
+// 否则内页会多出 11 个字符并被搜索结果截断。
+const browserTitle = resolvedTitle;
 const mixpanelToken = import.meta.env.PUBLIC_MIXPANEL_TOKEN?.trim();
 const analyticsEnabled =
   import.meta.env.PUBLIC_MIXPANEL_ENABLED !== 'false' &&
@@ -69,9 +93,11 @@ const analyticsConfigured =
 const indexingEnabled = import.meta.env.PUBLIC_INDEXING_ENABLED !== 'false';
 const robots = !indexingEnabled
   ? 'noindex, nofollow'
-  : current === '404'
+  : noindex
     ? 'noindex, follow'
-    : 'index, follow';
+    : current === '404'
+      ? 'noindex, follow'
+      : 'index, follow';
 const alternatePath =
   alternate ??
   (current === 'writing' || current === 'projects' || current === 'about'
@@ -82,7 +108,9 @@ const isDetail =
   Astro.url.pathname.split('/').filter((part) => part && part !== 'zh').length >
     1;
 const paired =
-  current !== '404' && (!isDetail || !['/', '/zh/'].includes(alternatePath));
+  !noAlternates &&
+  current !== '404' &&
+  (!isDetail || !['/', '/zh/'].includes(alternatePath));
 const structuredData = {
   '@context': 'https://schema.org',
   '@graph': [
@@ -90,6 +118,7 @@ const structuredData = {
       '@type': 'Person',
       '@id': `${profile.site}/#person`,
       name: profile.name,
+      // 站点名的两种写法都作为别名保留，便于检索 "willopc" 时把人与站点归并到同一实体。
       alternateName: [profile.siteName, profile.alternateName],
       url: `${profile.site}/`,
       image: `${profile.site}/avatar.svg`,
@@ -160,20 +189,29 @@ const structuredData = {
       name="viewport"
       content="width=device-width, initial-scale=1"
     />
-    <link
-      rel="preload"
-      href={interFontUrl}
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
-    <link
-      rel="preload"
-      href={newsreaderFontUrl}
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
+    {
+      /* 中文页预加载正文黑体 400 与 h1 宋体小档（合计约 178KB）；英文页零字体请求。
+         预览构建不预加载中文：?variant=system 的中文走系统字体，
+         预加载会让变体对比凭空多出 178KB。 */
+      locale === 'zh' && import.meta.env.PREVIEW_CONTENT !== 'true' ? (
+        <>
+          <link
+            rel="preload"
+            href={sansScFontUrl}
+            as="font"
+            type="font/woff2"
+            crossorigin
+          />
+          <link
+            rel="preload"
+            href={serifDisplayFontUrl}
+            as="font"
+            type="font/woff2"
+            crossorigin
+          />
+        </>
+      ) : null
+    }
     <script is:inline>
       (() => {
         let stored = null;
@@ -195,6 +233,24 @@ const structuredData = {
         }
       </style>
     </noscript>
+    {import.meta.env.PREVIEW_CONTENT === 'true' && (
+      <script is:inline>
+        (() => {
+          const family = new URLSearchParams(location.search).get('family');
+          if (family === 'sans-title' || family === 'sans-body')
+            document.documentElement.dataset.family = family;
+          const variant = new URLSearchParams(location.search).get('variant');
+          if (variant === 'a' || variant === 'b' || variant === 'system')
+            document.documentElement.dataset.variant = variant;
+        })();
+      </script>
+    )}
+    {
+      /* 预览构建专用：字体变体。放在 head 里，切换参数不会闪默认字体。 */
+      import.meta.env.PREVIEW_CONTENT === 'true' && (
+        <style is:inline set:html={typeVariantsCss} />
+      )
+    }
     <title>{browserTitle}</title><meta
       name="description"
       content={description}
@@ -256,7 +312,7 @@ const structuredData = {
       content={ogImageUrl}
     /><meta property="og:image:secure_url" content={ogImageUrl} /><meta
       property="og:image:type"
-      content="image/png"
+      content={ogImageType}
     /><meta property="og:image:width" content={String(ogImageWidth)} /><meta
       property="og:image:height"
       content={String(ogImageHeight)}
@@ -291,21 +347,38 @@ const structuredData = {
     />
   </head>
   <body
+    class={fullBleed ? 'home' : undefined}
     data-analytics-token={analyticsConfigured ? mixpanelToken : undefined}
     data-analytics-product={analyticsConfigured ? product : undefined}
   >
     <a class="skip" href="#main">{t.skip}</a>
     <header class="site-header">
       <div class="shell">
-        <a
-          href={path(locale)}
-          data-analytics-placement="header_brand"
-          class="site-brand"
-          aria-label="Will.OPC"
-          aria-current={!current ? 'page' : undefined}
-        >
-          <span>Will<span class="text-accent">.</span>OPC</span>
-        </a>
+        {
+          /* 首页 h1 = 站点标题（可见 wordmark）；内页 wordmark 退回普通链接，
+             各页 h1 仍是页面自身标题。H1 不是排名因素，数量保持每页 1。 */
+          !current ? (
+            <h1 class="site-brand">
+              <a
+                href={path(locale)}
+                data-analytics-placement="header_brand"
+                aria-label="Will.OPC"
+                aria-current="page"
+              >
+                <span>Will<span class="text-accent">.</span>OPC</span>
+              </a>
+            </h1>
+          ) : (
+            <a
+              href={path(locale)}
+              data-analytics-placement="header_brand"
+              class="site-brand"
+              aria-label="Will.OPC"
+            >
+              <span>Will<span class="text-accent">.</span>OPC</span>
+            </a>
+          )
+        }
         <nav
           class="site-nav"
           aria-label={locale === 'zh' ? '主导航' : 'Main navigation'}
@@ -367,10 +440,26 @@ const structuredData = {
         </nav>
       </div>
     </header>
-    <div class="shell">
-      <main id="main"><Fragment set:html={content} /></main>
-    </div>
+    {
+      fullBleed ? (
+        <main id="main">
+          <Fragment set:html={content} />
+        </main>
+      ) : (
+        <div class="shell">
+          <main id="main">
+            <Fragment set:html={content} />
+          </main>
+        </div>
+      )
+    }
     <script src="../scripts/theme.ts"></script>
     {analyticsConfigured && <script src="../scripts/analytics.ts" />}
+    {
+      import.meta.env.PREVIEW_CONTENT === 'true' && (
+        <script is:inline set:html={fontDebugSource} />
+      )
+    }
+    {import.meta.env.PREVIEW_CONTENT === 'true' && <FontFamilyPreview />}
   </body>
 </html>

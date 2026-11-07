@@ -1,7 +1,7 @@
 ---
 title: 'Why Even I Can’t Read What You Write in Yipa'
 updatedAt: '2026-10-23'
-seoTitle: 'Why Even I Can’t Read What You Write in Yipa | Will.OPC'
+seoTitle: 'Why Even I Can’t Read What You Write in Yipa'
 description: 'A conversation during Yipa’s security filing made me reconsider privacy, end-to-end encryption, and what a service provider should be able to do.'
 publishedAt: '2026-09-24'
 featured: true

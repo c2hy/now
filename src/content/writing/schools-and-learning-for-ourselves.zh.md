@@ -1,7 +1,7 @@
 ---
 title: '学校负责寻找天才，普通人应该学会自己学习'
 updatedAt: '2026-10-23'
-seoTitle: '学校负责寻找天才，普通人应该学会自己学习 | Will.OPC'
+seoTitle: '学校负责寻找天才，普通人应该学会自己学习'
 description: '学校作为社会系统的目标，并不天然等于个人的学习目标。AI 让普通人有机会围绕真实问题，重新掌握自己的学习。'
 publishedAt: '2026-10-21'
 category: 'life-observation'

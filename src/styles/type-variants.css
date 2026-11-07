@@ -1,0 +1,32 @@
+/* 预览专用字体变体（?variant=a|b|system），正式构建不内联。
+   三个变体共用同一套字号（3 档）、同一套行高、同一个字重 400，
+   只改族系，因此差异来自规则而不是随手挑的数值。
+
+   默认（无参数）：无衬线担正文/标题/条目/说明/导航，衬线只留在 h1 与 wordmark。
+   a：单族全衬线（旧版声音）——衬线覆盖接近全部可见文本。
+   b：衬线标题 + 无衬线正文——衬线覆盖仅标题层。
+   system：中文走系统字体、拉丁一款 webfont、零衬线——衬线覆盖 0。
+   字重表：全站 400。system 变体不再需要 500/700，因为系统字体
+   （Windows 雅黑 / macOS PingFang / Android Noto）都稳定提供 400。 */
+
+:root[data-variant='a'] {
+  --font-sans: var(--font-serif);
+  --font-heading: var(--font-serif);
+}
+
+:root[data-variant='b'] {
+  /* h2/h3 也走标题子集（同一族、同一档），不拉取 182KB 的完整宋体。 */
+  --font-heading: var(--font-display);
+}
+
+/* system：显式 CJK 回退链，按平台真实存在的族名逐层列出。
+   Windows：Microsoft YaHei（400 / 700）；macOS / iOS：PingFang SC；
+   Android：Noto Sans CJK SC；Linux：Noto Sans CJK / WenQuanYi。 */
+:root[data-variant='system'] {
+  --font-sans:
+    'Segoe UI', 'PingFang SC', 'Hiragino Sans GB',
+    'Microsoft YaHei UI', 'Microsoft YaHei', 'Noto Sans CJK SC',
+    'Source Han Sans SC', 'WenQuanYi Micro Hei', sans-serif;
+  --font-heading: var(--font-sans);
+  --font-display: var(--font-sans);
+}

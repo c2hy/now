@@ -21,6 +21,7 @@ const home = defineCollection({
     title: z.string(),
     description: z.string(),
     imprint: z.string(),
+    intro: z.string(),
   }),
 });
 const writing = defineCollection({

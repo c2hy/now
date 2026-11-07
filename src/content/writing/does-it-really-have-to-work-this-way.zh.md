@@ -1,7 +1,7 @@
 ---
 title: '事情真的必须这样吗？'
 updatedAt: '2026-10-23'
-seoTitle: '独立开发凭什么成为一门生意？ | Will.OPC'
+seoTitle: '独立开发凭什么成为一门生意？'
 description: '我花了一年多研究怎么把产品做好，上线之后才发现，自己几乎没有认真想过更前面的问题：独立开发凭什么成为一门生意？'
 publishedAt: '2026-10-22'
 category: 'product-building'

@@ -13,6 +13,9 @@ const productNames: Record<string, string> = {
 };
 const productParts = (text: string) =>
   text.split(/(Yipa|Huddle|Tablow|泡泡留言板|橘小记)/g);
+// 与首页渠道行同一套标签规则：英文页用 labelEn，避免出现中文频道名。
+const channelLabel = (channel: (typeof social)[number]) =>
+  locale === 'zh' ? channel.label : channel.labelEn ?? channel.label;
 const contact =
   locale === 'zh'
     ? {
@@ -30,15 +33,15 @@ const contact =
       };
 ---
 
-<article class="reading-column about-page">
-  <header class="reading-header">
+<article class="about-page">
+  <header class="about-header">
     <h1>{locale === 'en' ? 'About Will' : '关于 Will'}</h1>
   </header>
-  <div class="prose">
+  <div class="about-body">
     {content.paragraphs.map((text) => <p>{text}</p>)}
     {
       content.sections.map((section) => (
-        <section>
+        <section class="about-section">
           <h2>{section.title}</h2>
           {section.paragraphs.map((text) => (
             <p>
@@ -80,20 +83,6 @@ const contact =
               >
                 <span class="contact-label">{contact.email}</span>
                 <span class="contact-account">{profile.email}</span>
-                <span class="contact-arrow" aria-hidden="true">
-                  <svg
-                    viewBox="0 0 24 24"
-                    aria-hidden="true"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.6"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  >
-                    <path d="M6.5 17.5 17.5 6.5" />
-                    <path d="M8 6.5h9.5v9.5" />
-                  </svg>
-                </span>
               </a>
             </li>
           )}
@@ -106,23 +95,9 @@ const contact =
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <span class="contact-label">{link.label}</span>
+                <span class="contact-label">{channelLabel(link)}</span>
                 <span class="contact-account">
                   {link.account ?? contact.profile}
-                </span>
-                <span class="contact-arrow" aria-hidden="true">
-                  <svg
-                    viewBox="0 0 24 24"
-                    aria-hidden="true"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.6"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  >
-                    <path d="M6.5 17.5 17.5 6.5" />
-                    <path d="M8 6.5h9.5v9.5" />
-                  </svg>
                 </span>
               </a>
             </li>
@@ -132,3 +107,121 @@ const contact =
     )
   }
 </article>
+
+<style>
+  /* 关于页的独立版式：不依赖 .reading-column / .prose 的阅读页规则。
+     Astro 会把这段样式限定在本组件并在使用它的页面上单独打包，
+     因此文章详情页仍然是原来的无衬线正文。 */
+  .about-page {
+    max-width: var(--reading);
+    margin: 0 auto;
+    overflow-wrap: anywhere;
+  }
+  .about-page h1 {
+    margin: 0;
+    font-size: var(--type-display);
+    font-weight: 400;
+    line-height: var(--leading-display);
+  }
+  .about-header {
+    margin-bottom: var(--space-block);
+  }
+  /* 与全站一致：正文走无衬线，衬线只留给 h1。
+     英文连续正文不再例外套 --font-reading-en，与中文正文同族；
+     文章详情页的阅读衬线规则不受影响。 */
+  .about-body {
+    font-family: var(--font-sans);
+    font-size: var(--type-body);
+    font-weight: var(--weight-body);
+    line-height: var(--leading-body);
+    letter-spacing: var(--tracking-body);
+  }
+  .about-body p {
+    margin: 0 0 var(--space-group);
+  }
+  .about-section {
+    margin-top: var(--space-block);
+  }
+  /* 小节标题：与全站内容标题同一档（18/400/墨色，行高同正文）。
+     原先命中的是全局 h2/h3 的 13.5px 元信息标签规则，尺寸与颜色都不是标题档。
+     联系我同属页内小节标题，一并落到这一档，避免同页两种小标题。 */
+  .about-section h2,
+  .about-contact h2 {
+    margin: 0 0 var(--space-inner);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: var(--type-body);
+    font-weight: 400;
+    line-height: var(--leading-body);
+    letter-spacing: 0;
+  }
+  .about-body a {
+    color: var(--color-accent);
+    font-weight: var(--weight-ui);
+    text-decoration: underline;
+  }
+  .about-body a:hover {
+    text-decoration-color: transparent;
+  }
+  /* 联系方式收尾：链接文本按首页 B 方案统一（18/300 + 0.06em + accent 静止下划线）；
+     标签仍是元信息，不改字重与颜色，只由账号值承担行动层级。 */
+  .about-contact {
+    margin-top: var(--space-page);
+  }
+  .contact-intro {
+    margin: 0 0 var(--space-inner);
+    font-family: var(--font-sans);
+    font-size: var(--type-body);
+    font-weight: var(--weight-body);
+    line-height: var(--leading-body);
+    letter-spacing: var(--tracking-body);
+    color: var(--color-muted);
+  }
+  .contact-list {
+    display: grid;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    row-gap: var(--space-group);
+  }
+  .contact-link {
+    display: grid;
+    grid-template-columns: 72px minmax(0, 1fr);
+    align-items: baseline;
+    gap: var(--space-inner);
+    font-family: var(--font-sans);
+    font-size: var(--type-body);
+    line-height: var(--leading-body);
+  }
+  /* 英文标签最宽的是 RedNote（18px 下约 69px），80px 列留出 11px 余量；
+     中文标签最宽 3 个字（54px），沿用 72px。 */
+  :lang(en) .contact-link {
+    grid-template-columns: 80px minmax(0, 1fr);
+  }
+  .contact-label {
+    color: var(--color-muted);
+    overflow-wrap: anywhere;
+  }
+  .contact-account {
+    color: var(--color-accent);
+    font-weight: var(--weight-body);
+    letter-spacing: var(--tracking-action);
+    text-decoration-line: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 4px;
+    overflow-wrap: anywhere;
+  }
+  /* 基色已是 accent，hover/focus 的转色状态保留但视觉上幂等。 */
+  .contact-link:hover .contact-account,
+  .contact-link:focus-visible .contact-account {
+    color: var(--color-accent);
+  }
+  @media (max-width: 600px) {
+    .contact-link {
+      grid-template-columns: 64px minmax(0, 1fr);
+    }
+    :lang(en) .contact-link {
+      grid-template-columns: 76px minmax(0, 1fr);
+    }
+  }
+</style>

@@ -2,7 +2,7 @@
 name: '橘小记'
 statement: '记住上次是什么时候。'
 seoTitle: '橘小记 Tablow｜上次是什么时候？记录日期与间隔'
-description: '理发、换床单、清洗滤网，发生时点一下记下日期和时间。下次打开橘小记（Tablow），查看上次是哪天、已经过去多久。无需账号，离线可用，免费下载，Premium 为一次性购买。'
+description: '理发、换床单、清洗滤网，发生时点一下记下日期。下次打开橘小记（Tablow），看上次是哪天、已经过去多久。无需账号，离线可用。'
 year: 2026
 order: 2
 featured: true
@@ -92,4 +92,4 @@ translationKey: 'tablow'
 
 ## 相关记录
 
-[有些事情值得记住，但不一定值得改进。](/zh/notes/remember-not-improve)
+[有些事情值得记住，但不一定值得改进](/zh/notes/remember-not-improve)

@@ -9,3 +9,10 @@ playwright-report/
 .DS_Store
 .trae/
 .tmp/
+
+# 本地截图与一次性实验目录，整目录忽略，文件只留在本机。
+preview/*
+.trae-html-share-packages/
+docs/*-2026-*.html
+docs/image-background-research-*/
+

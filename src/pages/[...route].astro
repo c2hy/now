@@ -55,29 +55,34 @@ const title =
   project?.data.name ??
   home?.data.title ??
   t[page as 'writing' | 'projects' | 'about'];
+// 标题只分两类：首页是纯品牌名；栏目页用「内容名 + 品牌」，因为
+// Writing / 文章 这类泛词单独出现在标签页里认不出是谁的站；内容详情页
+// 只留内容标题，不再拖品牌后缀（部分英文标题本身已 50 字上下）。
+const pageTitles: Record<
+  Locale,
+  Partial<Record<'home' | 'writing' | 'projects' | 'about', string>>
+> = {
+  en: {
+    home: 'Will.OPC',
+    writing: 'Writing — Will.OPC',
+    projects: 'Projects — Will.OPC',
+    about: 'About — Will.OPC',
+  },
+  zh: {
+    home: 'Will.OPC',
+    writing: '文章｜Will.OPC',
+    projects: '作品｜Will.OPC',
+    about: '关于｜Will.OPC',
+  },
+};
 const metaTitle =
   article?.data.seoTitle ??
   article?.data.title ??
   project?.data.seoTitle ??
   (project
-    ? `${project.data.name} — ${project.data.statement}`
-    : page === 'home'
-      ? locale === 'en'
-        ? `${profile.siteName} (${profile.alternateName}) — Independent Developer & Products`
-        : `${profile.siteName}（${profile.alternateName}）｜独立开发者的作品与记录`
-      : page === 'writing'
-        ? locale === 'en'
-          ? 'Writing — Observations, Decisions, and Experiments'
-          : '文章｜生活、技术和做产品'
-        : page === 'projects'
-          ? locale === 'en'
-            ? 'Projects — Ideas Put into Practice'
-            : '作品｜把想法做出来'
-          : page === 'about'
-            ? locale === 'en'
-              ? `About ${profile.siteName} (${profile.alternateName}) — Will in Shanghai`
-              : `关于 ${profile.siteName}（${profile.alternateName}）｜独立开发者 Will`
-            : undefined);
+    ? `${project.data.name}${locale === 'zh' ? '｜' : ' — '}${project.data.statement}`
+    : undefined) ??
+  pageTitles[locale][page as 'home' | 'writing' | 'projects' | 'about'];
 const pageDescription =
   entry?.data.description ??
   home?.data.description ??
@@ -103,7 +108,19 @@ const ogImage = article
         width: project.data.ogImage.width,
         height: project.data.ogImage.height,
       }
-    : undefined;
+    : page === 'home'
+      ? {
+          // 纸色区展示首页第一段（中英各一句），一张图放不下两种语言，
+          // 因此按语言各出一张，各自在自己的页面上引用。
+          path: locale === 'zh' ? '/og/home-zh.jpg' : '/og/home-en.jpg',
+          alt:
+            locale === 'zh'
+              ? 'Will.OPC — 莫奈《阿让特伊的池塘》，1874'
+              : 'Will.OPC — Claude Monet, Le bassin d’Argenteuil, 1874',
+          width: 1200,
+          height: 630,
+        }
+      : undefined;
 // SoftwareApplication markup is limited to the app project that ships in both
 // stores, so other project pages keep their existing schema.
 const storeLinks =
@@ -126,7 +143,7 @@ const app =
       }
     : undefined;
 const writing =
-  page === 'writing' && !entry
+  !entry && page === 'writing'
     ? (await getCollection('writing'))
         .filter((e) => e.data.locale === locale && visible(e.data))
         .sort(
@@ -134,7 +151,7 @@ const writing =
         )
     : [];
 const projects =
-  page === 'projects' && !entry
+  !entry && page === 'projects'
     ? (await getCollection('projects'))
         .filter((e) => e.data.locale === locale && visible(e.data))
         .sort(
@@ -150,6 +167,7 @@ const projects =
   description={pageDescription}
   current={page === 'home' ? undefined : page}
   alternate={alternate}
+  fullBleed={page === 'home'}
   product={project?.data.slug}
   article={article?.data}
   ogImage={ogImage}
@@ -160,7 +178,7 @@ const projects =
   {
     !entry && (page === 'writing' || page === 'projects') && (
       <section
-        class={page === 'projects' ? 'project-gallery-page' : 'reading-column'}
+        class={page === 'projects' ? 'project-gallery-page' : 'writing-list-page'}
       >
         <header class="reading-header">
           <h1>{t[page]}</h1>

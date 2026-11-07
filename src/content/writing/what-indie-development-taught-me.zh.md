@@ -1,7 +1,7 @@
 ---
 title: '做独立开发以后，我慢慢知道了什么值得做'
 updatedAt: '2026-10-23'
-seoTitle: '做独立开发以后，我慢慢知道了什么值得做 | Will.OPC'
+seoTitle: '做独立开发以后，我慢慢知道了什么值得做'
 description: '关于独立开发、真实需求，以及如何在一次次试错后回看自己的判断。'
 publishedAt: '2026-09-26'
 category: 'product-building'

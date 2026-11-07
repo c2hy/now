@@ -5,24 +5,26 @@ export const profile = {
   site: 'https://willopc.com',
   location: 'Shanghai',
   email: 'hello@willopc.com',
-  description:
-    'Will’s observations, experiments, and changes of mind. An independent creator in Shanghai, exploring technology and everyday life.',
 };
-// Only add confirmed public destinations. Unconfigured channels are not rendered.
-export const social: {
+export type Channel = {
   id: string;
   label: string;
+  labelEn?: string;
   href: string;
   account?: string;
-}[] = [
+};
+// Only add confirmed public destinations. Unconfigured channels are not rendered.
+export const social: Channel[] = [
   {
     id: 'zhihu',
     label: '知乎',
+    labelEn: 'Zhihu',
     href: 'https://www.zhihu.com/people/56-90-3-32-19',
   },
   {
     id: 'xiaohongshu',
     label: '小红书',
+    labelEn: 'RedNote',
     href: 'https://xhslink.cn/o/3PlbP24tW4g',
   },
   {

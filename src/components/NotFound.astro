@@ -6,7 +6,7 @@ const { locale = 'en' } = Astro.props as { locale?: Locale };
 
 <BaseLayout
   locale={locale}
-  title={locale === 'en' ? 'Page not found' : '没有找到这一页'}
+  title={locale === 'en' ? 'Page not found — Will.OPC' : '没有找到这一页｜Will.OPC'}
   alternate={locale === 'en' ? '/zh/404' : '/404'}
   current="404"
 >

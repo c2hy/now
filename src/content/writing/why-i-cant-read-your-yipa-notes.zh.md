@@ -1,7 +1,7 @@
 ---
 title: '为什么连我自己也看不到你在 Yipa 里写了什么'
 updatedAt: '2026-10-23'
-seoTitle: '为什么连我自己也看不到你在 Yipa 里写了什么 | Will.OPC'
+seoTitle: '为什么连我自己也看不到你在 Yipa 里写了什么'
 description: '一次网安备案沟通，让我重新思考隐私、端到端加密，以及服务提供者应该拥有什么能力。'
 publishedAt: '2026-09-24'
 featured: true

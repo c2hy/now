@@ -1,7 +1,7 @@
 ---
 title: 'What Indie Development Has Taught Me'
 updatedAt: '2026-10-23'
-seoTitle: 'What Indie Development Has Taught Me | Will.OPC'
+seoTitle: 'What Indie Development Has Taught Me'
 description: 'Reflections on indie development, real user needs, and learning to look back after years of trial and error.'
 publishedAt: '2026-09-26'
 category: 'product-building'

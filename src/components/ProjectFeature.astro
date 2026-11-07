@@ -35,8 +35,10 @@ const titleId = `project-title-${item.data.slug}`;
     </figure>
     <div class="gallery-project-copy">
       <h2 id={titleId}>{item.data.name}</h2>
-      <p class="gallery-statement">{item.data.statement}</p>
-      <p class="gallery-description">{item.data.description}</p>
+      <p class="entry-description">{item.data.description}</p>
+      <time class="entry-date" datetime={String(item.data.year)}>
+        {item.data.year}
+      </time>
     </div>
   </a>
 </article>

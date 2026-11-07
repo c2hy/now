@@ -1,7 +1,7 @@
 ---
 title: 'Schools look for genius. The rest of us need to learn for ourselves'
 updatedAt: '2026-10-23'
-seoTitle: 'Learning for Ourselves in the Age of AI | Will.OPC'
+seoTitle: 'Learning for Ourselves in the Age of AI'
 description: 'Schools select for talent; personal learning needs a different goal. On using AI to learn around real problems and take charge of our education.'
 publishedAt: '2026-10-21'
 category: 'life-observation'

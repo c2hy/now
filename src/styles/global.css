@@ -1,73 +1,123 @@
 @import 'tailwindcss';
 
+/* 界面文字（导航、元信息、小节标签）拉丁走系统无衬线（Segoe UI / -apple-system），
+   中文走自托管思源黑体子集。Windows ClearType 下系统字有 hinting、笔画更实。
+   英文连续正文例外：走阅读衬线 --font-reading-en（见下方 :lang(en) .prose）。
+   黑体出两个字重：正文 300、界面 400；300 缺失时浏览器按最近字重取 400，
+   body 已设 font-synthesis: none，不会合成出更细的假字重。 */
 @font-face {
-  font-family: 'Inter Variable';
+  font-family: 'Noto Sans SC';
   font-style: normal;
-  font-weight: 100 900;
+  font-weight: 300;
   font-display: swap;
-  src: url('@fontsource-variable/inter/files/inter-latin-wght-normal.woff2')
-    format('woff2');
+  src: url('../assets/fonts/sans-sc-300.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Noto Sans SC';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../assets/fonts/sans-sc-400.woff2') format('woff2');
 }
 
+/* 中文正文宋体（变体 a 用）与 h1 大标题子集；字重只有 400。
+   h1 子集只含全站 h1 用字，正文不会拉取完整的 180KB 宋体。 */
 @font-face {
-  font-family: 'Newsreader Variable';
+  font-family: 'Noto Serif SC';
   font-style: normal;
-  font-weight: 200 800;
+  font-weight: 400;
   font-display: swap;
-  src: url('@fontsource-variable/newsreader/files/newsreader-latin-wght-normal.woff2')
-    format('woff2');
+  src: url('../assets/fonts/serif-sc-400.woff2') format('woff2');
 }
-
-/* Newsreader 的本地度量匹配后备族：swap 期间用 Times New Roman 顶替，
-   度量对齐 Newsreader，消除 swap 位移。数值用 fontkit 从实际字体文件读出
-   （一次性计算后固化于此；更换字体时需按同法重算）：
-
-   Newsreader（newsreader-latin-wght-normal.woff2，UPE=2000）：
-     ascent 1470，descent -530，lineGap 0，xHeight 852，capHeight 1340
-   Times New Roman（C:\Windows\Fonts\times.ttf，UPE=2048）：
-     ascent 1825，descent -443，lineGap 87，xHeight 916，capHeight 1356
-   （TNR 与 Newsreader 的 x 高差 5%、cap 高差 1%；Georgia x 高差 13%，故选 TNR。
-     macOS 自带 Times New Roman，度量按与 Windows 同版本处理，未实测。）
-
-   以 x-height 对齐（正文感知大小由 x 高主导；若按 capHeight 对齐则
-   size-adjust = (1340/2000)/(1356/2048) = 101.19%，供参考）：
-     size-adjust      = (852/2000) / (916/2048) = 0.426 / 0.44727 ≈ 95.25%
-     ascent-override  = (1470/2000) / 0.952453                ≈ 77.17%
-     descent-override = (530/2000)  / 0.952453                ≈ 27.82%
-     line-gap-override= 0（Newsreader lineGap 为 0，行盒恰为 1.0em）
-   覆盖值在 size-adjust 缩放之上生效，故按目标度量 ÷ s 反推。 */
 @font-face {
-  font-family: 'Newsreader Fallback';
-  src: local('Times New Roman');
+  font-family: 'Noto Serif SC Display';
+  font-style: normal;
+  font-weight: 400;
   font-display: swap;
-  size-adjust: 95.25%;
-  ascent-override: 77.17%;
-  descent-override: 27.82%;
-  line-gap-override: 0%;
+  src: url('../assets/fonts/serif-sc-display-400.woff2') format('woff2');
 }
 
 @theme {
   --color-paper: light-dark(#ffffff, #141417);
-  --color-ink: light-dark(#343940, #e8e9ec);
+  --color-ink: light-dark(#3e454f, #d8dbe0);
   --color-muted: light-dark(#6b7482, #989da6);
   --color-line: light-dark(#e9edf2, #2a2c31);
   --color-accent: light-dark(#c0392b, #e2685c);
   --color-soft: light-dark(#f5f7fa, #1d1f24);
   --color-selection: light-dark(#f8e3de, #4a2620);
   --color-glass: light-dark(rgba(255, 255, 255, 0.72), rgba(20, 20, 23, 0.72));
+
+  /* 声音分工：
+     sans      —— 界面与元信息。拉丁交给系统字，汉字交给思源黑体子集。
+     display   —— 只有两处「招牌」用它：h1 与页头 wordmark。
+     serif     —— 仅预览变体 a 使用（全衬线对照），正式页面不命中。
+     reading-en —— 英文连续正文的阅读衬线。Windows 优先 Sitka Text（长行更短、
+     词距更宽），其余平台回落到 Georgia（与 h1 同族）；中文正文不受影响。 */
   --font-sans:
-    'Inter Variable', 'PingFang SC', 'Microsoft YaHei', sans-serif;
-  --font-heading:
-    'Newsreader Variable', 'Newsreader Fallback', 'Songti SC', 'SimSun',
-    serif;
+    'Segoe UI Variable Text', 'Segoe UI', -apple-system, BlinkMacSystemFont,
+    'Helvetica Neue', Arial, 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei',
+    sans-serif;
+  --font-heading: var(--font-sans);
+  --font-serif:
+    Georgia, 'Times New Roman', 'Noto Serif SC Display', 'Noto Serif SC',
+    'Songti SC', 'SimSun', serif;
+  --font-display: var(--font-serif);
+  --font-reading-en: 'Sitka Text', Georgia, 'Times New Roman', serif;
 }
 
 :root {
   color-scheme: light dark;
+  /* 两种宽度语义：阅读测度用于连续长文，版面画布用于首页 / 列表 / 页头。 */
   --reading: 640px;
-  --wide: 900px;
+  --canvas: 1024px;
   --gutter: 30px;
+
+  /* 字号：全站只有三档，每档一个语义，跨页面不再例外。
+       32    页面标题（h1，唯一的衬线正文位置）
+       18    正文、导语、条目名、说明、渠道、联系方式
+       13.5  元信息、日期、导航、小节标签、说明中的说明
+     18px 中文 34px 行盒、英文 28px 行盒；只有一次语言级覆盖。
+     字重同样只有两档：正文/导语 300，界面/标题/元信息 400。
+     光学参数（字距、行高、墨色）只在这一层定义，页面规则不再各自调值。 */
+  --type-meta: 13.5px;
+  --leading-meta: 21px;
+  --type-body: 18px;
+  --leading-body: 34px;
+  --type-display: 32px;
+  --leading-display: 42px;
+  --type-brand: 18px;
+  --leading-brand: 24px;
+
+  /* C1：正文加 0.015em 字距（18px 下约 0.27px），不改字号。 */
+  --tracking-body: 0.015em;
+  /* B：联系类行动链接统一 0.06em 字距（18px 下约 1.08px），
+     与正文 0.015em 分开，避免把「可点击」和「可阅读」混成同一种质地。 */
+  --tracking-action: 0.06em;
+  --weight-body: 300;
+  --weight-ui: 400;
+
+  /* 间距：六档，每档只对应一种关系，全部页面共用，不许特例。
+       8    行内：标题→说明、眉标→标题
+       16   块内：标题→日期、标题→导语、小节标签→正文
+       24   同组：段落之间、同组条目之间、导语→渠道行
+       48   块间：标题簇→正文、导语→索引、列表条目之间
+       80   页面级：主体与收尾块、主内容上留白
+       120  页底：主内容下留白 */
+  --space-inline: 8px;
+  --space-inner: 16px;
+  --space-group: 24px;
+  --space-block: 48px;
+  --space-page: 80px;
+  --space-page-xl: 120px;
 }
+
+/* 英文行高整体收紧：同一字号下行盒更小，层级不变。 */
+html:lang(en) {
+  --leading-meta: 18px;
+  --leading-body: 28px;
+  --leading-display: 38px;
+}
+
 html[data-theme='light'] {
   color-scheme: light;
 }
@@ -78,13 +128,13 @@ html {
   background: var(--color-paper);
   color: var(--color-ink);
   scrollbar-gutter: stable;
-  /* Keep anchor targets clear of the sticky header. */
-  scroll-padding-top: 92px;
+  /* 页头 76px，留 96px 让锚点不被遮挡。 */
+  scroll-padding-top: 96px;
 }
 body {
   margin: 0;
   font-family: var(--font-sans);
-  font-size: 18px;
+  font-size: var(--type-body);
   font-weight: 400;
   font-synthesis: none;
   -webkit-font-smoothing: antialiased;
@@ -104,21 +154,23 @@ button:focus-visible {
   border-radius: 2px;
 }
 .shell {
-  max-width: calc(var(--wide) + var(--gutter) * 2);
+  max-width: calc(var(--canvas) + var(--gutter) * 2);
   margin: 0 auto;
   padding: 0 var(--gutter);
 }
 .skip {
   position: fixed;
   left: 20px;
-  top: -80px;
+  top: -60px;
   z-index: 10;
-  padding: 12px 16px;
+  padding: var(--space-inline) var(--space-inner);
   background: var(--color-paper);
   color: var(--color-accent);
+  font-size: var(--type-meta);
+  line-height: var(--leading-meta);
 }
 .skip:focus {
-  top: 12px;
+  top: var(--space-inner);
 }
 .site-header {
   position: sticky;
@@ -128,30 +180,53 @@ button:focus-visible {
   -webkit-backdrop-filter: blur(14px) saturate(1.6);
   backdrop-filter: blur(14px) saturate(1.6);
 }
+/* 首页：画从 y=0 起，页头必须 fixed 浮在画上，不能占用文档流。
+   玻璃浅色 86%、深色 78%，blur 18px saturate 1.2：普通滚动时画从页头后透出；
+   导航文字压深到 #4b535d（深色 #b9bec6）以维持对比度，
+   红点与语言切换共用 --color-accent 一个 token。 */
+body.home .site-header {
+  position: fixed;
+  inset: 0 0 auto 0;
+  background: rgba(255, 255, 255, 0.86);
+  -webkit-backdrop-filter: blur(18px) saturate(1.2);
+  backdrop-filter: blur(18px) saturate(1.2);
+}
+html[data-theme='dark'] body.home .site-header {
+  background: rgba(20, 20, 23, 0.78);
+}
+body.home .site-nav {
+  color: #4b535d;
+}
+html[data-theme='dark'] body.home .site-nav {
+  color: #b9bec6;
+}
 .site-header .shell {
-  max-width: calc(var(--reading) + var(--gutter) * 2);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 24px;
-  padding-top: 14px;
-  padding-bottom: 14px;
-  font-size: 14px;
+  gap: var(--space-group);
+  padding-top: var(--space-inner);
+  padding-bottom: var(--space-inner);
+  font-size: var(--type-meta);
+  line-height: var(--leading-meta);
 }
+/* wordmark：全站第二处（也是最后一处）衬线，作为品牌签名。
+   18px 对 13.5px 导航是 1.33 倍，对 32px h1 是 0.56 倍，不会压过标题。 */
 .site-brand {
   display: inline-flex;
   align-items: center;
   min-height: 44px;
-  font-family: var(--font-heading);
-  font-size: 17px;
-  font-weight: 500;
+  font-family: var(--font-display);
+  font-size: var(--type-brand);
+  font-weight: 400;
+  line-height: var(--leading-brand);
   white-space: nowrap;
-  letter-spacing: -0.5px;
+  letter-spacing: 0;
 }
 .site-nav {
   display: flex;
   align-items: center;
-  gap: 26px;
+  gap: var(--space-group);
   color: var(--color-muted);
 }
 .site-nav a {
@@ -171,6 +246,11 @@ button:focus-visible {
 }
 .site-nav .language-link {
   color: var(--color-accent);
+  /* 英文页的语言切换只剩一个汉字：拉丁走系统字，汉字也交给系统字体，
+     不为 1 个字下载 142KB 的中文黑体子集。 */
+  font-family:
+    'Segoe UI', -apple-system, 'PingFang SC', 'Hiragino Sans GB',
+    'Microsoft YaHei', sans-serif;
 }
 .theme-toggle {
   display: inline-flex;
@@ -204,14 +284,18 @@ html[data-theme='dark'] .theme-toggle [data-icon='sun'] {
   display: block;
 }
 main {
-  padding: 58px 0 112px;
+  padding: var(--space-page) 0 var(--space-page-xl);
+}
+/* 首页首屏从 y=0 开始，main 的上留白必须归零，否则画会被推离顶部。 */
+body.home main {
+  padding-top: 0;
 }
 .reading-column {
   max-width: var(--reading);
   margin: 0 auto;
 }
 .reading-header {
-  margin-bottom: 38px;
+  margin-bottom: var(--space-block);
 }
 h1,
 h2,
@@ -219,60 +303,91 @@ h3 {
   font-family: var(--font-heading);
   text-wrap: balance;
 }
+/* 页面标题：衬线，32px。全站所有页面的 h1 都一致。 */
 h1 {
   margin: 0;
-  font-size: clamp(28px, 24px + 1vw, 34px);
-  font-weight: 500;
-  line-height: 1.5;
+  font-family: var(--font-display);
+  font-size: var(--type-display);
+  font-weight: 400;
+  line-height: var(--leading-display);
   overflow-wrap: anywhere;
+}
+/* 小节标签：13.5px muted。文章页与首页索引共用同一条规则，
+   层级交给它上方的 48px 留白，而不是字号。关于页的小节标题属于内容标题档，
+   在组件内单独覆盖（见 About.astro）。 */
+h2,
+h3 {
+  margin: var(--space-block) 0 var(--space-inner);
+  color: var(--color-muted);
+  font-family: var(--font-sans);
+  font-size: var(--type-meta);
+  font-weight: 400;
+  line-height: var(--leading-meta);
+  letter-spacing: 0;
 }
 .prose {
-  font-size: 18px;
-  font-weight: 400;
-  line-height: 1.95;
-  overflow-wrap: anywhere;
+  font-size: var(--type-body);
+  font-weight: var(--weight-body);
+  line-height: var(--leading-body);
+  /* C1：正文统一字距由 token 给（0.015em），页面规则不再各自调值。
+     只在超长 URL 时断行。 */
+  letter-spacing: var(--tracking-body);
+  overflow-wrap: break-word;
 }
+:lang(zh) .prose {
+  /* 中文行尾允许标点悬挂（Safari 生效，其余忽略）。 */
+  line-break: strict;
+  hanging-punctuation: allow-end;
+}
+/* 英文连续正文换阅读衬线：Segoe UI 的等粗细无衬线在 18px/640 下平均每行
+   70.9 字、词距仅 0.274em，长行难扫读。实测 Sitka Text 每行 62.2 字、词距
+   0.285em；无字体文件，0 字节。中文正文保持思源黑体，不跟着换。 */
 :lang(en) .prose {
-  line-height: 1.85;
+  font-family: var(--font-reading-en);
 }
-/* WebKit's text-wrap: pretty balancer断行对 CJK 过于激进（每行提前约 2 字换行），
-   因此仅对拉丁文段落启用。 */
+/* WebKit 的 text-wrap: pretty 对 CJK 过于激进，仅对拉丁段落启用。 */
 :lang(en) .prose p {
   text-wrap: pretty;
 }
 .prose p {
-  margin: 0 0 1.25em;
-  font-weight: 400;
+  margin: 0 0 var(--space-group);
+  font-weight: var(--weight-body);
 }
 .prose > :last-child,
 .prose section > :last-child {
   margin-bottom: 0;
 }
-.prose h2,
+/* 三级标题与小节标签同一样式：不新开字号档，也不加分隔线。 */
 .prose h3 {
-  margin: 2.1em 0 0.85em;
-  font-size: clamp(21px, 19px + 0.5vw, 23px);
-  font-weight: 500;
-  line-height: 1.6;
+  margin: var(--space-block) 0 var(--space-inner);
 }
-.prose h3 {
-  font-size: 20px;
-}
+/* 强调不合成加粗：正文 300，强调回到界面字重 400，再加墨色下划线。 */
 .prose strong {
-  font-weight: 600;
+  font-weight: var(--weight-ui);
+  color: var(--color-ink);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--color-ink);
 }
+/* 链接保持界面字重 400：正文 300 时靠墨色 + 下划线区分，不加粗；
+   hover / focus-visible 再转 accent，作为交互反馈。 */
 .prose a,
 .project-links a {
-  color: var(--color-accent);
+  color: var(--color-ink);
+  font-weight: var(--weight-ui);
   text-decoration: underline;
 }
 .prose a:hover,
-.project-links a:hover {
+.prose a:focus-visible,
+.project-links a:hover,
+.project-links a:focus-visible {
+  color: var(--color-accent);
   text-decoration-color: transparent;
 }
 .prose ul,
 .prose ol {
-  margin: 0 0 1.25em;
+  margin: 0 0 var(--space-group);
   padding-left: 1.4em;
 }
 .prose ul {
@@ -282,13 +397,13 @@ h1 {
   list-style: decimal;
 }
 .prose li {
-  margin-bottom: 0.4em;
+  margin-bottom: var(--space-inline);
 }
 .prose li > p {
-  margin-bottom: 0.5em;
+  margin-bottom: var(--space-inline);
 }
 .prose blockquote {
-  margin: 1.5em 0;
+  margin: var(--space-group) 0;
   padding-left: 1.15em;
   border-left: 2px solid var(--color-line);
   color: var(--color-muted);
@@ -297,7 +412,7 @@ h1 {
   margin-bottom: 0;
 }
 .prose hr {
-  margin: 2.5em 0;
+  margin: var(--space-block) 0;
   border: 0;
   border-top: 1px solid var(--color-line);
 }
@@ -310,10 +425,11 @@ h1 {
   border-radius: 3px;
 }
 .prose pre {
-  margin: 1.5em 0;
-  padding: 18px;
+  margin: var(--space-group) 0;
+  padding: var(--space-inner);
   overflow-x: auto;
-  font-size: 14px;
+  font-size: var(--type-meta);
+  /* 代码块是技术例外：按比例行高，不跟随阅读档位的整数行盒。 */
   line-height: 1.7;
   border-radius: 4px;
 }
@@ -321,49 +437,62 @@ h1 {
   display: block;
   max-width: 100%;
   height: auto;
-  margin: 1.5em auto;
+  margin: var(--space-group) auto;
 }
 .prose table {
   display: block;
   max-width: 100%;
-  margin: 1.5em 0;
+  margin: var(--space-group) 0;
   overflow-x: auto;
   border-collapse: collapse;
-  font-size: 16px;
+  font-size: var(--type-body);
 }
 .prose th,
 .prose td {
-  padding: 8px 12px;
+  padding: var(--space-inline) 12px;
   border-bottom: 1px solid var(--color-line);
   text-align: left;
 }
 .prose th {
-  font-weight: 500;
+  font-weight: 400;
+  /* 表头没有字重差，改用更深的下边框标示表头行。 */
+  border-bottom-color: var(--color-muted);
 }
+/* 文章列表：单列，与文章详情同一阅读测度，点进文章不产生宽度跳变。 */
 .entry-list {
   display: grid;
-  gap: 34px;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-group);
 }
+/* 作品列表与文章列表、关于页同一阅读测度与同一左轴，切换页面不产生宽度跳变。 */
 .project-gallery-page {
   max-width: var(--reading);
   margin: 0 auto;
 }
+.writing-list-page {
+  max-width: var(--reading);
+  margin: 0 auto;
+}
+/* 作品列表：640 单列，条目间距沿用文章列表的同组档 24。 */
 .project-gallery {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  row-gap: 56px;
+  gap: var(--space-group);
 }
 .gallery-project-link {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  gap: 20px;
+  gap: var(--space-inner);
 }
 .gallery-project-copy {
   min-width: 0;
 }
 .gallery-cover {
   margin: 0;
+  width: 100%;
+  /* 640 列下 2:1 = 320px；封顶 240px，避免三张封面把列表撑成一屏一张。 */
   aspect-ratio: 2 / 1;
+  max-height: 240px;
   overflow: hidden;
   border-radius: 5px;
   background: var(--color-soft);
@@ -374,36 +503,20 @@ h1 {
   height: 100%;
   object-fit: cover;
 }
-.gallery-project h2 {
+/* 条目名与首页、文章列表一致：18px、墨色，与说明只差颜色和 8px。 */
+.gallery-project h2,
+.list-entry h2 {
   margin: 0;
-  font-size: 21px;
-  font-weight: 400;
-  line-height: 1.6;
-}
-.gallery-statement {
-  margin: 6px 0 0;
-  color: var(--color-muted);
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 1.8;
-}
-.gallery-description {
-  margin: 12px 0 0;
   color: var(--color-ink);
-  font-size: 17px;
-  font-weight: 400;
-  line-height: 1.85;
+  font-family: var(--font-sans);
+  font-size: var(--type-body);
+  font-weight: var(--weight-ui);
+  line-height: var(--leading-body);
 }
 .gallery-project-link:hover h2,
 .gallery-project-link:focus-visible h2 {
   color: var(--color-accent);
   text-decoration: underline;
-}
-.list-entry h2 {
-  margin: 0;
-  font-size: 21px;
-  font-weight: 400;
-  line-height: 1.65;
 }
 .list-entry h2 a:hover,
 .list-entry h2 a:focus-visible {
@@ -411,26 +524,27 @@ h1 {
   text-decoration: underline;
 }
 .entry-description {
-  margin: 7px 0 0;
+  margin: var(--space-inline) 0 0;
   color: var(--color-muted);
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 1.8;
+  font-size: var(--type-body);
+  font-weight: var(--weight-body);
+  line-height: var(--leading-body);
+  letter-spacing: var(--tracking-body);
 }
 .entry-date,
 .article-date {
   color: var(--color-muted);
-  font-size: 13px;
+  font-size: var(--type-meta);
   font-weight: 400;
+  line-height: var(--leading-meta);
   font-variant-numeric: tabular-nums;
 }
 .entry-date {
   display: block;
-  margin-top: 8px;
+  margin-top: var(--space-inner);
 }
 .article-date {
-  margin: 15px 0 0;
-  line-height: 1.8;
+  margin: var(--space-inner) 0 0;
 }
 .article-date a {
   text-decoration: underline;
@@ -439,240 +553,65 @@ h1 {
   color: var(--color-accent);
 }
 .project-intro {
-  margin: 18px 0 0;
-  font-size: 18px;
-  font-weight: 400;
-  line-height: 1.8;
+  margin: var(--space-inner) 0 0;
+  font-size: var(--type-body);
+  font-weight: var(--weight-body);
+  line-height: var(--leading-body);
+  letter-spacing: var(--tracking-body);
   color: var(--color-muted);
+}
+/* 空列表提示与说明文字同层：muted，不抢正文。 */
+.text-muted {
+  color: var(--color-muted);
+}
+/* 404 的两个入口与首页渠道行同一间距节奏（文字可折行，不做按钮）。 */
+.contact-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-inline) var(--space-group);
 }
 .project-links {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px 24px;
-}
-.project-links {
-  margin-top: 20px;
-  font-size: 15px;
-  line-height: 2;
-}
-.home-essay {
-  padding-top: 8px;
-}
-.home-essay .prose {
-  font-family: var(--font-heading);
-  font-size: 19px;
-  line-height: 1.95;
-  letter-spacing: 0.01em;
-  font-kerning: normal;
-  font-optical-sizing: auto;
-}
-:lang(en) .home-essay .prose {
-  font-size: 23px;
-  line-height: 1.6;
-  letter-spacing: -0.008em;
-}
-.home-essay .prose > p {
-  margin: 0 0 1.35em;
-}
-.home-essay .prose > p:last-child {
-  margin-top: 1.6em;
-  margin-bottom: 0;
-}
-.home-essay .prose a {
-  text-decoration-color: color-mix(
-    in srgb,
-    var(--color-accent) 35%,
-    transparent
-  );
-  text-decoration-thickness: 1px;
-  text-underline-offset: 4px;
-  white-space: nowrap;
-  transition: text-decoration-color 160ms ease;
-}
-.home-essay .prose a:hover {
-  text-decoration-color: var(--color-accent);
+  gap: var(--space-inline) var(--space-group);
+  margin-top: var(--space-inner);
+  font-size: var(--type-body);
+  line-height: var(--leading-body);
 }
 .home-contact {
-  margin-top: 34px;
-  font-size: 14px;
+  margin-top: var(--space-page);
+  font-size: var(--type-body);
+  line-height: var(--leading-body);
 }
 .home-contact a {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
   min-height: 44px;
   color: var(--color-accent);
 }
 .home-contact a:hover {
   text-decoration: underline;
 }
-.home-contact span {
-  display: inline-block;
-  font-size: 17px;
-  transition: transform 160ms ease;
-}
-/* 内联 SVG 箭头：替代文本箭头。U+2192/U+2197 不在 Inter 拉丁子集，
-   文本写法会触发 CJK webfont 分片回退下载；SVG 用 currentColor 继承链接色，
-   1em 随上下文字号缩放，尺寸与原 15–17px 文本箭头相当。 */
-.contact-arrow svg,
-.home-contact span svg,
-.project-links a svg {
-  display: inline-block;
-  width: 1em;
-  height: 1em;
-  vertical-align: -0.12em;
-}
-.home-contact a:hover span {
-  transform: translateX(2px);
-}
-@media (prefers-reduced-motion: reduce) {
-  .home-essay .prose a,
-  .home-contact span {
-    transition: none;
-  }
-}
-.about-contact {
-  margin-top: 54px;
-  padding-top: 30px;
-  border-top: 1px solid var(--color-line);
-}
-.about-contact h2 {
-  margin: 0;
-  font-size: 23px;
-  font-weight: 500;
-  line-height: 1.6;
-}
-.contact-intro {
-  margin: 10px 0 24px;
-  color: var(--color-muted);
-  font-size: 16px;
-  line-height: 1.8;
-}
-.contact-list {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-.contact-list li + li {
-  border-top: 1px solid var(--color-line);
-}
-.contact-link {
-  display: grid;
-  grid-template-columns: 100px minmax(0, 1fr) auto;
-  align-items: baseline;
-  gap: 16px;
-  padding: 16px 0;
-  font-size: 16px;
-  line-height: 1.7;
-}
-.contact-label {
-  color: var(--color-muted);
-  overflow-wrap: anywhere;
-}
-.contact-account,
-.contact-arrow {
-  color: var(--color-accent);
-}
-.contact-account {
-  overflow-wrap: anywhere;
-}
-.contact-link:hover .contact-account,
-.contact-link:focus-visible .contact-account {
-  text-decoration: underline;
-}
 
-@media (max-width: 700px) {
-  .gallery-project-link {
-    gap: 14px;
+/* 边距：1440/1024 为 30，768 为 24，390 为 22。 */
+@media (max-width: 767px) {
+  :root {
+    --gutter: 24px;
   }
 }
 @media (max-width: 600px) {
   :root {
     --gutter: 22px;
   }
-  body,
-  .prose {
-    font-size: 17px;
-  }
-  .site-header .shell {
-    gap: 14px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-  }
-  .site-brand {
-    font-size: 16px;
-  }
-  .home-essay {
-    padding-top: 0;
-  }
-  .home-essay .prose {
-    font-size: 18px;
-  }
-  :lang(en) .home-essay .prose {
-    font-size: 21px;
-    line-height: 1.6;
-  }
-  .home-contact {
-    margin-top: 28px;
-  }
   .site-nav {
-    gap: 19px;
-    font-size: 13px;
-  }
-  main {
-    padding: 39px 0 76px;
-  }
-  .reading-header {
-    margin-bottom: 29px;
-  }
-  .about-contact {
-    margin-top: 40px;
-    padding-top: 25px;
-  }
-  .about-contact h2 {
-    font-size: 21px;
-  }
-  .contact-link {
-    grid-template-columns: minmax(0, 1fr) auto;
-    gap: 3px 12px;
-  }
-  .contact-label {
-    grid-column: 1;
-    font-size: 13px;
-  }
-  .contact-account {
-    grid-column: 1;
-    grid-row: 2;
-  }
-  .contact-arrow {
-    grid-column: 2;
-    grid-row: 2;
-  }
-  .prose h3 {
-    font-size: 19px;
-  }
-  .list-entry h2 {
-    font-size: 20px;
-  }
-  .project-intro {
-    font-size: 17px;
-  }
-  .project-gallery {
-    row-gap: 34px;
-  }
-  .gallery-project h2 {
-    font-size: 20px;
+    gap: var(--space-inner);
   }
 }
-@media (max-width: 360px) {
+/* 320px：英文页导航五项（Projects / Writing / About / 中文 / 主题按钮）
+   按当前间距的固有宽度会把右缘推到 347，超出视口 27px。
+   极窄屏只收紧项间距，不改字号、不换行，375 及以上和桌面不受影响。 */
+@media (max-width: 359px) {
   .site-nav {
-    gap: 13px;
-    font-size: 12px;
-  }
-  .site-brand {
-    font-size: 15px;
-  }
-  .site-header .shell {
-    gap: 10px;
+    gap: 8px;
   }
 }

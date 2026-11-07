@@ -22,7 +22,7 @@ export const ui = {
     siteIntro:
       'Will’s observations, experiments, and changes of mind. An independent developer in Shanghai, exploring technology and everyday life.',
     aboutIntro:
-      'Meet Will, the independent developer behind Will.OPC (willopc). Based in Shanghai, he builds Yipa, Huddle, and Tablow, and writes about what he learns.',
+      'Will.OPC (willopc) is independent developer Will’s site. He builds Yipa, Huddle, and Tablow in Shanghai, and writes down what he hasn’t figured out.',
     writing: 'Writing',
     projects: 'Projects',
     about: 'About',
@@ -32,16 +32,19 @@ export const ui = {
     skip: 'Skip to content',
     empty: 'Nothing published here yet.',
     notesIntro:
-      'Everyday observations, technical decisions, and things I’ve tried. Some are worked through; others are questions I’m still turning over.',
+      'Observations from daily life, technical notes, and things I learn while building products. Some are worked through; others are still open questions.',
     projectsIntro:
-      'A few ideas I’ve put into practice: remembering the last time, sharing with familiar people, and taking another look at our experiences.',
+      'A few products I’ve built: remembering the last time, sharing with people you know, and keeping a private record.',
+    indexLabel: 'Site index',
+    now: 'Now',
+    nowSummary: 'One person, plus AI, carrying products from end to end: ',
   },
   zh: {
     homeTitle: '答案会变，问题留着',
     siteIntro:
       'Will 的个人网站。在上海做独立开发，喜欢多问一句为什么，也会自己动手试试。这里有作品，有日常，还有做过之后才明白的事。',
     aboutIntro:
-      '关于 Will.OPC（willopc）背后的独立开发者 Will：在上海，一个人做 Yipa、泡泡留言板和橘小记，也把试过之后才明白的事写在这里。',
+      'Will.OPC（willopc）是独立开发者 Will 的网站。他在上海一个人做 Yipa、泡泡留言板和橘小记，也写下试过之后才明白的事。',
     writing: '文章',
     projects: '作品',
     about: '关于',
@@ -51,9 +54,12 @@ export const ui = {
     skip: '跳至正文',
     empty: '这里暂时没有已发布的内容。',
     notesIntro:
-      '这里写生活里的观察，也聊技术和做产品的事。有些问题想明白了，有些还在琢磨，都先记下来，过段时间再回头看看。',
+      '生活里的观察，技术上的记录，做产品时想明白或没想明白的事。都先记下来，过段时间再回头看看。',
     projectsIntro:
       '这是我做的几个产品。起点都很日常：想记住上一次，想和熟悉的人分享生活，也想慢慢看清自己。',
+    indexLabel: '站点索引',
+    now: '现在',
+    nowSummary: '一个人，加上 AI，把产品从头做到尾：',
   },
 };
 export const writingCategoryLabels: Record<

@@ -1,0 +1,26 @@
+---
+// 预览专用：超家族配对实验的字族与切换规则。
+// 正式构建不渲染该组件，因此 /fonts/* 请求与这些覆盖规则都不会进入产物。
+---
+
+<style is:global>
+  /* 字族实验（?family=sans-title|sans-body）：直接复用站点已有的
+     --font-sans / --font-serif，避免与 global.css 的 @font-face 重复下载。 */
+  :root {
+    --sf-sans: var(--font-sans);
+    --sf-serif: var(--font-serif);
+  }
+
+  /* A：标题黑体、正文宋体。只切真实标题元素，导语与正文仍是衬线。 */
+  html[data-family='sans-title'] :is(h1, h2, h3) {
+    font-family: var(--sf-sans);
+  }
+
+  /* B：标题宋体、正文黑体。@theme 里 --font-heading 是 var(--font-serif)，
+     在同一元素上覆盖 --font-serif 会连标题一起带成黑体，所以显式钉回衬线。 */
+  html[data-family='sans-body'] {
+    --font-serif: var(--sf-sans);
+    --font-sans: var(--sf-sans);
+    --font-heading: var(--sf-serif);
+  }
+</style>
