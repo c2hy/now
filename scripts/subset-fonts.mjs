@@ -9,6 +9,15 @@ import { spawnSync } from 'node:child_process';
 const outDir = join('src', 'assets', 'fonts');
 mkdirSync(outDir, { recursive: true });
 
+// macOS/部分 Linux 只装了 python3，没有 python 这个别名。
+const python = ['python3', 'python'].find(
+  (bin) =>
+    spawnSync(bin, ['-c', 'import fontTools'], { stdio: 'ignore' }).status ===
+    0,
+);
+if (!python)
+  throw new Error('需要 fonttools：python3 -m pip install fonttools brotli');
+
 const walk = (dir) =>
   readdirSync(dir, { withFileTypes: true }).flatMap((entry) =>
     entry.isDirectory()
@@ -67,7 +76,7 @@ for (const [pkg, alias, weight] of jobs) {
   );
   const output = join(outDir, `${alias}-sc-${weight}.woff2`);
   const result = spawnSync(
-    'python',
+    python,
     [
       '-m',
       'fontTools.subset',
@@ -96,7 +105,7 @@ const displayInput = join(
 );
 const displayOutput = join(outDir, 'serif-sc-display-400.woff2');
 const displayResult = spawnSync(
-  'python',
+  python,
   [
     '-m',
     'fontTools.subset',

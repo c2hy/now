@@ -360,7 +360,10 @@ for (const file of files) {
     .replace(/<style[\s\S]*?<\/style>/g, '');
   for (const char of text)
     if (char.codePointAt(0) > 0x7f)
-      assert(subsetChars.has(char), `${file}: glyph outside subset "${char}"`);
+      assert(
+        subsetChars.has(char),
+        `${file}: glyph outside subset "${char}" — 改过文案后请运行 npm run fonts:subset`,
+      );
 }
 console.log(
   `Verified ${files.length} pages: links, unique metadata, branded titles, structured data, sitemap, hreflang, h1, ${robotsContent} (404: noindex), font subset coverage${production ? ', sample exclusion' : ''}.`,
