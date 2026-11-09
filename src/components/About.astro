@@ -15,19 +15,20 @@ const productParts = (text: string) =>
   text.split(/(Yipa|Huddle|Tablow|泡泡留言板|橘小记)/g);
 // 与首页渠道行同一套标签规则：英文页用 labelEn，避免出现中文频道名。
 const channelLabel = (channel: (typeof social)[number]) =>
-  locale === 'zh' ? channel.label : channel.labelEn ?? channel.label;
+  locale === 'zh' ? channel.label : (channel.labelEn ?? channel.label);
 const contact =
   locale === 'zh'
     ? {
         title: '联系我',
-        intro: '聊聊产品、分享想法，或者只是打个招呼，都欢迎。',
+        intro:
+          '聊聊产品、分享想法，或者只是打个招呼，都欢迎。想要个小礼物的话，跟我说一声就好。',
         email: '邮箱',
         profile: '查看主页',
       }
     : {
         title: 'Get in touch',
         intro:
-          'Have a question, an idea to share, or just want to say hello? I’d love to hear from you.',
+          'Have a question, an idea to share, or just want to say hello? I’d love to hear from you — and if you’d like a small gift, just let me know.',
         email: 'Email',
         profile: 'View profile',
       };
@@ -186,21 +187,18 @@ const contact =
   }
   .contact-link {
     display: grid;
-    grid-template-columns: 72px minmax(0, 1fr);
+    grid-template-columns: minmax(6.5rem, max-content) minmax(0, 1fr);
     align-items: baseline;
     gap: var(--space-inner);
     font-family: var(--font-sans);
     font-size: var(--type-body);
     line-height: var(--leading-body);
   }
-  /* 英文标签最宽的是 RedNote（18px 下约 69px），80px 列留出 11px 余量；
-     中文标签最宽 3 个字（54px），沿用 72px。 */
-  :lang(en) .contact-link {
-    grid-template-columns: 80px minmax(0, 1fr);
-  }
+  /* 标签列随内容自适应：中文最宽 3 个字，英文最宽 RedNote，
+     列宽不足时也不再折行，默认给到 6.5rem 保持各行对齐。 */
   .contact-label {
     color: var(--color-muted);
-    overflow-wrap: anywhere;
+    white-space: nowrap;
   }
   .contact-account {
     color: var(--color-accent);
@@ -218,10 +216,7 @@ const contact =
   }
   @media (max-width: 600px) {
     .contact-link {
-      grid-template-columns: 64px minmax(0, 1fr);
-    }
-    :lang(en) .contact-link {
-      grid-template-columns: 76px minmax(0, 1fr);
+      grid-template-columns: minmax(4rem, max-content) minmax(0, 1fr);
     }
   }
 </style>
