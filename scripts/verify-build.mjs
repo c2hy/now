@@ -155,16 +155,14 @@ for (const file of files) {
       description.includes('Will.OPC') && description.includes('willopc'),
       `${file}: both name forms in description`,
     );
-    // 首页新版导语只保留 OPC 缩写，不再重复 Will.OPC (willopc)；
-    // 关于页仍要求两种写法都在，别把这条一起放宽。
-    const introductionMentionsBrand = homePages.has(file)
-      ? introduction?.includes('OPC')
-      : introduction?.includes('Will.OPC') &&
-        introduction?.includes('willopc');
-    assert(
-      introductionMentionsBrand,
-      `${file}: visible introduction keeps the brand`,
-    );
+    if (homePages.has(file)) {
+      assert(/\bWill\b/.test(introduction ?? ''), `${file}: homepage introduces Will`);
+    } else {
+      assert(
+        introduction?.includes('Will.OPC') && introduction?.includes('willopc'),
+        `${file}: visible introduction keeps both name forms`,
+      );
+    }
   }
   const graph = JSON.parse(
     html.match(

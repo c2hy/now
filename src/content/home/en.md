@@ -3,7 +3,7 @@ locale: en
 title: Answers change. The questions stay.
 description: Will.OPC (willopc) is Will's personal site. An independent developer in Shanghai building Yipa, Huddle, and Tablow with AI, and writing about what he learns.
 imprint: 'Now that AI is here, what is still worth doing, remembering, believing in, and holding on to?'
-intro: "This is where I write down what I notice in ordinary life, and the judgments I've changed because of it. I don't delete the old ones; they stay where they are. The products are part of it: judgments turned into software, made in public. OPC is one person doing this."
+intro: "I'm Will, an independent developer in Shanghai. I write about problems I run into in everyday life, and sometimes I build software to solve them."
 # 备查：未采用的方向 1，不参与渲染
 # 中文：一个人加 AI，能把产品从想法做到上线。我做过三个，这件事不用再证明。但 OPC 能证明的也只是这一步：上线，不等于有人需要。真正难的是分清哪些需求真的存在——这部分 AI 替不了。
 # English: One person plus AI can take a product from an idea to launch. I’ve done it three times; that part no longer needs proving. But that’s all OPC proves: shipping doesn’t mean anyone needs it. The hard part is telling which needs are real—and AI can’t do that for you.
