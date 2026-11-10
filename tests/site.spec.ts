@@ -211,7 +211,7 @@ test('top navigation opens writing and the article language switch preserves the
   await page.goto('/zh/');
   await page.locator('[data-analytics-placement="nav_writing"]').click();
   await expect(page).toHaveURL('/zh/notes');
-  await expect(page.locator('[data-writing-item]')).toHaveCount(6);
+  await expect(page.locator('[data-writing-item]')).toHaveCount(7);
   await page
     .locator(
       '[data-analytics-placement="note_item"][href="/zh/notes/schools-and-learning-for-ourselves"]',
@@ -322,7 +322,7 @@ test('related writing, author and product links preserve the reading language', 
     await page.goto(`${prefix}/notes`);
     await expect(
       page.locator('[data-writing-item] .entry-description'),
-    ).toHaveCount(6);
+    ).toHaveCount(7);
   }
 });
 
