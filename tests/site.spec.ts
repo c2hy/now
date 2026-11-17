@@ -211,7 +211,7 @@ test('top navigation opens writing and the article language switch preserves the
   await page.goto('/zh/');
   await page.locator('[data-analytics-placement="nav_writing"]').click();
   await expect(page).toHaveURL('/zh/notes');
-  await expect(page.locator('[data-writing-item]')).toHaveCount(7);
+  await expect(page.locator('[data-writing-item]')).toHaveCount(8);
   await page
     .locator(
       '[data-analytics-placement="note_item"][href="/zh/notes/schools-and-learning-for-ourselves"]',
